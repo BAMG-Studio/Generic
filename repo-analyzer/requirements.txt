@@ -1,0 +1,21 @@
+# Universal Repository Analyzer - Dependencies
+# Python 3.12+
+
+# Core dependencies
+requests>=2.31.0
+click>=8.1.0
+rich>=13.0.0
+python-dotenv>=1.0.0
+
+# SBOM and parsing
+toml>=0.10.2  # For Cargo.toml parsing
+
+# PDF generation (optional but recommended)
+reportlab>=4.0.0
+
+# Development dependencies (optional)
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.0.0
+flake8>=6.1.0
+mypy>=1.5.0
