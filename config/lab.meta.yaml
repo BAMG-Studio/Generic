@@ -1,5 +1,0 @@
-project: superlab
-org: cs
-environments: [dev, test, prod, sandbox]
-resource_naming: "cs-{project}-{env}-{service}-{component}-{suffix}"
-scenario_index_start: 1
