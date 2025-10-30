@@ -1,6 +1,5 @@
 """HTML Reporter - Author: Peter"""
 from pathlib import Path
-from jinja2 import Template
 
 class HTMLReporter:
     TEMPLATE = """<!DOCTYPE html>
@@ -65,7 +64,8 @@ class HTMLReporter:
                 </tr>
             </thead>
             <tbody>
-                {% for filepath, data in classifications.items()[:100] %}
+                {% for filepath, data in classifications.items() %}
+                {% if loop.index <= 100 %}
                 <tr>
                     <td>{{ filepath|basename }}</td>
                     <td class="origin-{{ data.origin }}">{{ data.origin }}</td>
@@ -74,6 +74,7 @@ class HTMLReporter:
                     <td>{{ rewriteability.get(filepath, {}).get('score', 0)|round(2) }}</td>
                     <td>{{ rewriteability.get(filepath, {}).get('loc', 0) }}</td>
                 </tr>
+                {% endif %}
                 {% endfor %}
             </tbody>
         </table>
@@ -98,9 +99,13 @@ class HTMLReporter:
     def generate(self):
         output_file = self.output_dir / "report.html"
         
-        template = Template(self.TEMPLATE)
-        template.globals['format_number'] = lambda x: f"{x:,}"
-        template.globals['basename'] = lambda x: Path(x).name
+        # Create environment and add custom filters
+        from jinja2 import Environment
+        env = Environment()
+        env.filters['format_number'] = lambda x: f"{int(x):,}" if x else "0"
+        env.filters['basename'] = lambda x: Path(x).name
+        
+        template = env.from_string(self.TEMPLATE)
         
         html = template.render(
             classifications=self.findings.get("classification", {}),

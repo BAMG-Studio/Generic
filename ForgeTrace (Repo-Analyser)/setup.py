@@ -11,11 +11,17 @@ setup(
     install_requires=[
         "pyyaml>=6.0",
         "jinja2>=3.1.0",
-        "tlsh>=4.5.0",
-        "ssdeep>=3.4",
         "gitpython>=3.1.0",
-        "weasyprint>=59.0",
     ],
+    extras_require={
+        "full": [
+            "py-tlsh>=4.7.2",
+            "ppdeep",  # Python wrapper for ssdeep
+            "weasyprint>=59.0",
+        ],
+        "pdf": ["weasyprint>=59.0"],
+        "similarity": ["py-tlsh>=4.7.2", "ppdeep"],
+    },
     entry_points={
         "console_scripts": [
             "forgetrace=forgetrace.cli:main",

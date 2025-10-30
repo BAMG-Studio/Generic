@@ -6,14 +6,18 @@ import hashlib
 try:
     import tlsh
     HAS_TLSH = True
-except:
+except ImportError:
     HAS_TLSH = False
 
 try:
-    import ssdeep
+    import ppdeep as ssdeep
     HAS_SSDEEP = True
-except:
-    HAS_SSDEEP = False
+except ImportError:
+    try:
+        import ssdeep
+        HAS_SSDEEP = True
+    except ImportError:
+        HAS_SSDEEP = False
 
 class SimilarityScanner:
     def __init__(self, repo_path, config):
