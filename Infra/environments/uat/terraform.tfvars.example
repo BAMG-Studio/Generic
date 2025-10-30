@@ -1,5 +1,0 @@
-account_id = "555555555555"
-region     = "us-east-1"
-env        = "uat"
-s3_state_bucket = "org-terraform-state-us-east-1-uat"
-kms_key_arn = "arn:aws:kms:us-east-1:555555555555:key/xxxx"

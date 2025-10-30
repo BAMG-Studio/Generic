@@ -1,5 +1,0 @@
-account_id = "444444444444"
-region     = "us-west-1"
-env        = "sandbox"
-s3_state_bucket = "org-terraform-state-us-west-1"
-kms_key_arn = "arn:aws:kms:us-west-1:444444444444:key/xxxx"

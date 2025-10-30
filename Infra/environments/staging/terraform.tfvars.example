@@ -1,5 +1,0 @@
-account_id = "222222222222"
-region     = "us-west-2"
-env        = "staging"
-s3_state_bucket = "org-terraform-state-us-west-2"
-kms_key_arn = "arn:aws:kms:us-west-2:222222222222:key/xxxx"
