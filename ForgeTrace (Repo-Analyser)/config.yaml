@@ -1,0 +1,59 @@
+# ForgeTrace Configuration
+# Author: Peter Kolawole, BAMG Studio LLC
+
+# Scoring Weights (must sum to 1.0)
+scoring:
+  novelty_weight: 0.35
+  complexity_weight: 0.25
+  ownership_weight: 0.25
+  criticality_weight: 0.15
+
+# Similarity Thresholds
+similarity:
+  high_similarity: 0.85
+  medium_similarity: 0.60
+  shingle_size: 5
+  min_code_lines: 10
+
+# Rewriteability Scoring
+rewriteability:
+  complexity_threshold: 500  # LOC
+  coupling_threshold: 10     # dependencies
+  test_coverage_min: 0.70
+
+# Cost Estimation
+cost:
+  days_per_kloc: 15
+  hours_per_day: 8
+  hourly_rate: 150
+  complexity_multiplier: 1.5
+
+# Path Criticality Rules
+criticality:
+  high:
+    - "/core/"
+    - "/services/"
+    - "/api/"
+  medium:
+    - "/lib/"
+    - "/utils/"
+  low:
+    - "/tests/"
+    - "/docs/"
+
+# Tool Paths (auto-detected if empty)
+tools:
+  syft: ""
+  scancode: ""
+  semgrep: ""
+  trufflehog: ""
+  gitleaks: ""
+  jscpd: ""
+
+# Output Options
+output:
+  include_pdf: true
+  include_sbom: true
+  client_name: ""
+  engagement_start: ""
+  engagement_end: ""
