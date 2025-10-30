@@ -1,7 +1,0 @@
-# Ignore terraform local files
-*.tfstate
-*.tfstate.backup
-.terraform/
-
-# local override files
-terraform.tfvars

@@ -1,6 +1,0 @@
-account_id = "005965605891"
-aws_region = "us-east-1"
-oidc_provider_arn = "arn:aws:iam::005965605891:oidc-provider/token.actions.githubusercontent.com"
-github_repo = "BAMG-Studio/sbom-security-pipeline"
-artifact_bucket = "sbom-artifacts-your-org"
-# kms_key_alias = "alias/github-actions-cosign" (optional)
