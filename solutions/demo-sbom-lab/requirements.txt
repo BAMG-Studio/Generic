@@ -1,2 +1,0 @@
-# Minimal dev requirements for demo tests
-pytest
