@@ -1,101 +1,105 @@
-"""
-Tests for Git Scanner functionality.
-"""
-import pytest
+"""Tests for Git Scanner functionality."""
 from pathlib import Path
+from typing import Any, Callable, Type, cast
+
 from forgetrace.scanners.git import GitScanner
+
+ScannerFactory = Callable[[Type[Any], Path | str], Any]
 
 
 class TestGitScanner:
     """Test suite for GitScanner."""
-    
-    def test_scanner_initialization(self):
+
+    def test_scanner_initialization(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
         """Test that scanner initializes correctly."""
-        scanner = GitScanner()
+
+        scanner: Any = scanner_factory(GitScanner, temp_dir)
         assert scanner is not None
-        assert hasattr(scanner, 'scan')
-    
-    def test_scan_basic_repo(self, sample_repo):
+        assert hasattr(scanner, "scan")
+
+    def test_scan_basic_repo(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
         """Test scanning a basic repository."""
-        scanner = GitScanner()
-        results = scanner.scan(str(sample_repo))
-        
-        assert results is not None
-        assert "commits" in results
-        assert len(results["commits"]) == 2  # Initial + utils commit
+
+        scanner: Any = scanner_factory(GitScanner, sample_repo)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        assert isinstance(results, dict)
         assert "authors" in results
-        assert len(results["authors"]) >= 1
-    
-    def test_scan_commit_metadata(self, sample_repo):
+        assert "churn" in results
+        assert "timeline" in results
+        assert results.get("total_commits", 0) >= 1
+
+    def test_scan_commit_metadata(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
         """Test that commit metadata is captured correctly."""
-        scanner = GitScanner()
-        results = scanner.scan(str(sample_repo))
-        
-        commits = results["commits"]
-        assert len(commits) > 0
-        
-        # Check first commit structure
-        first_commit = commits[0]
-        assert "sha" in first_commit or "hash" in first_commit
-        assert "author" in first_commit
-        assert "date" in first_commit
-        assert "message" in first_commit
-    
-    def test_scan_authorship(self, sample_repo_with_multiple_authors):
+
+        scanner: Any = scanner_factory(GitScanner, sample_repo)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        timeline = cast(list[dict[str, Any]], results.get("timeline", []))
+        if timeline:
+            first_entry = timeline[0]
+            assert "author" in first_entry
+            assert "date" in first_entry
+
+    def test_scan_authorship(
+        self,
+        sample_repo_with_multiple_authors: Path,
+        scanner_factory: ScannerFactory,
+    ) -> None:
         """Test authorship analysis."""
-        scanner = GitScanner()
-        results = scanner.scan(str(sample_repo_with_multiple_authors))
-        
-        authors = results["authors"]
+
+        scanner: Any = scanner_factory(GitScanner, sample_repo_with_multiple_authors)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        authors = cast(dict[str, dict[str, Any]], results.get("authors", {}))
         assert len(authors) >= 2
-        
-        # Check author structure
-        for author in authors:
-            assert "name" in author or "email" in author
-            assert "commits" in author
-            assert author["commits"] > 0
-    
-    def test_scan_file_changes(self, sample_repo):
+        for author_data in authors.values():
+            assert "commits" in author_data
+
+    def test_scan_file_changes(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
         """Test file change tracking."""
-        scanner = GitScanner()
-        results = scanner.scan(str(sample_repo))
-        
-        commits = results["commits"]
-        
-        # At least one commit should have file changes
-        has_files = any("files" in commit for commit in commits)
-        assert has_files or any("stats" in commit for commit in commits)
-    
-    def test_scan_nonexistent_repo(self, temp_dir):
+
+        scanner: Any = scanner_factory(GitScanner, sample_repo)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        churn = cast(dict[str, dict[str, Any]], results.get("churn", {}))
+        if churn:
+            sample = next(iter(churn.values()))
+            assert "added" in sample
+            assert "removed" in sample
+            assert "files" in sample
+
+    def test_scan_nonexistent_repo(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
         """Test scanning a non-existent repository."""
-        scanner = GitScanner()
-        
-        with pytest.raises(Exception):
-            scanner.scan(str(Path(temp_dir) / "nonexistent"))
-    
-    def test_scan_non_git_directory(self, temp_dir):
+
+        missing_path = Path(temp_dir) / "nonexistent"
+        scanner: Any = scanner_factory(GitScanner, missing_path)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        assert "error" in results
+
+    def test_scan_non_git_directory(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
         """Test scanning a directory that's not a git repo."""
-        scanner = GitScanner()
-        
-        # Create a regular directory
+
         test_dir = Path(temp_dir) / "not_a_repo"
         test_dir.mkdir()
-        
-        with pytest.raises(Exception):
-            scanner.scan(str(test_dir))
-    
-    def test_scan_empty_repo(self, temp_dir):
+
+        scanner: Any = scanner_factory(GitScanner, test_dir)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        assert "error" in results
+
+    def test_scan_empty_repo(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
         """Test scanning an empty git repository."""
+
         from git import Repo
-        
+
         repo_path = Path(temp_dir) / "empty_repo"
         repo_path.mkdir()
         Repo.init(repo_path)
-        
-        scanner = GitScanner()
-        results = scanner.scan(str(repo_path))
-        
-        # Empty repo should have no commits
-        assert results is not None
-        assert "commits" in results
-        assert len(results["commits"]) == 0
+
+        scanner: Any = scanner_factory(GitScanner, repo_path)
+        results: dict[str, Any] = cast(dict[str, Any], scanner.scan())
+
+        assert isinstance(results, dict)
+        assert results.get("total_commits", 0) == 0

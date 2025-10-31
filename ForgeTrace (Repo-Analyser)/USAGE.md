@@ -20,10 +20,10 @@ pip install -e .
 
 ```bash
 # Run audit on a repository
-forgetrace audit /path/to/target-repo --out ./results
+forgetrace audit /path/to/target-repo --out repo_audit/example/forgetrace_report
 
 # With custom config
-forgetrace audit /path/to/repo --out ./out --config my-config.yaml
+forgetrace audit /path/to/repo --out repo_audit/acme/forgetrace_report --config my-config.yaml
 
 # Specify tool paths
 forgetrace audit /path/to/repo \
@@ -55,12 +55,12 @@ Edit `config.yaml` to customize:
 ## Example Workflow
 
 ```bash
-# 1. Audit a client repository
-forgetrace audit /path/to/client-repo --out ./client-audit
+# 1. Audit a client repository (stored in repo_audit/<client>)
+forgetrace audit /path/to/client-repo --out repo_audit/client-name/forgetrace_report
 
 # 2. Review outputs
-cat ./client-audit/ip_contribution_table.md
-open ./client-audit/report.html
+cat repo_audit/client-name/forgetrace_report/ip_contribution_table.md
+open repo_audit/client-name/forgetrace_report/report.html
 
 # 3. Share with client
 # Send report.pdf and ip_contribution_table.md

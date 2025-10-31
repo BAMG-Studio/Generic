@@ -1,30 +1,34 @@
-"""
-Pytest configuration and shared fixtures for ForgeTrace tests.
-"""
-import os
+"""Pytest configuration and shared fixtures for ForgeTrace tests."""
 import shutil
 import tempfile
 from pathlib import Path
+from typing import Any, Callable, Dict, Iterator, Type
+
 import pytest
 from git import Repo
 
 
 @pytest.fixture
-def temp_dir():
+def temp_dir() -> Iterator[str]:
     """Create a temporary directory for tests."""
+
     temp = tempfile.mkdtemp()
-    yield temp
-    shutil.rmtree(temp, ignore_errors=True)
+    try:
+        yield temp
+    finally:
+        shutil.rmtree(temp, ignore_errors=True)
 
 
 @pytest.fixture
-def sample_repo(temp_dir):
+def sample_repo(temp_dir: str) -> Iterator[Path]:
     """Create a sample git repository for testing."""
     repo_path = Path(temp_dir) / "test_repo"
     repo_path.mkdir()
     
     # Initialize git repo
     repo = Repo.init(repo_path)
+    index: Any = repo.index
+    index: Any = repo.index
     
     # Configure git user
     with repo.config_writer() as config:
@@ -76,8 +80,8 @@ SOFTWARE.
 """)
     
     # Initial commit
-    repo.index.add(["README.md", "main.py", "requirements.txt", "LICENSE"])
-    repo.index.commit("Initial commit")
+    index.add(["README.md", "main.py", "requirements.txt", "LICENSE"])
+    index.commit("Initial commit")
     
     # Add another commit
     (repo_path / "utils.py").write_text("""\"\"\"Utility functions.\"\"\"
@@ -90,20 +94,21 @@ def multiply(a, b):
     \"\"\"Multiply two numbers.\"\"\"
     return a * b
 """)
-    repo.index.add(["utils.py"])
-    repo.index.commit("Add utils module")
+    index.add(["utils.py"])
+    index.commit("Add utils module")
     
     yield repo_path
 
 
 @pytest.fixture
-def sample_repo_with_secrets(temp_dir):
+def sample_repo_with_secrets(temp_dir: str) -> Iterator[Path]:
     """Create a repo with hardcoded secrets for testing."""
     repo_path = Path(temp_dir) / "secrets_repo"
     repo_path.mkdir()
     
     repo = Repo.init(repo_path)
-    
+    index: Any = repo.index
+
     with repo.config_writer() as config:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test@example.com")
@@ -116,28 +121,29 @@ PASSWORD = "admin123"
 DATABASE_URL = "postgresql://user:password@localhost:5432/db"
 """)
     
-    repo.index.add(["config.py"])
-    repo.index.commit("Add config with secrets")
+    index.add(["config.py"])
+    index.commit("Add config with secrets")
     
     yield repo_path
 
 
 @pytest.fixture
-def sample_repo_with_multiple_authors(temp_dir):
+def sample_repo_with_multiple_authors(temp_dir: str) -> Iterator[Path]:
     """Create a repo with multiple authors."""
     repo_path = Path(temp_dir) / "multi_author_repo"
     repo_path.mkdir()
     
     repo = Repo.init(repo_path)
-    
+    index: Any = repo.index
+
     # First author
     with repo.config_writer() as config:
         config.set_value("user", "name", "Alice")
         config.set_value("user", "email", "alice@example.com")
     
     (repo_path / "alice.py").write_text("# Alice's code\ndef alice_func():\n    return 'Alice'\n")
-    repo.index.add(["alice.py"])
-    repo.index.commit("Alice's commit")
+    index.add(["alice.py"])
+    index.commit("Alice's commit")
     
     # Second author
     with repo.config_writer() as config:
@@ -145,8 +151,8 @@ def sample_repo_with_multiple_authors(temp_dir):
         config.set_value("user", "email", "bob@example.com")
     
     (repo_path / "bob.py").write_text("# Bob's code\ndef bob_func():\n    return 'Bob'\n")
-    repo.index.add(["bob.py"])
-    repo.index.commit("Bob's commit")
+    index.add(["bob.py"])
+    index.commit("Bob's commit")
     
     # Third author
     with repo.config_writer() as config:
@@ -154,20 +160,21 @@ def sample_repo_with_multiple_authors(temp_dir):
         config.set_value("user", "email", "charlie@example.com")
     
     (repo_path / "charlie.py").write_text("# Charlie's code\ndef charlie_func():\n    return 'Charlie'\n")
-    repo.index.add(["charlie.py"])
-    repo.index.commit("Charlie's commit")
+    index.add(["charlie.py"])
+    index.commit("Charlie's commit")
     
     yield repo_path
 
 
 @pytest.fixture
-def sample_repo_with_duplicates(temp_dir):
+def sample_repo_with_duplicates(temp_dir: str) -> Iterator[Path]:
     """Create a repo with duplicate/similar code."""
     repo_path = Path(temp_dir) / "dup_repo"
     repo_path.mkdir()
     
     repo = Repo.init(repo_path)
-    
+    index: Any = repo.index
+
     with repo.config_writer() as config:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test@example.com")
@@ -197,15 +204,16 @@ def farewell():
 """
     (repo_path / "file3.py").write_text(similar_code)
     
-    repo.index.add(["file1.py", "file2.py", "file3.py"])
-    repo.index.commit("Add files with duplicates")
+    index.add(["file1.py", "file2.py", "file3.py"])
+    index.commit("Add files with duplicates")
     
     yield repo_path
 
 
 @pytest.fixture
-def mock_config():
+def mock_config() -> Dict[str, Any]:
     """Provide a mock configuration."""
+
     return {
         "scanners": {
             "sbom": {"enabled": True},
@@ -223,4 +231,15 @@ def mock_config():
             "cost_per_hour": 100,
             "third_party_patterns": ["node_modules", "vendor", "third_party"],
         },
+        "tools": {},
     }
+
+
+@pytest.fixture
+def scanner_factory(mock_config: Dict[str, Any]) -> Callable[[Type[Any], Path | str], Any]:
+    """Factory to construct scanners with required parameters."""
+
+    def _factory(scanner_cls: Type[Any], repo_path: Path | str) -> Any:
+        return scanner_cls(repo_path, mock_config)
+
+    return _factory

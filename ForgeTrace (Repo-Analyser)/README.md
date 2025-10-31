@@ -46,6 +46,12 @@ pip install -e .
 - `report.html` - Interactive report
 - `report.pdf` - Comprehensive PDF
 
+## Organizing Client Audits
+
+- Keep deliverables under `repo_audit/<client>/forgetrace_report/` so every engagement has an isolated package.
+- Optional source snapshots or working copies can live alongside the report folder (for example, `repo_audit/<client>/source/`).
+- Update the `--out` flag accordingly: `forgetrace audit /target/repo --out repo_audit/<client>/forgetrace_report --config config.yaml`.
+
 ## Configuration
 
 Edit `config.yaml` to adjust scoring weights, thresholds, and tool paths.
