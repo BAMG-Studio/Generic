@@ -1,0 +1,131 @@
+# ForgeTrace Configuration
+# Author: Peter Kolawole, BAMG Studio LLC
+
+# Scoring Weights (must sum to 1.0)
+scoring:
+  novelty_weight: 0.35
+  complexity_weight: 0.25
+  ownership_weight: 0.25
+  criticality_weight: 0.15
+
+# Similarity Thresholds
+similarity:
+  high_similarity: 0.85
+  medium_similarity: 0.60
+  shingle_size: 5
+  min_code_lines: 10
+
+# Rewriteability Scoring
+rewriteability:
+  complexity_threshold: 500  # LOC
+  coupling_threshold: 10     # dependencies
+  test_coverage_min: 0.70
+
+# Cost Estimation
+cost:
+  days_per_kloc: 15
+  hours_per_day: 8
+  hourly_rate: 150
+  complexity_multiplier: 1.5
+
+# Path Criticality Rules
+criticality:
+  high:
+    - "/core/"
+    - "/services/"
+    - "/api/"
+  medium:
+    - "/lib/"
+    - "/utils/"
+  low:
+    - "/tests/"
+    - "/docs/"
+
+# Tool Paths (auto-detected if empty)
+tools:
+  syft: ""
+  scancode: ""
+  semgrep: ""
+  trufflehog: ""
+  gitleaks: ""
+  jscpd: ""
+  owasp_dependency_check: ""  # Optional: path to dependency-check.sh
+
+# Vulnerability Scanning
+vulnerability_scanning:
+  enabled: true
+  sources:
+    - OSV  # Open Source Vulnerabilities (free, no API key)
+    - GitHub  # GitHub Advisory Database
+    - OWASP  # OWASP Dependency-Check (requires tool installation)
+  severity_threshold: "MEDIUM"  # Minimum severity to report: LOW, MEDIUM, HIGH, CRITICAL
+  fail_on_critical: false  # Set to true to fail audit if critical vulnerabilities found
+
+# Output Options
+output:
+  include_pdf: true
+  include_sbom: true
+
+# Metadata for Reports
+metadata:
+  client_name: "ForgeTrace Client"
+  engagement_window: "Not Specified"
+  prepared_by: "Peter Kolawole, BAMG Studio LLC"
+  contact_email: "peter@beaconagile.net"
+
+# ML-Based IP Classification
+# Machine learning classifier for intelligent code origin detection
+ml_classifier:
+  enabled: true  # Set to false to use rule-based fallback
+  model_path: "models/ip_classifier.pkl"  # Path to trained Random Forest model
+  confidence_threshold: 0.7  # Minimum confidence for auto-classification (0.0-1.0)
+  fallback_to_rules: true  # Use rule-based classification if ML unavailable
+  
+  # Company email domains (for external author detection)
+  # Add your organization's email domains here
+  company_domains:
+    - "company.com"
+    - "beaconagile.net"
+  
+  # Training data export
+  export_uncertain: true  # Export low-confidence predictions for human review
+  training_data_path: "training_data.jsonl"  # Path for exported training examples
+
+# Policy Engine - Configurable Rule Enforcement
+# Define custom policies to enforce organizational standards
+policies:
+  # Example 1: Block GPL licenses (common in commercial software)
+  - id: no-gpl-licenses
+    name: Prohibit GPL Licenses
+    description: "GPL licenses found. Company policy prohibits GPL-2.0 and GPL-3.0 due to copyleft requirements."
+    severity: HIGH
+    action: WARN  # Change to BLOCK to enforce
+    condition: "'GPL' in license_types"
+    enabled: true
+  
+  # Example 2: Block critical vulnerabilities in production
+  - id: no-critical-vulnerabilities
+    name: No Critical Vulnerabilities
+    description: "Critical severity vulnerabilities must be patched before deployment."
+    severity: CRITICAL
+    action: BLOCK
+    condition: "vulnerability_count.CRITICAL > 0"
+    enabled: false  # Enable when vulnerability scanner is active
+  
+  # Example 3: Warn on high third-party code ratio
+  - id: third-party-limit
+    name: Third-Party Code Limit
+    description: "Third-party code exceeds recommended 60% threshold. Consider rewriting core components."
+    severity: MEDIUM
+    action: WARN
+    condition: "third_party_percentage > 60"
+    enabled: false  # Enable when classification is reliable
+  
+  # Example 4: Info on large dependency count
+  - id: dependency-count-warning
+    name: High Dependency Count
+    description: "Large number of dependencies detected. Review for unnecessary packages."
+    severity: LOW
+    action: INFO
+    condition: "package_count > 100"
+    enabled: false
