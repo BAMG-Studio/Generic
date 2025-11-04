@@ -1,0 +1,114 @@
+{
+  "sbom": {
+    "tool": "fallback",
+    "format": "custom",
+    "packages": [
+      {
+        "name": "requests",
+        "type": "python",
+        "file": "test_repo/requirements.txt"
+      },
+      {
+        "name": "numpy",
+        "type": "python",
+        "file": "test_repo/requirements.txt"
+      },
+      {
+        "name": "flask",
+        "type": "python",
+        "file": "test_repo/requirements.txt"
+      }
+    ]
+  },
+  "git": {
+    "authors": {
+      "Jane Smith": {
+        "commits": 1,
+        "lines_added": 0,
+        "lines_removed": 0
+      },
+      "John Doe": {
+        "commits": 1,
+        "lines_added": 0,
+        "lines_removed": 0
+      }
+    },
+    "churn": {
+      "Jane Smith": {
+        "added": 1,
+        "removed": 0,
+        "files": 1
+      },
+      "John Doe": {
+        "added": 101,
+        "removed": 0,
+        "files": 5
+      }
+    },
+    "timeline": [
+      {
+        "author": "Jane Smith",
+        "date": "2025-11-04T13:49:17-06:00"
+      },
+      {
+        "author": "John Doe",
+        "date": "2025-11-04T13:49:09-06:00"
+      }
+    ],
+    "total_commits": 2
+  },
+  "similarity": {
+    "total_files": 2,
+    "duplicates": [],
+    "fuzzy_hashes": {},
+    "has_tlsh": false,
+    "has_ssdeep": false
+  },
+  "licenses": {
+    "tool": "heuristic",
+    "findings": [
+      {
+        "file": "test_repo/LICENSE",
+        "license": "MIT",
+        "confidence": "high"
+      }
+    ]
+  },
+  "secrets": {
+    "findings": [],
+    "count": 0
+  },
+  "sast": {
+    "findings": [],
+    "count": 0
+  },
+  "vulnerabilities": {
+    "total_packages": 3,
+    "vulnerable_packages": 0,
+    "total_vulnerabilities": 0,
+    "by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "UNKNOWN": 0
+    },
+    "vulnerabilities": [],
+    "scan_timestamp": "2025-11-04T19:54:57.312043+00:00",
+    "sources": [
+      "OSV",
+      "GitHub Advisory",
+      "OWASP Dependency-Check"
+    ]
+  },
+  "classification": {},
+  "rewriteability": {},
+  "cost_estimate": {
+    "total_loc": 0,
+    "foreground_loc": 0,
+    "estimated_days": 0.0,
+    "estimated_hours": 0.0,
+    "estimated_cost_usd": 0.0
+  },
+  "policy_violations": []
+}

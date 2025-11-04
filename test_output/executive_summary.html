@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ForgeTrace Executive Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; color: #1a1a1a; }
+        .cover { text-align: center; padding: 80px 20px 40px 20px; border-bottom: 4px solid #1b75bc; }
+        .cover h1 { font-size: 42px; margin-bottom: 10px; color: #0d3b66; }
+        .cover h2 { font-size: 18px; margin-top: 10px; color: #4a4a4a; }
+        .meta { margin-top: 30px; font-size: 14px; color: #555555; }
+        h2 { border-bottom: 2px solid #1b75bc; padding-bottom: 6px; margin-top: 45px; color: #0d3b66; }
+        h3 { color: #1b75bc; margin-top: 25px; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .summary-card { background: #f5f9fc; border: 1px solid #d5e4f3; border-radius: 6px; padding: 16px; }
+        .summary-card strong { display: block; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: #1b75bc; }
+        .summary-card span { font-size: 24px; font-weight: 600; display: block; margin-top: 12px; color: #0d3b66; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { border: 1px solid #e1e7ef; padding: 10px; text-align: left; font-size: 13px; }
+        th { background: #f1f5fb; color: #0d3559; text-transform: uppercase; letter-spacing: 0.4px; }
+        .note { font-size: 12px; color: #666666; margin-top: 12px; }
+        .callout { background: #fff8e5; border-left: 4px solid #ffb347; padding: 14px; margin-top: 16px; font-size: 13px; }
+        .two-column { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+        .list-block { background: #f7f9fc; border: 1px solid #dde6f3; border-radius: 6px; padding: 18px; }
+        .list-block h4 { margin-top: 0; color: #0d3b66; }
+        .list-block ul { padding-left: 18px; margin: 0; }
+        .badge-pill { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 11px; background: #e8f1ff; color: #0d3b66; margin-right: 6px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase; }
+        .badge-critical { background: #f8d7da; color: #721c24; }
+        .badge-high { background: #fbe7c6; color: #8c4a03; }
+        .badge-medium { background: #fef3bd; color: #856404; }
+        .badge-low { background: #d4edda; color: #155724; }
+        .heatmap { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .heatmap th, .heatmap td { border: 1px solid #dee4ef; padding: 8px; text-align: center; font-size: 12px; }
+        .heatmap td.high { background: #f8d7da; color: #721c24; }
+        .heatmap td.medium { background: #fef3bd; color: #856404; }
+        .heatmap td.low { background: #d4edda; color: #155724; }
+        ol, ul { margin-left: 20px; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #dddddd; font-size: 11px; color: #777777; }
+    </style>
+</head>
+<body>
+    <div class="cover">
+        <h1>ForgeTrace Executive Summary</h1>
+        <h2>Test Company</h2>
+        <div class="meta">
+            <p><strong>Engagement Window:</strong> Not Specified</p>
+            <p><strong>Generated:</strong> 2025-11-04 19:49 UTC</p>
+            <p><strong>Prepared By:</strong> Peter Kolawole</p>
+        </div>
+    </div>
+
+    <h2>1. Executive Overview</h2>
+    <div class="summary-grid">
+        <div class="summary-card"><strong>Total LOC Inventoried</strong><span>0</span></div>
+        <div class="summary-card"><strong>Foreground LOC</strong><span>0</span></div>
+        <div class="summary-card"><strong>Estimated Rewrite Cost (USD)</strong><span>$0.00</span></div>
+        <div class="summary-card"><strong>Estimated Schedule (Days)</strong><span>0</span></div>
+        <div class="summary-card"><strong>Third-Party Components</strong><span>3</span></div>
+        <div class="summary-card"><strong>Open Findings (Security/IP)</strong><span>0</span></div>
+        <div class="summary-card"><strong>High-Risk Licenses</strong><span>0</span></div>
+        <div class="summary-card"><strong>Clean-Room Candidates</strong><span>0</span></div>
+    </div>
+    <p class="note">Key Risks: No material risks flagged in this pass</p>
+    <div class="callout">Stakeholder Questions Covered: Is attribution coverage sufficient for planned disclosures?; Do we have sign-off on SBOM accuracy for transaction disclosures?</div>
+
+    <h2>2. Engagement Context & Scope</h2>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Assessment Scope</h4>
+            <ul>
+                
+                <li>Source code, licenses, and dependency manifests supplied in audit bundle.</li>
+                
+                <li>Historical git metadata (authors, churn, timeline).</li>
+                
+                <li>ForgeTrace scanners across secrets, SAST, similarity, and licenses.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Key Deliverables</h4>
+            <ul>
+                
+                <li>Executive summary narrative (PDF/HTML).</li>
+                
+                <li>Machine-readable SBOM extracts (JSON).</li>
+                
+                <li>Risk, license, and rewriteability analytics.</li>
+                
+            </ul>
+        </div>
+    </div>
+    <div class="callout">Methodology Summary: ForgeTrace executed automated scanners and manual analytics to surface provenance, license, and security risks.</div>
+
+    <h2>3. IP Inventory and Provenance</h2>
+    <h3>Origin Breakdown</h3>
+    <table>
+        <thead><tr><th>Origin</th><th>Files</th><th>Share</th></tr></thead>
+        <tbody>
+            
+            <tr><td>unknown</td><td>0</td><td>0.0%</td></tr>
+            
+        </tbody>
+    </table>
+    <h3>IP Contribution Highlights</h3>
+    <table>
+        <thead><tr><th>Module</th><th>Origin</th><th>Primary Author</th><th>License</th><th>Rewriteable</th><th>Score</th><th>LOC</th></tr></thead>
+        <tbody>
+            
+            <tr>
+                <td>No modules analysed</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>0.00</td>
+                <td>0</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="callout">Provenance Insights: Jane Smith leads with 1 commits across 1 files.</div>
+
+    <h2>4. Dependency & License Compliance</h2>
+    <h3>Dependency Inventory</h3>
+    <table>
+        <thead><tr><th>Name</th><th>Version</th><th>Type</th><th>Source</th></tr></thead>
+        <tbody>
+            
+            <tr><td>flask</td><td></td><td>python</td><td>test_repo/requirements.txt</td></tr>
+            
+            <tr><td>numpy</td><td></td><td>python</td><td>test_repo/requirements.txt</td></tr>
+            
+            <tr><td>requests</td><td></td><td>python</td><td>test_repo/requirements.txt</td></tr>
+            
+        </tbody>
+    </table>
+    <p class="note">Total dependencies detected: 3 across 1 manifests.</p>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Top Packages by Surface Area</h4>
+            <ul>
+                
+                <li>flask (1 reference)</li>
+                
+                <li>numpy (1 reference)</li>
+                
+                <li>requests (1 reference)</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Dependency Observations</h4>
+            <ul>
+                
+                <li>Detected 3 package entries across 1 manifest.</li>
+                
+                <li>python ecosystem represents 3 components in scope.</li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <h3>License Posture</h3>
+    <table>
+        <thead><tr><th>License</th><th>Occurrences</th><th>Files</th></tr></thead>
+        <tbody>
+            
+            <tr><td>MIT</td><td>1</td><td>test_repo/LICENSE</td></tr>
+            
+        </tbody>
+    </table>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>License Obligations</h4>
+            <ul>
+                
+                <li>Ensure SPDX attributions accompany third-party packages in outbound deliverables.</li>
+                
+                <li>Track dependency provenance in data rooms alongside SBOM exports.</li>
+                
+                <li>Confirm permissive-license notices remain within corporate policy thresholds.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Recommended Counsel Actions</h4>
+            <ul>
+                
+                <li>Review updated SBOM with legal counsel before diligence disclosures.</li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <h2>5. Authorship & Development Activity</h2>
+    <h3>Top Contributors</h3>
+    <table>
+        <thead><tr><th>Author</th><th>Commits</th><th>Lines Added</th><th>Lines Removed</th><th>Files Touched</th></tr></thead>
+        <tbody>
+            
+            <tr>
+                <td>Jane Smith</td>
+                <td>1</td>
+                <td>1</td>
+                <td>0</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>John Doe</td>
+                <td>1</td>
+                <td>101</td>
+                <td>0</td>
+                <td>5</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <p class="note">Commit window: 2025-11-04 to 2025-11-04</p>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Authorship Insights</h4>
+            <ul>
+                
+                <li>Net code delta for lead contributor: +1 lines.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Historical Milestones</h4>
+            <ul>
+                
+                <li>Initial commit observed 2025-11-04.</li>
+                
+                <li>Most recent commit 2025-11-04.</li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <h2>6. Rewriteability & Clean Room Planning</h2>
+    <div class="summary-grid">
+        <div class="summary-card"><strong>Average Rewrite Score</strong><span>0.00</span></div>
+        <div class="summary-card"><strong>High-Risk Modules</strong><span>0</span></div>
+        <div class="summary-card"><strong>Candidate Modules (Score ≥ 0.75)</strong><span>0</span></div>
+    </div>
+    <h3>Clean Room Recommendations</h3>
+    <ul>
+        
+        <li>No critical rewrite blockers detected; maintain periodic reassessment alongside refactors.</li>
+        
+    </ul>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Priority Modules to Shield</h4>
+            <ul>
+                
+                <li>No critical modules identified.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Clean-Room Playbook Tasks</h4>
+            <ul>
+                
+                <li>Document clean-room brief per high priority module.</li>
+                
+                <li>Assign independent implementers for guarded rewrites.</li>
+                
+                <li>Track escrow-ready deliverables with counsel oversight.</li>
+                
+            </ul>
+        </div>
+    </div>
+
+    <h2>7. Security, Similarity & Risk Heat Map</h2>
+    <table class="heatmap">
+        <thead><tr><th></th><th>High</th><th>Medium</th><th>Low</th></tr></thead>
+        <tbody>
+            <tr><th>Security</th><td class="">0</td><td class="">0</td><td class="low">1</td></tr>
+            <tr><th>IP / License</th><td class="">0</td><td class="medium">1</td><td class="">0</td></tr>
+            <tr><th>Operational</th><td class="">0</td><td class="">0</td><td class="low">1</td></tr>
+        </tbody>
+    </table>
+    <table>
+        <thead><tr><th>Area</th><th>Count</th><th>Severity</th><th>Notes</th></tr></thead>
+        <tbody>
+            
+            <tr>
+                <td>Secrets</td>
+                <td>0</td>
+                <td><span class="badge badge-low">None</span></td>
+                <td>No hardcoded secrets detected.</td>
+            </tr>
+            
+            <tr>
+                <td>SAST</td>
+                <td>0</td>
+                <td><span class="badge badge-low">None</span></td>
+                <td>Static analysis returned no actionable findings.</td>
+            </tr>
+            
+            <tr>
+                <td>Similarity</td>
+                <td>0</td>
+                <td><span class="badge badge-low">Low</span></td>
+                <td>No significant code duplication detected beyond thresholds.</td>
+            </tr>
+            
+        </tbody>
+    </table>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Security Focus</h4>
+            <ul>
+                
+                <li>Secrets scanner found no embedded credentials in scope.</li>
+                
+                <li>SAST baseline clean; maintain guardrails in CI pipelines.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Similarity Focus</h4>
+            <ul>
+                
+                <li>No similarity collisions crossed reporting threshold.</li>
+                
+            </ul>
+        </div>
+    </div>
+    <h3>Representative Similarity Pairs</h3>
+    <table>
+        <thead><tr><th>File A</th><th>File B</th><th>Similarity</th></tr></thead>
+        <tbody>
+            
+            <tr><td>-</td><td>-</td><td>0.00</td></tr>
+            
+        </tbody>
+    </table>
+
+    <h2>8. Strategic Next Steps</h2>
+    <ol>
+        
+        <li>Maintain continuous SBOM updates as dependencies evolve across sprints.</li>
+        
+    </ol>
+
+    <h2>9. Appendix</h2>
+    <div class="two-column">
+        <div class="list-block">
+            <h4>Tooling Footprint</h4>
+            <ul>
+                
+                <li>ForgeTrace scanners: SBOM, license, secrets, SAST, similarity, git provenance.</li>
+                
+                <li>WeasyPrint-rendered executive PDF via Jinja2 templates.</li>
+                
+            </ul>
+        </div>
+        <div class="list-block">
+            <h4>Data Coverage</h4>
+            <ul>
+                
+                <li>SBOM captured 3 package entries across 1 manifest.</li>
+                
+                <li>Security scanners surfaced 0 aggregate findings across secrets, SAST, and similarity modules.</li>
+                
+                <li>Git analytics derived from repository metadata supplied in audit bundle.</li>
+                
+            </ul>
+        </div>
+    </div>
+    <div class="list-block">
+        <h4>Open Questions for Stakeholders</h4>
+        <ul>
+            
+            <li>Is attribution coverage sufficient for planned disclosures?</li>
+            
+            <li>Do we have sign-off on SBOM accuracy for transaction disclosures?</li>
+            
+        </ul>
+    </div>
+
+    <footer>
+        <p>Prepared for Test Company by BAMG Studio LLC &copy; 2025. ForgeTrace (Repo-Analyser) v0.1.0.</p>
+        <p>Confidential – Not legal advice. Engage qualified counsel for final determinations.</p>
+    </footer>
+</body>
+</html>
