@@ -22,10 +22,14 @@ Example Policy:
         enabled: true
 """
 
-import re
+import ast
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set
 from enum import Enum
+
+
+class PolicyEvaluationError(Exception):
+    """Raised when a policy expression contains unsupported constructs."""
 
 
 class PolicyAction(Enum):
@@ -299,11 +303,7 @@ class PolicyEngine:
         # Build evaluation context
         context = self._build_evaluation_context(findings)
         
-        # Simple expression evaluation (MVP - will enhance later)
-        # For now, support basic checks like:
-        # - "license_types contains 'GPL'"
-        # - "vulnerability_count.CRITICAL > 0"
-        # - "third_party_percentage > 60"
+        # Evaluate condition with the restricted AST interpreter to prevent unsafe execution
         
         result = self._safe_eval(condition, context)
         return result
@@ -390,105 +390,237 @@ class PolicyEngine:
         return context
     
     def _safe_eval(self, condition: str, context: Dict[str, Any]) -> bool:
-        """
-        Safely evaluate a policy condition expression.
-        
-        Args:
-            condition: Expression string (e.g., "vulnerability_count.CRITICAL > 0")
-            context: Variables available in the expression
-            
-        Returns:
-            True if condition is met (violation), False otherwise
-            
-        IMPLEMENTATION STRATEGY (MVP):
-        -----------------------------
-        Phase 1 (Now): Pattern matching for common cases
-        - "X contains Y"
-        - "X > N", "X < N", "X == N"
-        - "X in [A, B, C]"
-        
-        Phase 2 (Future): Full expression evaluator
-        - Use 'simpleeval' library
-        - Support: and, or, not, parentheses
-        - Example: "(GPL in licenses) and (critical_vulns > 0)"
-        
-        WHY PATTERN MATCHING FIRST?
-        - Faster to implement (15 minutes vs 2 hours)
-        - Covers 80% of real-world cases
-        - No external dependencies
-        - Easy to understand and debug
-        """
+        """Safely evaluate a policy condition using a restricted AST interpreter."""
         condition = condition.strip()
-        
-        # Pattern 1: "X contains Y" or "'Y' in X"
-        contains_match = re.match(r"['\"](.+?)['\"]\s+in\s+(\w+)", condition)
-        if contains_match:
-            value, var_name = contains_match.groups()
-            if var_name in context:
-                container = context[var_name]
-                if isinstance(container, (list, set)):
-                    return value in container
-                if isinstance(container, str):
-                    return value in container
-        
-        # Pattern 2: "X > N", "X < N", "X >= N", "X <= N"
-        comparison_match = re.match(r"(\w+(?:\.\w+)?)\s*([><=!]+)\s*(\d+(?:\.\d+)?)", condition)
-        if comparison_match:
-            var_path, operator, value_str = comparison_match.groups()
-            
-            # Navigate nested paths like "vulnerability_count.CRITICAL"
-            var_value = self._get_nested_value(context, var_path)
-            
-            if var_value is not None:
-                value = float(value_str) if '.' in value_str else int(value_str)
-                
-                if operator == ">":
-                    return var_value > value
-                elif operator == "<":
-                    return var_value < value
-                elif operator == ">=":
-                    return var_value >= value
-                elif operator == "<=":
-                    return var_value <= value
-                elif operator == "==":
-                    return var_value == value
-                elif operator == "!=":
-                    return var_value != value
-        
-        # Pattern 3: "X == 'string'"
-        string_eq_match = re.match(r"(\w+)\s*==\s*['\"](.+?)['\"]", condition)
-        if string_eq_match:
-            var_name, value = string_eq_match.groups()
-            if var_name in context:
-                return context[var_name] == value
-        
-        # If no pattern matched, log warning and return False (fail-safe)
-        print(f"⚠️  Could not parse condition: '{condition}'. Skipping.")
-        return False
-    
-    def _get_nested_value(self, context: Dict[str, Any], path: str) -> Any:
-        """
-        Get value from nested dictionary using dot notation.
-        
-        Example: "vulnerability_count.CRITICAL" -> context["vulnerability_count"]["CRITICAL"]
-        
-        Args:
-            context: Context dictionary
-            path: Dot-separated path to value
-            
-        Returns:
-            Value at path, or None if not found
-        """
-        parts = path.split(".")
-        value = context
-        
-        for part in parts:
-            if isinstance(value, dict) and part in value:
-                value = value[part]
+        if not condition:
+            return False
+
+        try:
+            tree = ast.parse(condition, mode="eval")
+        except SyntaxError as exc:
+            print(f"⚠️  Invalid policy condition '{condition}': {exc}")
+            return False
+
+        try:
+            self._validate_ast(tree)
+            result = self._evaluate_ast(tree.body, context)
+        except PolicyEvaluationError as exc:
+            print(f"⚠️  Unsupported policy condition '{condition}': {exc}")
+            return False
+        except Exception as exc:  # Fail-safe: never let policy evaluation crash audit
+            print(f"⚠️  Error evaluating condition '{condition}': {exc}")
+            return False
+
+        return bool(result)
+
+    def _validate_ast(self, node: ast.AST) -> None:
+        """Ensure the parsed expression only contains safe constructs."""
+        if isinstance(node, ast.Expression):
+            self._validate_ast(node.body)
+            return
+
+        if isinstance(node, ast.BoolOp):
+            if not isinstance(node.op, (ast.And, ast.Or)):
+                raise PolicyEvaluationError("Only 'and'/'or' boolean operators are allowed")
+            for value in node.values:
+                self._validate_ast(value)
+            return
+
+        if isinstance(node, ast.UnaryOp):
+            if not isinstance(node.op, ast.Not):
+                raise PolicyEvaluationError("Only 'not' unary operator is allowed")
+            self._validate_ast(node.operand)
+            return
+
+        if isinstance(node, ast.Compare):
+            allowed_ops = (ast.Eq, ast.NotEq, ast.Gt, ast.GtE, ast.Lt, ast.LtE, ast.In, ast.NotIn)
+            for op in node.ops:
+                if not isinstance(op, allowed_ops):
+                    raise PolicyEvaluationError("Unsupported comparison operator")
+            self._validate_ast(node.left)
+            for comparator in node.comparators:
+                self._validate_ast(comparator)
+            return
+
+        if isinstance(node, ast.BinOp):
+            if not isinstance(node.op, (ast.Add, ast.Sub, ast.Mult, ast.Div, ast.Mod)):
+                raise PolicyEvaluationError("Unsupported arithmetic operator")
+            self._validate_ast(node.left)
+            self._validate_ast(node.right)
+            return
+
+        if isinstance(node, ast.Call):
+            if not isinstance(node.func, ast.Name) or node.func.id not in {"len"}:
+                raise PolicyEvaluationError("Only len() calls are permitted in policy expressions")
+            if node.keywords:
+                raise PolicyEvaluationError("Keyword arguments are not permitted in policy expressions")
+            for arg in node.args:
+                self._validate_ast(arg)
+            return
+
+        if isinstance(node, ast.Attribute):
+            if node.attr.startswith("_"):
+                raise PolicyEvaluationError("Private attributes are not accessible in policy expressions")
+            self._validate_ast(node.value)
+            return
+
+        if isinstance(node, ast.Subscript):
+            self._validate_ast(node.value)
+            self._validate_ast(node.slice)
+            return
+
+        if isinstance(node, (ast.List, ast.Tuple, ast.Set)):
+            for element in node.elts:
+                self._validate_ast(element)
+            return
+
+        if isinstance(node, ast.Dict):
+            for key in node.keys:
+                if key is not None:
+                    self._validate_ast(key)
+            for value in node.values:
+                self._validate_ast(value)
+            return
+
+        if isinstance(node, (ast.Name, ast.Constant)):
+            return
+
+        raise PolicyEvaluationError(f"Unsupported expression: {ast.dump(node, include_attributes=False)}")
+
+    def _evaluate_ast(self, node: ast.AST, context: Dict[str, Any]) -> Any:
+        """Evaluate a validated AST node against the provided context."""
+        if isinstance(node, ast.Expression):
+            return self._evaluate_ast(node.body, context)
+
+        if isinstance(node, ast.BoolOp):
+            if isinstance(node.op, ast.And):
+                result = True
+                for value in node.values:
+                    result = result and bool(self._evaluate_ast(value, context))
+                    if not result:
+                        break
+                return result
+            if isinstance(node.op, ast.Or):
+                result = False
+                for value in node.values:
+                    result = result or bool(self._evaluate_ast(value, context))
+                    if result:
+                        break
+                return result
+
+        if isinstance(node, ast.UnaryOp):
+            return not bool(self._evaluate_ast(node.operand, context))
+
+        if isinstance(node, ast.Compare):
+            return self._apply_comparison(node, context)
+
+        if isinstance(node, ast.BinOp):
+            left = self._evaluate_ast(node.left, context)
+            right = self._evaluate_ast(node.right, context)
+            if isinstance(node.op, ast.Add):
+                return left + right
+            if isinstance(node.op, ast.Sub):
+                return left - right
+            if isinstance(node.op, ast.Mult):
+                return left * right
+            if isinstance(node.op, ast.Div):
+                return left / right
+            if isinstance(node.op, ast.Mod):
+                return left % right
+            raise PolicyEvaluationError("Unsupported arithmetic operator")
+
+        if isinstance(node, ast.Call):
+            func_name = node.func.id
+            args = [self._evaluate_ast(arg, context) for arg in node.args]
+            if func_name == "len":
+                if len(args) != 1:
+                    raise PolicyEvaluationError("len() expects exactly one argument")
+                return len(args[0])
+            raise PolicyEvaluationError(f"Unsupported function '{func_name}' in policy expression")
+
+        if isinstance(node, ast.Attribute):
+            value = self._evaluate_ast(node.value, context)
+            return self._resolve_attribute(value, node.attr)
+
+        if isinstance(node, ast.Subscript):
+            value = self._evaluate_ast(node.value, context)
+            index = self._evaluate_ast(node.slice, context)
+            try:
+                return value[index]
+            except (TypeError, KeyError, IndexError) as exc:
+                raise PolicyEvaluationError(f"Invalid subscript access: {exc}") from exc
+
+        if isinstance(node, ast.Name):
+            if node.id in context:
+                return context[node.id]
+            raise PolicyEvaluationError(f"Unknown variable '{node.id}' in policy expression")
+
+        if isinstance(node, ast.Constant):
+            return node.value
+
+        if isinstance(node, ast.List):
+            return [self._evaluate_ast(elem, context) for elem in node.elts]
+
+        if isinstance(node, ast.Tuple):
+            return tuple(self._evaluate_ast(elem, context) for elem in node.elts)
+
+        if isinstance(node, ast.Set):
+            return {self._evaluate_ast(elem, context) for elem in node.elts}
+
+        if isinstance(node, ast.Dict):
+            return {
+                self._evaluate_ast(key, context): self._evaluate_ast(value, context)
+                for key, value in zip(node.keys, node.values)
+            }
+
+        raise PolicyEvaluationError(f"Unsupported expression node '{type(node).__name__}'")
+
+    def _apply_comparison(self, node: ast.Compare, context: Dict[str, Any]) -> bool:
+        """Evaluate comparison expressions including chained comparisons."""
+        left_value = self._evaluate_ast(node.left, context)
+        for operator, comparator in zip(node.ops, node.comparators):
+            right_value = self._evaluate_ast(comparator, context)
+
+            if isinstance(operator, ast.In):
+                result = left_value in right_value
+            elif isinstance(operator, ast.NotIn):
+                result = left_value not in right_value
+            elif isinstance(operator, ast.Eq):
+                result = left_value == right_value
+            elif isinstance(operator, ast.NotEq):
+                result = left_value != right_value
+            elif isinstance(operator, ast.Gt):
+                result = left_value > right_value
+            elif isinstance(operator, ast.GtE):
+                result = left_value >= right_value
+            elif isinstance(operator, ast.Lt):
+                result = left_value < right_value
+            elif isinstance(operator, ast.LtE):
+                result = left_value <= right_value
             else:
-                return None
-        
-        return value
+                raise PolicyEvaluationError("Unsupported comparison operator")
+
+            if not result:
+                return False
+            left_value = right_value
+
+        return True
+
+    def _resolve_attribute(self, value: Any, attribute: str) -> Any:
+        """Resolve attribute access on dictionaries or objects."""
+        if isinstance(value, dict):
+            if attribute in value:
+                return value[attribute]
+            raise PolicyEvaluationError(f"Key '{attribute}' not found in policy context")
+
+        if hasattr(value, attribute):
+            if attribute.startswith("_"):
+                raise PolicyEvaluationError("Private attributes are not accessible in policy expressions")
+            return getattr(value, attribute)
+
+        raise PolicyEvaluationError(
+            f"Cannot resolve attribute '{attribute}' on type {type(value).__name__}"
+        )
     
     def _create_violation(self, policy: Dict[str, Any], findings: Dict[str, Any]) -> PolicyViolation:
         """

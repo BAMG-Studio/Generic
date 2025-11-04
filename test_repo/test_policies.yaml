@@ -1,0 +1,19 @@
+# Test Policy Configuration
+# These policies will be evaluated during the audit
+
+policies:
+  - id: test-third-party-limit
+    name: "Limit Third-Party Code"
+    description: "Third-party code should not exceed 40% of total codebase"
+    condition: "third_party_percentage > 40"
+    action: WARN
+    severity: MEDIUM
+    enabled: true
+
+  - id: test-package-count
+    name: "Package Count Warning"
+    description: "Large number of dependencies detected"
+    condition: "package_count > 5"
+    action: INFO
+    severity: LOW
+    enabled: true

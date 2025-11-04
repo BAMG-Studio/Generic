@@ -8,12 +8,13 @@ import webbrowser
 from pathlib import Path
 import yaml
 from .audit import AuditEngine
+from .classifiers import MLIPClassifier
 
 
 def cmd_audit(args, config):
     """Run audit command"""
     engine = AuditEngine(args.repo_path, args.out, config)
-    engine.run()
+    findings = engine.run()
     
     # Print output paths
     out_dir = Path(args.out).resolve()
@@ -41,6 +42,14 @@ def cmd_audit(args, config):
     print(f"\n💡 View reports:")
     print(f"   forgetrace preview {args.out}")
     print(f"   (or open files manually with your browser)\n")
+    return findings
+
+
+def cmd_export_training(args, config):
+    """Run audit and export training data for the ML classifier."""
+    findings = cmd_audit(args, config)
+    ml_classifier = MLIPClassifier(findings, config)
+    ml_classifier.export_training_data(args.training_output)
 
 
 def cmd_preview(args):
@@ -132,6 +141,31 @@ Examples:
     audit_parser.add_argument("--semgrep", help="Path to semgrep")
     audit_parser.add_argument("--trufflehog", help="Path to trufflehog")
     audit_parser.add_argument("--gitleaks", help="Path to gitleaks")
+
+    export_parser = subparsers.add_parser(
+        "export-training",
+        help="Run audit and export ML training data"
+    )
+    export_parser.add_argument("repo_path", help="Path to repository")
+    export_parser.add_argument("--out", default="./out", help="Output directory")
+    export_parser.add_argument("--config", default="config.yaml", help="Config file")
+    export_parser.add_argument(
+        "--training-output",
+        default="training_data.jsonl",
+        help="Training data JSONL output path"
+    )
+    export_parser.add_argument("--client-name", help="Client/project name for reports")
+    export_parser.add_argument(
+        "--engagement-window",
+        help="Engagement timeframe (e.g., 'Q4 2025')"
+    )
+    export_parser.add_argument("--prepared-by", help="Name of person/team preparing report")
+    export_parser.add_argument("--contact-email", help="Contact email for report")
+    export_parser.add_argument("--syft", help="Path to syft binary")
+    export_parser.add_argument("--scancode", help="Path to scancode")
+    export_parser.add_argument("--semgrep", help="Path to semgrep")
+    export_parser.add_argument("--trufflehog", help="Path to trufflehog")
+    export_parser.add_argument("--gitleaks", help="Path to gitleaks")
     
     # Preview command
     preview_parser = subparsers.add_parser("preview", help="Launch HTTP server to view reports")
@@ -145,7 +179,7 @@ Examples:
         parser.print_help()
         sys.exit(1)
     
-    if args.command == "audit":
+    if args.command in {"audit", "export-training"}:
         config_path = Path(args.config)
         if not config_path.exists():
             print(f"Config not found: {args.config}", file=sys.stderr)
@@ -177,8 +211,11 @@ Examples:
             config["tools"]["trufflehog"] = args.trufflehog
         if args.gitleaks:
             config["tools"]["gitleaks"] = args.gitleaks
-        
-        cmd_audit(args, config)
+
+        if args.command == "audit":
+            cmd_audit(args, config)
+        else:
+            cmd_export_training(args, config)
     
     elif args.command == "preview":
         cmd_preview(args)

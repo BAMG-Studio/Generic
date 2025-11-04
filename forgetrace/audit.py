@@ -91,5 +91,6 @@ class AuditEngine:
         if policy_engine.should_fail_audit():
             print("\n❌ Audit FAILED due to policy violations")
             sys.exit(1)
-        
+
         print("\n✅ Audit completed successfully")
+        return findings

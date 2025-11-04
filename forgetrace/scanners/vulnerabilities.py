@@ -12,9 +12,10 @@ Provides unified vulnerability reporting with severity scoring.
 """
 
 import json
+import math
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List, Optional, Set
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -480,17 +481,137 @@ class VulnerabilityScanner:
         return "UNKNOWN"
     
     def _extract_cvss(self, vuln_data: Dict[str, Any]) -> float:
-        """Extract CVSS score from vulnerability data."""
-        # Check for CVSS in different fields
+        """Extract CVSS score from vulnerability data, parsing vector strings when needed."""
+        scores: List[float] = []
+
+        def collect_score(value: Any) -> None:
+            score = self._normalize_cvss_score(value)
+            if score is not None:
+                scores.append(score)
+
+        # Standard severity blocks from OSV / GitHub advisories
         if "severity" in vuln_data:
-            severity_list = vuln_data["severity"] if isinstance(vuln_data["severity"], list) else [vuln_data["severity"]]
-            for sev in severity_list:
-                if isinstance(sev, dict) and "score" in sev:
-                    return float(sev["score"])
-        
-        if "database_specific" in vuln_data:
-            db_specific = vuln_data["database_specific"]
-            if "cvss_score" in db_specific:
-                return float(db_specific["cvss_score"])
-        
-        return 0.0
+            severity_entries = vuln_data["severity"]
+            if not isinstance(severity_entries, list):
+                severity_entries = [severity_entries]
+            for entry in severity_entries:
+                collect_score(entry)
+
+        # Common nested payloads
+        for key in ("database_specific", "ecosystem_specific", "cvss", "cvssV3"):
+            if key in vuln_data:
+                collect_score(vuln_data[key])
+
+        if "cvssScore" in vuln_data:
+            collect_score(vuln_data["cvssScore"])
+
+        return max(scores) if scores else 0.0
+
+    def _normalize_cvss_score(self, value: Any) -> Optional[float]:
+        """Normalize various CVSS representations into a numeric score."""
+        if value is None:
+            return None
+
+        if isinstance(value, (int, float)):
+            return float(value)
+
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped:
+                return None
+            if stripped.upper().startswith("CVSS:"):
+                return self._parse_cvss_vector(stripped)
+            try:
+                return float(stripped)
+            except ValueError:
+                return None
+
+        if isinstance(value, dict):
+            for key in ("score", "baseScore", "base_score", "cvss_score"):
+                if key in value:
+                    score = self._normalize_cvss_score(value[key])
+                    if score is not None:
+                        return score
+            for key in ("vector", "vectorString", "cvss_vector"):
+                if key in value:
+                    score = self._parse_cvss_vector(str(value[key]))
+                    if score:
+                        return score
+            if "severity" in value:
+                return self._normalize_cvss_score(value["severity"])
+
+        if isinstance(value, list):
+            best: Optional[float] = None
+            for item in value:
+                score = self._normalize_cvss_score(item)
+                if score is not None:
+                    best = score if best is None else max(best, score)
+            return best
+
+        return None
+
+    def _parse_cvss_vector(self, vector: str) -> float:
+        """Parse a CVSS v3.x vector string and return the base score."""
+        vector = vector.strip()
+        if not vector.upper().startswith("CVSS:3"):
+            return 0.0
+
+        try:
+            parts = vector.split("/")
+            metrics = {}
+            for part in parts[1:]:
+                if ":" not in part:
+                    continue
+                key, metric = part.split(":", 1)
+                metrics[key] = metric
+
+            required = {"AV", "AC", "PR", "UI", "S", "C", "I", "A"}
+            if not required.issubset(metrics.keys()):
+                return 0.0
+
+            av_map = {"N": 0.85, "A": 0.62, "L": 0.55, "P": 0.2}
+            ac_map = {"L": 0.77, "H": 0.44}
+            pr_scope_u = {"N": 0.85, "L": 0.62, "H": 0.27}
+            pr_scope_c = {"N": 0.85, "L": 0.68, "H": 0.5}
+            ui_map = {"N": 0.85, "R": 0.62}
+            impact_map = {"H": 0.56, "L": 0.22, "N": 0.0}
+
+            scope = metrics["S"].upper()
+            av = av_map.get(metrics["AV"].upper())
+            ac = ac_map.get(metrics["AC"].upper())
+            pr_map = pr_scope_c if scope == "C" else pr_scope_u
+            pr = pr_map.get(metrics["PR"].upper())
+            ui = ui_map.get(metrics["UI"].upper())
+            c_impact = impact_map.get(metrics["C"].upper())
+            i_impact = impact_map.get(metrics["I"].upper())
+            a_impact = impact_map.get(metrics["A"].upper())
+
+            if None in {av, ac, pr, ui, c_impact, i_impact, a_impact} or scope not in {"U", "C"}:
+                return 0.0
+
+            impact_subscore = 1 - ((1 - c_impact) * (1 - i_impact) * (1 - a_impact))
+            if impact_subscore <= 0:
+                return 0.0
+
+            if scope == "U":
+                impact_score = 6.42 * impact_subscore
+            else:
+                impact_score = 7.52 * (impact_subscore - 0.029) - 3.25 * (impact_subscore - 0.02) ** 15
+
+            exploitability = 8.22 * av * ac * pr * ui
+
+            if scope == "U":
+                base_score = min(impact_score + exploitability, 10)
+            else:
+                base_score = min(1.08 * (impact_score + exploitability), 10)
+
+            return self._round_up_cvss(base_score)
+        except Exception:
+            return 0.0
+
+    @staticmethod
+    def _round_up_cvss(score: float) -> float:
+        """Round scores to one decimal using CVSS round-up rules."""
+        if score <= 0:
+            return 0.0
+        return math.ceil(score * 10.0) / 10.0
