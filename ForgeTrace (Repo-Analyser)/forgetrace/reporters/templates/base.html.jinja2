@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ client.client_name }} &mdash; ForgeTrace Executive Summary</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --bg: #f7f9fb;
+            --fg: #1f2933;
+            --muted: #52606d;
+            --border: #d9e2ec;
+            --accent: #2563eb;
+            --accent-soft: #e0ebff;
+            --critical: #b91c1c;
+            --high: #c05621;
+            --medium: #b7791f;
+            --low: #0f766e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            position: relative;
+        }
+
+        main.report {
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 32px;
+            background: #ffffff;
+            box-shadow: 0 18px 45px rgba(31, 41, 51, 0.08);
+            border-radius: 12px;
+        }
+
+        h1, h2, h3, h4 {
+            margin: 0;
+            font-weight: 600;
+            color: var(--fg);
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        p, li {
+            line-height: 1.5;
+            color: var(--muted);
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        table thead tr {
+            background: var(--bg);
+        }
+
+        table th, table td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section {
+            margin-bottom: 36px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-critical { background: #fee2e2; color: var(--critical); }
+        .badge-high { background: #fef3c7; color: var(--high); }
+        .badge-medium { background: #fef7cd; color: var(--medium); }
+        .badge-low { background: #dcfce7; color: var(--low); }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            background: #ffffff;
+        }
+
+        .card .label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+        }
+
+        .card .value {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 6px;
+            color: var(--fg);
+        }
+
+        .pill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .pill-list li {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 13px;
+            color: var(--fg);
+        }
+
+        .columns {
+            display: grid;
+            gap: 18px;
+        }
+
+        .columns.triple {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .columns.double {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .callout {
+            border-left: 4px solid var(--accent);
+            background: var(--accent-soft);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        footer.report-footer {
+            margin-top: 48px;
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            text-align: center;
+        }
+
+        .table-small td, .table-small th {
+            font-size: 13px;
+            padding: 8px 10px;
+        }
+
+        .list-tight li {
+            margin-bottom: 6px;
+        }
+
+        .branding-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .branding-header img {
+            max-height: 56px;
+            width: auto;
+        }
+
+        .classification-banner {
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            border: 1px dashed var(--border);
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: inline-flex;
+            margin-bottom: 16px;
+            background: #ffffff;
+        }
+
+        .engagement-id {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .engagement-id-inline {
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        {% if branding.watermark %}
+        body.has-watermark::before {
+            content: "{{ branding.watermark | replace('"', '\\"') }}";
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            font-size: 72px;
+            font-weight: 700;
+            color: rgba(82, 96, 109, 0.08);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 0;
+        }
+
+        main.report {
+            position: relative;
+            z-index: 1;
+        }
+        {% endif %}
+    </style>
+</head>
+<body class="mode-{{ mode }}{% if branding.watermark %} has-watermark{% endif %}">
+    <main class="report">
+        {% if branding.classification_label %}
+        <div class="classification-banner">{{ branding.classification_label }}</div>
+        {% endif %}
+        {% if branding.logo_path %}
+        <div class="branding-header">
+            <img src="{{ branding.logo_path }}" alt="{{ client.client_name }} logo" />
+            {% if client.engagement_id %}
+            <span class="engagement-id">Engagement ID: {{ client.engagement_id }}</span>
+            {% endif %}
+        </div>
+        {% elif client.engagement_id %}
+        <div class="engagement-id engagement-id-inline">Engagement ID: {{ client.engagement_id }}</div>
+        {% endif %}
+        {% block content %}{% endblock %}
+        <footer class="report-footer">
+            <p>Prepared for {{ client.client_name }} by {{ client.prepared_by }} ({{ client.contact_email or "contact pending" }}).</p>
+            <p>Generated {{ client.generated_on }}. Confidential analysis &ndash; coordinate with counsel before disclosure.</p>
+        </footer>
+    </main>
+</body>
+</html>

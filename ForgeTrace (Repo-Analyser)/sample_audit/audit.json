@@ -1,0 +1,92 @@
+{
+  "sbom": {
+    "tool": "fallback",
+    "format": "custom",
+    "packages": [
+      {
+        "name": "requests",
+        "type": "python",
+        "file": "/tmp/forgetrace_sample__cy5yngc/sample_repo/requirements.txt"
+      },
+      {
+        "name": "pyyaml",
+        "type": "python",
+        "file": "/tmp/forgetrace_sample__cy5yngc/sample_repo/requirements.txt"
+      }
+    ]
+  },
+  "git": {
+    "authors": {
+      "Sample User": {
+        "commits": 1,
+        "lines_added": 0,
+        "lines_removed": 0
+      }
+    },
+    "churn": {
+      "Sample User": {
+        "added": 16,
+        "removed": 0,
+        "files": 3
+      }
+    },
+    "timeline": [
+      {
+        "author": "Sample User",
+        "date": "2025-11-08T02:32:25-06:00"
+      }
+    ],
+    "total_commits": 1
+  },
+  "similarity": {
+    "total_files": 1,
+    "duplicates": [],
+    "fuzzy_hashes": {},
+    "has_tlsh": false,
+    "has_ssdeep": false
+  },
+  "licenses": {
+    "tool": "heuristic",
+    "findings": []
+  },
+  "secrets": {
+    "findings": [],
+    "count": 0
+  },
+  "sast": {
+    "findings": [],
+    "count": 0
+  },
+  "vulnerabilities": {
+    "total_packages": 2,
+    "vulnerable_packages": 0,
+    "total_vulnerabilities": 0,
+    "by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "UNKNOWN": 0
+    },
+    "vulnerabilities": [],
+    "scan_timestamp": "2025-11-08T08:32:26.297787+00:00",
+    "sources": [
+      "OSV",
+      "GitHub Advisory",
+      "OWASP Dependency-Check"
+    ],
+    "normalized_vuln_density": 0.0,
+    "weighted_vuln_score": 0.0,
+    "osv_noise_ratio": 0.0
+  },
+  "classification": {},
+  "rewriteability": {},
+  "cost_estimate": {
+    "total_loc": 0,
+    "foreground_loc": 0,
+    "estimated_days": 0.0,
+    "estimated_hours": 0.0,
+    "estimated_cost_usd": 0.0
+  },
+  "policy_violations": []
+}

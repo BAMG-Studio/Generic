@@ -60,11 +60,41 @@ vulnerability_scanning:
     - OWASP  # OWASP Dependency-Check (requires tool installation)
   severity_threshold: "MEDIUM"  # Minimum severity to report: LOW, MEDIUM, HIGH, CRITICAL
   fail_on_critical: false  # Set to true to fail audit if critical vulnerabilities found
+  filters:
+    min_cvss_ingest: 4.0  # Drop OSV entries below this CVSS score during ingestion
+    min_cvss_context: 3.5  # Drop entries below this score during post-processing
+    confidence_floor: "medium"  # none | low | medium | high
+    drop_unknown_severity: true  # Skip vulns without normalized severity labels
+    severity_weights:
+      CRITICAL: 1.5
+      HIGH: 1.3
+      MEDIUM: 1.0
+      LOW: 0.6
+      UNKNOWN: 0.4
 
 # Output Options
 output:
+  executive_mode: "executive"  # board | executive | detailed
   include_pdf: true
   include_sbom: true
+  report_layout:
+    include_cover: true
+    include_narrative: true
+    include_kpis: true
+    include_risk: true
+    include_rewrite: true
+    include_ip: true
+    include_compliance: true
+    include_similarity: true
+    include_policy: true
+    include_provenance: true
+    include_appendix: true
+    include_next_steps: true
+  # Optional branding elements for rendered reports
+  logo_path: ""
+  watermark_text: ""
+  classification_label: "Confidential - M&A Audit Report"
+  engagement_id: ""
 
 # Metadata for Reports
 metadata:
@@ -72,12 +102,16 @@ metadata:
   engagement_window: "Not Specified"
   prepared_by: "Peter Kolawole, BAMG Studio LLC"
   contact_email: "peter@beaconagile.net"
+  logo_path: ""
+  watermark_text: ""
+  classification_label: "Confidential - M&A Audit Report"
+  engagement_id: ""
 
 # ML-Based IP Classification
 # Machine learning classifier for intelligent code origin detection
 ml_classifier:
   enabled: true  # Set to false to use rule-based fallback
-  model_path: "models/ip_classifier.pkl"  # Path to trained Random Forest model
+  model_path: "models/ip_classifier_rf.pkl"  # Path to trained Random Forest model
   confidence_threshold: 0.7  # Minimum confidence for auto-classification (0.0-1.0)
   fallback_to_rules: true  # Use rule-based classification if ML unavailable
   

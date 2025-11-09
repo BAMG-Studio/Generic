@@ -132,6 +132,11 @@ Examples:
     audit_parser.add_argument("--semgrep", help="Path to semgrep")
     audit_parser.add_argument("--trufflehog", help="Path to trufflehog")
     audit_parser.add_argument("--gitleaks", help="Path to gitleaks")
+    audit_parser.add_argument(
+        "--exec-mode",
+        choices=["board", "executive", "detailed"],
+        help="Executive summary depth (board, executive, detailed)"
+    )
     
     # Preview command
     preview_parser = subparsers.add_parser("preview", help="Launch HTTP server to view reports")
@@ -177,6 +182,11 @@ Examples:
             config["tools"]["trufflehog"] = args.trufflehog
         if args.gitleaks:
             config["tools"]["gitleaks"] = args.gitleaks
+
+        if args.exec_mode:
+            if "output" not in config or not isinstance(config["output"], dict):
+                config["output"] = {}
+            config["output"]["executive_mode"] = args.exec_mode
         
         cmd_audit(args, config)
     

@@ -1,0 +1,58 @@
+<section class="section similarity">
+    <h2>Similarity and Background IP</h2>
+    <div class="columns double">
+        <div>
+            <h3>Signals</h3>
+            <ul class="list-tight">
+                {% for point in similarity.summary %}
+                    <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Public Matches</h3>
+            {% if similarity.public_matches %}
+                <table class="table-small">
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Source</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for match in similarity.public_matches %}
+                            <tr>
+                                <td>{{ match.file }}</td>
+                                <td>{{ match.source }}</td>
+                                <td>{{ match.confidence }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No public code overlaps were surfaced in this pass.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Duplicate Highlights</h3>
+    <table class="table-small">
+        <thead>
+            <tr>
+                <th>File A</th>
+                <th>File B</th>
+                <th>Similarity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dup in similarity.duplicates %}
+                <tr>
+                    <td>{{ dup.file1 }}</td>
+                    <td>{{ dup.file2 }}</td>
+                    <td>{{ dup.similarity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>

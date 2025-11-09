@@ -1,0 +1,60 @@
+<section class="section risk">
+    <h2>Risk Overview</h2>
+    <table class="table-small">
+        <thead>
+            <tr>
+                <th>Area</th>
+                <th>Findings</th>
+                <th>Severity</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in risk["items"] %}
+                <tr>
+                    <td>{{ item.area }}</td>
+                    <td>{{ item.count|format_int }}</td>
+                    <td><span class="badge {{ item.badge }}">{{ item.severity }}</span></td>
+                    <td>{{ item.notes }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="columns double" style="margin-top: 20px;">
+        <div>
+            <h3>Primary Signals</h3>
+            <div class="callout">
+                <strong>Total Open Items:</strong> {{ risk["total_findings"]|format_int }}<br />
+                <strong>Key Theme:</strong> {{ key_risks }}
+                {% if risk.get("has_vulnerability_findings") %}
+                <br />
+                <strong>Vulnerability Density:</strong> {{ risk["vulnerability_density_percent"]|format_percent }}<br />
+                <strong>Weighted Vuln Score:</strong> {{ risk["vulnerability_weighted_score"]|round(2) }}<br />
+                <strong>Noise Rejection:</strong> {{ risk["vulnerability_noise_ratio_percent"]|format_percent }}
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <h3>Duplicate Hotspots</h3>
+            <table class="table-small">
+                <thead>
+                    <tr>
+                        <th>File A</th>
+                        <th>File B</th>
+                        <th>Similarity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pair in duplicate_highlights %}
+                        <tr>
+                            <td>{{ pair.file1 }}</td>
+                            <td>{{ pair.file2 }}</td>
+                            <td>{{ pair.similarity }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

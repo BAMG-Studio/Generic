@@ -1,0 +1,55 @@
+<section class="section appendix">
+    <h2>Appendix</h2>
+    <h3>IP Contribution Table (Top 25)</h3>
+    <table class="table-small">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Origin</th>
+                <th>Primary Author</th>
+                <th>License</th>
+                <th>Rewriteable</th>
+                <th>Score</th>
+                <th>LOC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ip.contribution_table[:25] %}
+                <tr>
+                    <td>{{ row.module }}</td>
+                    <td>{{ row.origin }}</td>
+                    <td>{{ row.primary_author }}</td>
+                    <td>{{ row.license }}</td>
+                    <td>{{ row.rewriteable }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.loc|format_int }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="columns double" style="margin-top: 24px;">
+        <div>
+            <h3>Tooling Footprint</h3>
+            <ul class="list-tight">
+                {% for tooling_item in appendix.tooling %}
+                    <li>{{ tooling_item }}</li>
+                {% endfor %}
+            </ul>
+            <h3>Coverage Notes</h3>
+            <ul class="list-tight">
+                {% for note in appendix.coverage %}
+                    <li>{{ note }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Stakeholder Questions</h3>
+            <ul class="list-tight">
+                {% for question in appendix.questions %}
+                    <li>{{ question }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>

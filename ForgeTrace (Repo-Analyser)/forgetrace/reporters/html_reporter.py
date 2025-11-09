@@ -51,6 +51,22 @@ class HTMLReporter:
                 <div class="metric-label">Estimated Days</div>
                 <div class="metric-value">{{ cost.estimated_days|default(0)|round(1) }}</div>
             </div>
+            <div class="metric">
+                <div class="metric-label">Open Vulnerabilities</div>
+                <div class="metric-value">{{ vulnerabilities.total_vulnerabilities|default(0)|int }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Vuln Density</div>
+                <div class="metric-value">{{ vulnerabilities.normalized_vuln_density|default(0.0)|percent }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Noise Rejection</div>
+                <div class="metric-value">{{ vulnerabilities.osv_noise_ratio|default(0.0)|percent }}</div>
+            </div>
+            <div class="metric">
+                <div class="metric-label">Weighted Vuln Score</div>
+                <div class="metric-value">{{ vulnerabilities.weighted_vuln_score|default(0.0)|round(2) }}</div>
+            </div>
         </div>
         
         <h2>IP Classification</h2>
@@ -104,8 +120,24 @@ class HTMLReporter:
         # Create environment and add custom filters
         from jinja2 import Environment
         env = Environment()
-        env.filters['format_number'] = lambda x: f"{int(x):,}" if x else "0"
-        env.filters['basename'] = lambda x: Path(x).name
+        filters = env.filters  # type: ignore[assignment]
+        def format_number_filter(value: Any) -> str:
+            try:
+                return f"{int(value):,}"
+            except (TypeError, ValueError):
+                return "0"
+
+        def basename_filter(value: Any) -> str:
+            return Path(str(value)).name
+
+        filters['format_number'] = format_number_filter
+        filters['basename'] = basename_filter
+        def percent_filter(value: Any) -> str:
+            try:
+                return f"{float(value) * 100:.1f}%"
+            except (TypeError, ValueError):
+                return "0.0%"
+        filters['percent'] = percent_filter
         
         template = env.from_string(self.TEMPLATE)
         
@@ -114,7 +146,8 @@ class HTMLReporter:
             rewriteability=self.findings.get("rewriteability", {}),
             cost=self.findings.get("cost_estimate", {}),
             secrets=self.findings.get("secrets", {}),
-            sast=self.findings.get("sast", {})
+            sast=self.findings.get("sast", {}),
+            vulnerabilities=self.findings.get("vulnerabilities", {}),
         )
         
         output_file.write_text(html)

@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD031 MD032 MD034 MD036 -->
+
 # ForgeTrace Usage Guide
 
 **Author: Peter Kolawole, BAMG Studio LLC**
@@ -36,6 +38,9 @@ forgetrace audit /path/to/repo \
   --trufflehog trufflehog \
   --gitleaks gitleaks
 
+# Override executive summary depth on the fly
+forgetrace audit /path/to/repo --exec-mode board
+
 # Preview on custom port
 forgetrace preview repo_audit/acme/forgetrace_report --port 9000 --browser
 ```
@@ -57,6 +62,7 @@ Edit `config.yaml` to customize:
 - **Similarity thresholds**: Control duplicate detection sensitivity
 - **Cost parameters**: Set hourly rate, days per KLOC, complexity multiplier
 - **Tool paths**: Specify custom locations for external tools
+- **Vulnerability filters**: Tune OSV noise suppression via `min_cvss_*`, `confidence_floor`, and severity weights
 
 ## Example Workflow
 
@@ -116,7 +122,7 @@ ForgeTrace now supports **machine learning classification** for intelligent code
 **Comprehensive ML classifier guide**: [docs/ML_CLASSIFIER.md](docs/ML_CLASSIFIER.md)
 
 Covers:
-- Feature engineering details (19 features)
+- Feature engineering details (23 features)
 - Training workflow and best practices
 - Confidence scoring and thresholds
 - Performance tuning and troubleshooting

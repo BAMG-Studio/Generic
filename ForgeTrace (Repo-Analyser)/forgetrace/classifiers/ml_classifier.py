@@ -129,6 +129,12 @@ class FileFeatures:
     primary_author_commit_ratio: float  # Dominant author suggests background IP
     is_primary_author_external: bool  # Based on email domain analysis
     
+    # Repository-level vulnerability posture
+    repo_vuln_density: float  # Vulnerable packages / total packages
+    repo_vuln_weighted_score: float  # Weighted CVSS score across actionable vulns
+    repo_osv_noise_ratio: float  # Share of OSV entries filtered out
+    repo_vulnerability_count: float  # Actionable vulnerability count
+    
     def to_array(self) -> List[float]:
         """
         Convert features to numpy-compatible array.
@@ -161,6 +167,10 @@ class FileFeatures:
             float(self.similar_file_count),
             float(self.primary_author_commit_ratio),
             float(self.is_primary_author_external),
+            float(self.repo_vuln_density),
+            float(self.repo_vuln_weighted_score),
+            float(self.repo_osv_noise_ratio),
+            float(self.repo_vulnerability_count),
         ]
 
 
@@ -199,6 +209,12 @@ class MLIPClassifier:
     4. Save model: model.pkl placed in config directory
     5. Deploy: ForgeTrace automatically uses trained model
     
+    
+    # Repository-level vulnerability posture
+    repo_vuln_density: float  # Vulnerable packages / total packages
+    repo_vuln_weighted_score: float  # Weighted CVSS score across actionable vulns
+    repo_osv_noise_ratio: float  # Share of OSV entries filtered out
+    repo_vulnerability_count: float  # Actionable vulnerability count
     CONTINUOUS IMPROVEMENT:
     - Each audit with human review adds to training data
     - Periodic retraining (monthly/quarterly) improves accuracy
@@ -217,6 +233,7 @@ class MLIPClassifier:
         self.config = config
         self.model: Optional[RandomForestClassifier] = None
         self.model_loaded = False
+        self._vuln_metrics_cache: Optional[Dict[str, float]] = None
         
         # Configuration extraction
         ml_config = config.get("ml_classifier", {})
@@ -532,7 +549,6 @@ class MLIPClassifier:
         git_data = self.findings.get("git", {})
         file_commits = self._get_file_commits(fstr)
         file_authors = self._get_file_authors(fstr)
-        
         commit_count = len(file_commits)
         author_count = len(file_authors)
         
@@ -573,6 +589,8 @@ class MLIPClassifier:
         
         is_primary_author_external = self._is_external_author(primary_author)
         
+        vuln_metrics = self._repo_vulnerability_metrics()
+
         return FileFeatures(
             file_path=fstr,
             lines_of_code=lines_of_code,
@@ -595,6 +613,10 @@ class MLIPClassifier:
             similar_file_count=similarity_data['similar_count'],
             primary_author_commit_ratio=primary_author_commit_ratio,
             is_primary_author_external=is_primary_author_external,
+            repo_vuln_density=vuln_metrics["repo_vuln_density"],
+            repo_vuln_weighted_score=vuln_metrics["repo_vuln_weighted_score"],
+            repo_osv_noise_ratio=vuln_metrics["repo_osv_noise_ratio"],
+            repo_vulnerability_count=vuln_metrics["repo_vulnerability_count"],
         )
     
     # ============================================================================
@@ -884,6 +906,29 @@ class MLIPClassifier:
         """Get current Unix timestamp."""
         import time
         return int(time.time())
+
+    def _repo_vulnerability_metrics(self) -> Dict[str, float]:
+        if self._vuln_metrics_cache is not None:
+            return self._vuln_metrics_cache
+
+        data = self.findings.get("vulnerabilities", {})
+        metrics = {
+            "repo_vuln_density": 0.0,
+            "repo_vuln_weighted_score": 0.0,
+            "repo_osv_noise_ratio": 0.0,
+            "repo_vulnerability_count": 0.0,
+        }
+
+        if isinstance(data, dict):
+            metrics = {
+                "repo_vuln_density": float(data.get("normalized_vuln_density", 0.0) or 0.0),
+                "repo_vuln_weighted_score": float(data.get("weighted_vuln_score", 0.0) or 0.0),
+                "repo_osv_noise_ratio": float(data.get("osv_noise_ratio", 0.0) or 0.0),
+                "repo_vulnerability_count": float(data.get("total_vulnerabilities", 0.0) or 0.0),
+            }
+
+        self._vuln_metrics_cache = metrics
+        return metrics
     
     # ============================================================================
     # TRAINING AND MODEL MANAGEMENT
@@ -971,7 +1016,9 @@ class MLIPClassifier:
             'has_license_header', 'has_third_party_indicators',
             'import_count', 'stdlib_import_ratio', 'third_party_import_ratio',
             'max_similarity_score', 'similar_file_count',
-            'primary_author_commit_ratio', 'is_primary_author_external'
+            'primary_author_commit_ratio', 'is_primary_author_external',
+            'repo_vuln_density', 'repo_vuln_weighted_score',
+            'repo_osv_noise_ratio', 'repo_vulnerability_count'
         ]
         
         return dict(zip(feature_names, importances.tolist()))

@@ -7,10 +7,13 @@ import shutil
 import subprocess
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional, cast
+
+import yaml
 
 from ..core import ExtractionConfig, RepoSpec, TrainingExample
 from ..validators import PhaseValidator
+from ...scanners.vulnerabilities import VulnerabilityScanner
 
 
 class BaseExtractor(ABC):
@@ -21,6 +24,8 @@ class BaseExtractor(ABC):
         self.cache_dir = Path(".forgetrace-cache") / "repos"
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.config_dir = Path("config.yaml")
+        self._config_cache: Optional[Dict[str, Any]] = None
+        self._vuln_metric_cache: Dict[Path, Dict[str, float]] = {}
 
     @abstractmethod
     def extract(self, repo: RepoSpec) -> List[TrainingExample]:
@@ -141,6 +146,70 @@ class BaseExtractor(ABC):
             features=features,
             metadata=metadata,
         )
+
+    def _load_config(self) -> Dict[str, Any]:
+        if self._config_cache is not None:
+            return self._config_cache
+
+        if not self.config_dir.exists():
+            self._config_cache = {}
+            return self._config_cache
+
+        try:
+            with self.config_dir.open("r", encoding="utf-8") as fh:
+                raw = yaml.safe_load(fh)
+        except Exception as exc:
+            print(f"⚠️  Unable to load config.yaml: {exc}")
+            raw = None
+
+        if isinstance(raw, dict):
+            loaded_config = cast(Dict[str, Any], raw)
+        else:
+            loaded_config = {}
+
+        self._config_cache = loaded_config
+        return self._config_cache
+
+    def _repo_vulnerability_features(self, repo_dir: Path) -> Dict[str, float]:
+        cache_key = repo_dir.resolve()
+        cached = self._vuln_metric_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+        config = self._load_config()
+        vuln_config_raw = config.get("vulnerability_scanning", {})
+        vuln_config = cast(Dict[str, Any], vuln_config_raw) if isinstance(vuln_config_raw, dict) else {}
+        if vuln_config and not bool(vuln_config.get("enabled", True)):
+            metrics = {
+                "repo_vuln_density": 0.0,
+                "repo_vuln_weighted_score": 0.0,
+                "repo_osv_noise_ratio": 0.0,
+                "repo_vulnerability_count": 0.0,
+            }
+            self._vuln_metric_cache[cache_key] = metrics
+            return metrics
+
+        metrics = {
+            "repo_vuln_density": 0.0,
+            "repo_vuln_weighted_score": 0.0,
+            "repo_osv_noise_ratio": 0.0,
+            "repo_vulnerability_count": 0.0,
+        }
+
+        try:
+            scanner = VulnerabilityScanner(repo_path=repo_dir, config=config)
+            results = scanner.scan()
+            metrics = {
+                "repo_vuln_density": float(results.get("normalized_vuln_density", 0.0) or 0.0),
+                "repo_vuln_weighted_score": float(results.get("weighted_vuln_score", 0.0) or 0.0),
+                "repo_osv_noise_ratio": float(results.get("osv_noise_ratio", 0.0) or 0.0),
+                "repo_vulnerability_count": float(results.get("total_vulnerabilities", 0.0) or 0.0),
+            }
+        except Exception as exc:  # pragma: no cover - defensive guard
+            print(f"⚠️  Vulnerability scan failed for {repo_dir}: {exc}")
+
+        self._vuln_metric_cache[cache_key] = metrics
+        return metrics
 
 
 def serialize_examples(examples: List[TrainingExample], path: Path) -> None:

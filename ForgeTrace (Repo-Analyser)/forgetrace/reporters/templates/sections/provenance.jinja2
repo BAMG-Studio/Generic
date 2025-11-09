@@ -1,0 +1,40 @@
+<section class="section provenance">
+    <h2>Provenance Insights</h2>
+    <div class="columns double">
+        <div>
+            <h3>Summary</h3>
+            <div class="callout">
+                <p>{{ provenance.notes }}</p>
+                <p><strong>Commit Window:</strong> {{ provenance.commit_window }}</p>
+            </div>
+            {% if provenance.sparkline %}
+            <h4>Commit Activity (Weekly)</h4>
+            <svg width="{{ provenance.sparkline.width }}" height="{{ provenance.sparkline.height }}" viewBox="0 0 {{ provenance.sparkline.width }} {{ provenance.sparkline.height }}" role="img" aria-label="Commit activity sparkline">
+                <polyline points="0,{{ provenance.sparkline.height }} {{ provenance.sparkline.width }},{{ provenance.sparkline.height }}" fill="none" stroke="var(--border)" stroke-width="1" />
+                <path d="{{ provenance.sparkline.path }}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p class="note">Peak weekly commits: {{ provenance.sparkline.max|format_int }}</p>
+            {% endif %}
+            <h4>Milestones</h4>
+            <ul class="list-tight">
+                {% for milestone in provenance.milestones %}
+                    <li>{{ milestone }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Signals</h3>
+            <ul class="list-tight">
+                {% for insight in provenance.insights %}
+                    <li>{{ insight }}</li>
+                {% endfor %}
+            </ul>
+            <h4>Deliverables</h4>
+            <ul class="list-tight">
+                {% for deliverable in engagement.deliverables %}
+                    <li>{{ deliverable }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>

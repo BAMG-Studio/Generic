@@ -1,0 +1,29 @@
+<section class="section narrative">
+    <h2>Narrative Highlights</h2>
+    <div class="columns triple">
+        <div class="card">
+            <h3>Executive Lens</h3>
+            <ul class="list-tight">
+                {% for line in narrative.executive %}
+                    <li>{{ line }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Board Lens</h3>
+            <ul class="list-tight">
+                {% for line in narrative.board %}
+                    <li>{{ line }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Engineering Lens</h3>
+            <ul class="list-tight">
+                {% for line in narrative.engineering %}
+                    <li>{{ line }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>

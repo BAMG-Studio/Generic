@@ -93,6 +93,7 @@ class SecurityExtractor(BaseExtractor):
 
     def extract(self, repo: RepoSpec) -> List[TrainingExample]:
         repo_dir = self._ensure_repo(repo)
+        vuln_features = self._repo_vulnerability_features(repo_dir)
         examples: List[TrainingExample] = []
 
         for file_path in repo_dir.rglob("*"):
@@ -102,7 +103,7 @@ class SecurityExtractor(BaseExtractor):
             text = file_path.read_text(errors="ignore")
             base_features = self._collect_basic_features(file_path)
             sec_features = self._security_features(file_path, text)
-            features = {**base_features, **sec_features}
+            features = {**base_features, **sec_features, **vuln_features}
 
             label, confidence = self._infer_label(file_path, features)
             metadata = {

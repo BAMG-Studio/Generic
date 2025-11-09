@@ -1,0 +1,48 @@
+<section class="section cover">
+    <h1>ForgeTrace Executive Summary</h1>
+    <p class="subtitle">{{ client.client_name }} &bull; {{ client.engagement_window }}</p>
+
+    <div class="columns double" style="margin-top: 18px;">
+        <div>
+            <h3>Engagement Details</h3>
+            <ul class="list-tight">
+                <li><strong>Prepared By:</strong> {{ client.prepared_by }}</li>
+                <li><strong>Generated:</strong> {{ client.generated_on }}</li>
+                {% if client.engagement_id %}
+                <li><strong>Engagement ID:</strong> {{ client.engagement_id }}</li>
+                {% endif %}
+                <li><strong>Primary Contact:</strong> {{ client.contact_email or "Not Provided" }}</li>
+                {% if client.classification_label %}
+                <li><strong>Classification:</strong> {{ client.classification_label }}</li>
+                {% endif %}
+            </ul>
+        </div>
+        <div>
+            <h3>Recommendation</h3>
+            <div class="card">
+                <span class="badge {{ recommendation.badge_class }}">{{ recommendation.text }}</span>
+                <p style="margin-top: 12px;">{{ recommendation.reason }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="columns double" style="margin-top: 24px;">
+        <div>
+            <h3>Negotiation Watchlist</h3>
+            <ul class="list-tight">
+                {% for item in negotiation.points %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Engagement Scope</h3>
+            <p>{{ engagement.methodology_summary }}</p>
+            <ul class="list-tight">
+                {% for scope_item in engagement.scope %}
+                    <li>{{ scope_item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
