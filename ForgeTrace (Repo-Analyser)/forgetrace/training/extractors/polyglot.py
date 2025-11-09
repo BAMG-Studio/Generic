@@ -90,6 +90,7 @@ class PolyglotExtractor(BaseExtractor):
 
     def extract(self, repo: RepoSpec) -> List[TrainingExample]:
         repo_dir = self._ensure_repo(repo)
+        vuln_features = self._repo_vulnerability_features(repo_dir)
         examples: List[TrainingExample] = []
 
         for file_path in repo_dir.rglob("*"):
@@ -103,7 +104,7 @@ class PolyglotExtractor(BaseExtractor):
             text = file_path.read_text(errors="ignore")
             base_features = self._collect_basic_features(file_path)
             lang_features = self._language_features(language, file_path, text)
-            features = {**base_features, **lang_features}
+            features = {**base_features, **lang_features, **vuln_features}
 
             label, confidence = self._infer_label(features)
             metadata = {

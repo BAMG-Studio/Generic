@@ -1,0 +1,43 @@
+<section class="section policy">
+    <h2>Policy Engine Outcomes</h2>
+    <div class="card-grid" style="margin-bottom: 20px;">
+        <div class="card">
+            <span class="label">Block</span>
+            <span class="value">{{ policy.block|format_int }}</span>
+        </div>
+        <div class="card">
+            <span class="label">Warn</span>
+            <span class="value">{{ policy.warn|format_int }}</span>
+        </div>
+        <div class="card">
+            <span class="label">Info</span>
+            <span class="value">{{ policy.info|format_int }}</span>
+        </div>
+    </div>
+    {% if policy.violations %}
+        <table class="table-small">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Severity</th>
+                    <th>Action</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for violation in policy.violations[:20] %}
+                    <tr>
+                        <td>{{ violation.policy_id }}</td>
+                        <td>{{ violation.policy_name }}</td>
+                        <td>{{ violation.severity }}</td>
+                        <td>{{ violation.action }}</td>
+                        <td>{{ violation.message }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No policy violations were triggered.</p>
+    {% endif %}
+</section>

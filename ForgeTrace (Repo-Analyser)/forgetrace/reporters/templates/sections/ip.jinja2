@@ -1,0 +1,33 @@
+<section class="section ip">
+    <h2>IP Composition</h2>
+    <h3>Origin Share</h3>
+    <ul class="pill-list">
+        {% for entry in ip.share_list %}
+            <li><strong>{{ entry.label }}:</strong> {{ entry.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Top Modules Requiring Attention</h3>
+    <table class="table-small">
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Origin</th>
+                <th>Rewriteable</th>
+                <th>Score</th>
+                <th>LOC</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ip.top_modules %}
+                <tr>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.origin }}</td>
+                    <td>{{ row.rewriteability }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.loc }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>

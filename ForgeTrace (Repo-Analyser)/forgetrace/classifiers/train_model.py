@@ -167,6 +167,10 @@ def _features_dict_to_array(features: Dict[str, Any]) -> np.ndarray:
         float(features['similar_file_count']),
         float(features['primary_author_commit_ratio']),
         float(features['is_primary_author_external']),
+        float(features.get('repo_vuln_density', 0.0)),
+        float(features.get('repo_vuln_weighted_score', 0.0)),
+        float(features.get('repo_osv_noise_ratio', 0.0)),
+        float(features.get('repo_vulnerability_count', 0.0)),
     ])
 
 
@@ -340,7 +344,11 @@ def analyze_feature_importance(model: RandomForestClassifier) -> None:
         'max_similarity_score',
         'similar_file_count',
         'primary_author_commit_ratio',
-        'is_primary_author_external'
+        'is_primary_author_external',
+        'repo_vuln_density',
+        'repo_vuln_weighted_score',
+        'repo_osv_noise_ratio',
+        'repo_vulnerability_count'
     ]
     
     importances = model.feature_importances_
