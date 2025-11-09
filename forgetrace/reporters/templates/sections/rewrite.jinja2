@@ -1,0 +1,56 @@
+<section class="section rewrite">
+    <h2>Rewriteability Outlook</h2>
+    <div class="card-grid" style="margin-bottom: 20px;">
+        <div class="card">
+            <span class="label">Average Score</span>
+            <span class="value">{{ rewrite.avg_score }}</span>
+        </div>
+        <div class="card">
+            <span class="label">Low Score Foreground</span>
+            <span class="value">{{ rewrite.low_rewriteable_count|format_int }}</span>
+        </div>
+        <div class="card">
+            <span class="label">Clean-Room Candidates</span>
+            <span class="value">{{ rewrite.high_rewriteable_count|format_int }}</span>
+        </div>
+    </div>
+
+    <div class="columns double">
+        <div>
+            <h3>Recommendations</h3>
+            <ul class="list-tight">
+                {% for item in rewrite.recommendations %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h3>Priority Modules</h3>
+            <ul class="pill-list">
+                {% for module in rewrite.priority_modules %}
+                    <li>{{ module }}</li>
+                {% endfor %}
+            </ul>
+            <h4>Playbook</h4>
+            <ul class="list-tight">
+                {% for step in rewrite.playbook %}
+                    <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 24px;">Quadrant View</h3>
+    <div class="columns double">
+        {% for quadrant in rewrite.quadrants %}
+            <div class="card">
+                <h4>{{ quadrant.quadrant }}</h4>
+                <ul class="list-tight">
+                    {% for module in quadrant.modules %}
+                        <li>{{ module }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</section>

@@ -1,0 +1,49 @@
+<section class="section kpis">
+    <h2>Key Performance Indicators</h2>
+    <div class="card-grid">
+        {% for card in kpi_cards %}
+            <div class="card">
+                <span class="label">{{ card.label }}</span>
+                <span class="value">{{ card.value }}</span>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="columns double" style="margin-top: 24px;">
+        <div>
+            <h3>IP Composition</h3>
+            <table class="table-small">
+                <thead>
+                    <tr>
+                        <th>Origin</th>
+                        <th>Files</th>
+                        <th>Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in origin_breakdown %}
+                        <tr>
+                            <td>{{ row.origin }}</td>
+                            <td>{{ row.count|format_int }}</td>
+                            <td>{{ row.share }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Third-Party Snapshot</h3>
+            <ul class="list-tight">
+                {% for note in dependency.observations %}
+                    <li>{{ note }}</li>
+                {% endfor %}
+            </ul>
+            <h4>Top Packages</h4>
+            <ul class="list-tight">
+                {% for pkg in dependency.top_packages %}
+                    <li>{{ pkg }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>

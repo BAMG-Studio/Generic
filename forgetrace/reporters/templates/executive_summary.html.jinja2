@@ -1,0 +1,7 @@
+{% extends "base.html.jinja2" %}
+
+{% block content %}
+    {% for section in sections %}
+        {% include "sections/" + section + ".jinja2" %}
+    {% endfor %}
+{% endblock %}

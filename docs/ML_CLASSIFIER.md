@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD022 MD031 MD032 MD033 MD040 -->
+
 # ML-Based IP Classification
 
 ## Overview
@@ -41,14 +43,16 @@
 
 ### Feature Engineering
 
-The classifier extracts **19 features** from each file:
+The classifier extracts **23 features** from each file:
 
 #### 1. File Metadata (3 features)
+
 - **lines_of_code**: Large files often indicate third-party libraries
 - **file_size_bytes**: Correlates with LOC, redundant but helpful for robustness
 - **path_depth**: Third-party code often in deeper directories (vendor/, node_modules/)
 
 #### 2. Git History (7 features)
+
 - **commit_count**: Third-party rarely modified after import, background IP has few commits
 - **author_count**: Single author suggests background IP, many authors = foreground
 - **days_since_first_commit**: Older files may be imported third-party
@@ -58,21 +62,34 @@ The classifier extracts **19 features** from each file:
 - **is_primary_author_external**: External email domains (gmail) suggest contractor work
 
 #### 3. Code Complexity (2 features)
+
 - **cyclomatic_complexity**: High complexity = sophisticated library code
 - **maintainability_index**: Low score = possibly rushed background code
 
 #### 4. License Indicators (2 features)
+
 - **has_license_header**: SPDX tags, copyright notices → third-party
 - **has_third_party_indicators**: Keywords like "Licensed under", "All rights reserved"
 
 #### 5. Import Analysis (3 features)
+
 - **import_count**: Total number of imports
 - **stdlib_import_ratio**: High stdlib usage = likely original code
 - **third_party_import_ratio**: High third-party imports = uses many dependencies
 
 #### 6. Similarity (2 features)
+
 - **max_similarity_score**: Highest match to known third-party code
 - **similar_file_count**: Duplicated files suggest copy-paste
+
+#### 7. Repository Risk Context (4 features)
+
+- **repo_vuln_density**: Vulnerable packages ÷ total packages (from vulnerability scanner).
+- **repo_vuln_weighted_score**: CVSS-weighted severity average using configurable weights.
+- **repo_osv_noise_ratio**: Share of raw OSV hits filtered out by the noise gates.
+- **repo_vulnerability_count**: Total actionable vulnerabilities after context filtering.
+
+These metrics give the model awareness of macro security posture, allowing background vs third-party heuristics to adapt when a repo is highly vulnerable.
 
 ### Algorithm Choice: Random Forest
 

@@ -18,6 +18,7 @@ class FoundationalExtractor(BaseExtractor):
 
     def extract(self, repo: RepoSpec) -> List[TrainingExample]:
         repo_dir = self._ensure_repo(repo)
+        vuln_features = self._repo_vulnerability_features(repo_dir)
         examples: List[TrainingExample] = []
 
         for file_path in repo_dir.rglob("*"):
@@ -26,6 +27,7 @@ class FoundationalExtractor(BaseExtractor):
 
             features = self._collect_basic_features(file_path)
             features.update(self._additional_features(file_path))
+            features.update(vuln_features)
 
             label, confidence = self._infer_label(file_path, features)
             metadata = {

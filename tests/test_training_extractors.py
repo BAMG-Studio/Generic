@@ -3,13 +3,15 @@
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Dict
 import sys
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import pytest
 
-from forgetrace.training.core import ExtractionConfig, Phase
+from forgetrace.training.core import ExtractionConfig, Phase, RepoSpec
+from forgetrace.classifiers.ml_classifier import FileFeatures
 from forgetrace.training.extractors.enterprise import EnterpriseExtractor
 from forgetrace.training.extractors.research import ResearchExtractor
 from forgetrace.training.extractors.security import SecurityExtractor
@@ -117,3 +119,81 @@ def test_research_features_detect_citations(
     assert features["paper_reference_hits"] >= 1.0
     assert features["dataset_mentions"] >= 1.0
     assert features["metric_mentions"] >= 1.0
+
+
+def test_training_examples_include_vulnerability_metrics(
+    tmp_path: Path, security_extractor: SecurityExtractor, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    repo_dir = tmp_path / "sample-repo"
+    repo_dir.mkdir(parents=True, exist_ok=True)
+    config_file = repo_dir / "config.yaml"
+    config_file.write_text("API_KEY='secret'\n")
+
+    def _mock_ensure_repo(self: SecurityExtractor, _repo: RepoSpec) -> Path:
+        return repo_dir
+
+    monkeypatch.setattr(SecurityExtractor, "_ensure_repo", _mock_ensure_repo)
+
+    mocked_metrics = {
+        "repo_vuln_density": 0.2,
+        "repo_vuln_weighted_score": 5.1,
+        "repo_osv_noise_ratio": 0.05,
+        "repo_vulnerability_count": 4.0,
+    }
+    def _mock_vuln_features(self: SecurityExtractor, _repo_dir: Path) -> Dict[str, float]:
+        return mocked_metrics
+
+    monkeypatch.setattr(
+        SecurityExtractor,
+        "_repo_vulnerability_features",
+        _mock_vuln_features,
+    )
+
+    repo_spec = RepoSpec(
+        name="example/repo",
+        url="https://example.invalid/repo.git",
+        phase=Phase.SECURITY,
+        languages=("python",),
+        expected_signals=("security",),
+        classification_targets=("foreground",),
+    )
+
+    examples = security_extractor.extract(repo_spec)
+    assert examples, "Expected extractor to produce at least one training example"
+
+    for key, value in mocked_metrics.items():
+        assert examples[0].features.get(key) == value
+
+
+def test_file_features_to_array_includes_repo_metrics() -> None:
+    features = FileFeatures(
+        file_path="src/example.py",
+        lines_of_code=100,
+        file_size_bytes=2048,
+        extension=".py",
+        path_depth=3,
+        commit_count=10,
+        author_count=2,
+        days_since_first_commit=30,
+        days_since_last_commit=5,
+        commit_frequency=0.33,
+        cyclomatic_complexity=5.0,
+        maintainability_index=75.0,
+        has_license_header=True,
+        has_third_party_indicators=False,
+        import_count=8,
+        stdlib_import_ratio=0.6,
+        third_party_import_ratio=0.4,
+        max_similarity_score=0.1,
+        similar_file_count=2,
+        primary_author_commit_ratio=0.7,
+        is_primary_author_external=False,
+        repo_vuln_density=0.12,
+        repo_vuln_weighted_score=6.5,
+        repo_osv_noise_ratio=0.25,
+        repo_vulnerability_count=4.0,
+    )
+
+    vector = features.to_array()
+    assert len(vector) == 23
+    assert vector[-4:] == [0.12, 6.5, 0.25, 4.0]

@@ -1,0 +1,73 @@
+<section class="section compliance">
+    <h2>License and Compliance</h2>
+    <h3>Heatmap</h3>
+    <table class="table-small">
+        <tbody>
+            {% for row in licenses.heatmap %}
+                {% if loop.first %}
+                    <tr>
+                        {% for header in row %}
+                            <th>{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="columns double" style="margin-top: 24px;">
+        <div>
+            <h3>High-Risk Identifiers</h3>
+            {% if licenses.high_risk %}
+                <ul class="pill-list">
+                    {% for name in licenses.high_risk %}
+                        <li>{{ name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No GPL-family or reciprocal licenses detected.</p>
+            {% endif %}
+
+            <h3>License Summary</h3>
+            <table class="table-small">
+                <thead>
+                    <tr>
+                        <th>License</th>
+                        <th>Count</th>
+                        <th>Files</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in licenses.summary %}
+                        <tr>
+                            <td>{{ item.license }}</td>
+                            <td>{{ item.count|format_int }}</td>
+                            <td>{{ item.files }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3>Required Actions</h3>
+            <h4>Obligations</h4>
+            <ul class="list-tight">
+                {% for obligation in compliance.obligations %}
+                    <li>{{ obligation }}</li>
+                {% endfor %}
+            </ul>
+            <h4>Counsel Follow-Ups</h4>
+            <ul class="list-tight">
+                {% for action in compliance.counsel_actions %}
+                    <li>{{ action }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
