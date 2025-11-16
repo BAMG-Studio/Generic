@@ -24,7 +24,10 @@ services:
 
   # MLflow tracking server
   mlflow:
-    image: ghcr.io/mlflow/mlflow:v2.9.0
+    build:
+      context: ./deployment/mlflow
+      dockerfile: Dockerfile
+    image: forgetrace-mlflow:latest
     container_name: forgetrace-mlflow
     depends_on:
       postgres:
@@ -38,7 +41,7 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-1}
     command: >
-      mlflow server
+      server
       --backend-store-uri postgresql://mlflow:${MLFLOW_DB_PASSWORD:-change_this_password_123}@postgres:5432/mlflow
       --default-artifact-root s3://${DVC_REMOTE_BUCKET:-forgetrace-models}/mlflow/
       --host 0.0.0.0
