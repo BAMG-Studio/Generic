@@ -1,0 +1,50 @@
+# Client Profiling Dataset Catalog
+
+# This file tracks all anonymized client profiling datasets used for
+# validation, benchmarking, and training of ForgeTrace.
+
+version: "1.0"
+last_updated: "2025-11-16"
+total_datasets: 0
+
+# Dataset entries follow this schema:
+# 
+# datasets:
+#   <profile_id>:
+#     source: "Client description or origin"
+#     date_added: "YYYY-MM-DD"
+#     characteristics: [list of architectural patterns]
+#     languages: [primary languages]
+#     files: <sample file count>
+#     size_mb: <total size in MB>
+#     edge_cases: [list of edge case types]
+#     validation_status: "passed" | "failed" | "pending"
+#     accuracy: <classification accuracy as decimal>
+#     notes: "Additional context"
+
+datasets: {}
+  # Example entry (uncomment and fill when adding first profile):
+  #
+  # client_profile_1:
+  #   source: "FinTech SaaS - Payment Processing"
+  #   date_added: "2025-11-16"
+  #   characteristics:
+  #     - monorepo
+  #     - microservices
+  #     - graphql_codegen
+  #     - typescript_heavy
+  #   languages:
+  #     - TypeScript
+  #     - Python
+  #     - Go
+  #   files: 150
+  #   size_mb: 28
+  #   edge_cases:
+  #     - multiple_languages_per_file
+  #     - generated_graphql_types
+  #     - vendored_jquery
+  #   validation_status: "passed"
+  #   accuracy: 0.998
+  #   notes: "50 microservices in monorepo structure"
+
+# Add new profiles below

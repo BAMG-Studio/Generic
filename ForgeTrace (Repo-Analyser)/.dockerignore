@@ -1,0 +1,62 @@
+# .dockerignore - Files to exclude from Docker build context
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Training outputs and cache
+training_output/
+.forgetrace-cache/
+test_output/
+repo_audit/
+
+# Client profiling data (sensitive)
+training/profiling_datasets/*/samples/
+training/profiling_datasets/*/ground_truth/
+
+# Documentation (not needed in container)
+docs/
+*.md
+!README.md
+
+# CI/CD
+.github/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+deployment/nginx/.htpasswd
+
+# Backups
+backups/
+
+# OS files
+.DS_Store
+Thumbs.db
