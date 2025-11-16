@@ -1,0 +1,28 @@
+# ForgeTrace Terraform Variables
+# Copy this file to terraform.tfvars and customize
+
+# Environment Configuration
+environment  = "production"  # dev, staging, or production
+aws_region   = "us-east-1"  # Change to your preferred region
+owner_email  = "peter@beaconagile.net"
+
+# IAM Configuration
+ci_user_name = "forgetrace-ci"
+
+# S3 Configuration
+enable_s3_versioning       = true
+enable_s3_lifecycle        = true
+s3_glacier_transition_days = 90   # Transition to Glacier after 90 days
+s3_expiration_days         = 365  # Delete after 1 year
+
+# Security & Monitoring
+enable_cloudtrail = true
+enable_cloudwatch = true
+enable_encryption = true
+
+# Additional Tags (optional)
+tags = {
+  Team        = "DevOps"
+  CostCenter  = "Engineering"
+  Compliance  = "Required"
+}
