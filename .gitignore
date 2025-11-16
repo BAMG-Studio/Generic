@@ -31,8 +31,35 @@ training_output/
 test_output/
 repo_audit/
 
-# Training data and cache
-training_output/
-.forgetrace-cache/
-test_output/
-repo_audit/
+# Production secrets and environment
+.env
+.env.local
+.env.production
+*.pem
+*.key
+deployment/nginx/.htpasswd
+deployment/nginx/ssl/
+
+# MLflow and DVC
+mlruns/
+.dvc/cache/
+*.dvc
+
+# Client profiling data (sensitive)
+training/profiling_datasets/*/samples/
+training/profiling_datasets/*/ground_truth/
+
+# Backup files
+backups/
+*.backup
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+.DS_Store

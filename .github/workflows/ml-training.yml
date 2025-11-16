@@ -1,0 +1,171 @@
+name: ML Training Pipeline
+
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: 'Training phase to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - FOUNDATIONAL
+          - POLYGLOT
+          - SECURITY
+          - ENTERPRISE
+          - RESEARCH
+      force_retrain:
+        description: 'Force model retraining even if cached'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # Run weekly on Sundays at 2 AM UTC
+    - cron: '0 2 * * 0'
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  train:
+    name: Train ML Model
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git analysis
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+          pip install mlflow dvc scikit-learn pandas numpy
+      
+      - name: Configure DVC
+        run: |
+          dvc remote add -d s3remote s3://${{ secrets.DVC_REMOTE_BUCKET }}/dvc-storage
+          dvc remote modify s3remote region ${{ secrets.AWS_DEFAULT_REGION }}
+      
+      - name: Pull existing data (if any)
+        run: dvc pull || true
+        continue-on-error: true
+      
+      - name: Set MLflow tracking URI
+        run: echo "MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}" >> $GITHUB_ENV
+      
+      - name: Run training pipeline
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MLFLOW_USERNAME: ${{ secrets.MLFLOW_USERNAME }}
+          MLFLOW_PASSWORD: ${{ secrets.MLFLOW_PASSWORD }}
+        run: |
+          if [ "${{ github.event.inputs.phase }}" = "all" ]; then
+            python scripts/run_training_pipeline.py
+          else
+            python scripts/run_training_pipeline.py --phase=${{ github.event.inputs.phase }}
+          fi
+      
+      - name: Train Random Forest model
+        env:
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_USERNAME: ${{ secrets.MLFLOW_USERNAME }}
+          MLFLOW_PASSWORD: ${{ secrets.MLFLOW_PASSWORD }}
+        run: |
+          python scripts/train_random_forest.py \
+            --input training_output/dataset/complete_training_dataset.jsonl \
+            --output models/ip_classifier_rf.pkl \
+            --mlflow-experiment forgetrace-training
+      
+      - name: Run model validation
+        run: |
+          python scripts/analyze_feature_importance.py \
+            --model models/ip_classifier_rf.pkl \
+            --output training_output/model_analysis.json
+      
+      - name: Commit training artifacts
+        run: |
+          dvc add models/ip_classifier_rf.pkl
+          dvc add training_output/dataset/
+          dvc push
+      
+      - name: Create training report
+        run: |
+          echo "# Training Report - $(date +%Y-%m-%d)" > training_report.md
+          echo "" >> training_report.md
+          echo "## Model Metrics" >> training_report.md
+          cat training_output/model_analysis.json >> training_report.md
+      
+      - name: Upload training artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-artifacts-${{ github.sha }}
+          path: |
+            models/ip_classifier_rf.pkl
+            training_output/
+            training_report.md
+      
+      - name: Commit model version
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models/ip_classifier_rf.pkl.dvc training_output/dataset.dvc
+          git commit -m "chore: update ML model - $(date +%Y-%m-%d)" || true
+          git push || true
+
+  evaluate:
+    name: Model Evaluation
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      
+      - name: Download training artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: training-artifacts-${{ github.sha }}
+      
+      - name: Install dependencies
+        run: |
+          pip install scikit-learn pandas numpy matplotlib seaborn
+      
+      - name: Run model interpretability
+        run: |
+          python scripts/model_interpretability.py \
+            --model models/ip_classifier_rf.pkl \
+            --output training_output/interpretability/
+      
+      - name: Generate performance report
+        run: |
+          python scripts/production_monitor.py \
+            --model models/ip_classifier_rf.pkl \
+            --baseline-accuracy 0.999 \
+            --output training_output/performance_report.json
+      
+      - name: Upload evaluation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-results
+          path: training_output/interpretability/

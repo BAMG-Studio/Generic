@@ -1,0 +1,44 @@
+# CODEOWNERS - Automated Review Assignment
+# Reference: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owner (reviews everything by default)
+* @papaert-cloud
+
+# Machine Learning & Training
+/training/ @papaert-cloud
+/models/ @papaert-cloud
+/forgetrace/classifiers/ @papaert-cloud
+/scripts/train_*.py @papaert-cloud
+/scripts/run_training_pipeline.py @papaert-cloud
+/scripts/analyze_feature_importance.py @papaert-cloud
+/scripts/model_*.py @papaert-cloud
+/docs/ML_CLASSIFIER.md @papaert-cloud
+/docs/MODEL_CARD.md @papaert-cloud
+
+# Core Scanning & Analysis
+/forgetrace/scanners/ @papaert-cloud
+/forgetrace/reporters/ @papaert-cloud
+/forgetrace/audit.py @papaert-cloud
+/forgetrace/policy.py @papaert-cloud
+
+# Infrastructure & CI/CD
+/.github/workflows/ @papaert-cloud
+/docker-compose.yml @papaert-cloud
+/deployment/ @papaert-cloud
+/.env.example @papaert-cloud
+/requirements*.txt @papaert-cloud
+/setup.py @papaert-cloud
+
+# Security-Sensitive Files
+/forgetrace/scanners/secrets.py @papaert-cloud
+/forgetrace/scanners/vulnerabilities.py @papaert-cloud
+/forgetrace/scanners/sast.py @papaert-cloud
+/docs/VULNERABILITY_SCANNING.md @papaert-cloud
+/SECURITY.md @papaert-cloud
+
+# Configuration
+/config.yaml @papaert-cloud
+
+# Documentation
+/docs/ @papaert-cloud
+/*.md @papaert-cloud
