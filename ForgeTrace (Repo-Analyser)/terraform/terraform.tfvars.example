@@ -4,7 +4,7 @@
 # Environment Configuration
 environment  = "production"  # dev, staging, or production
 aws_region   = "us-east-1"  # Change to your preferred region
-owner_email  = "peter@beaconagile.net"
+owner_email  = "seun.beaconagilelogix@gmail.com"
 
 # IAM Configuration
 ci_user_name = "forgetrace-ci"
