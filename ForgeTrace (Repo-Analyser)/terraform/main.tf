@@ -124,6 +124,7 @@ output "deployment_summary" {
 # Output formatted for easy copy-paste to GitHub Secrets
 output "github_secrets_reference" {
   description = "Formatted values for GitHub Secrets configuration"
+  sensitive   = true
   value = <<-EOT
     
     ╔═══════════════════════════════════════════════════════════════╗
@@ -166,5 +167,4 @@ output "github_secrets_reference" {
     ⚠️  Enable MFA on AWS root account
     
   EOT
-  sensitive = false
 }
