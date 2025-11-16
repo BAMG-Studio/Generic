@@ -96,12 +96,13 @@ resource "aws_iam_user_policy_attachment" "ci_user_cloudwatch" {
 }
 
 # Optional: Read-only access to CloudTrail for audit purposes
-resource "aws_iam_user_policy_attachment" "ci_user_cloudtrail_readonly" {
-  count = var.enable_cloudtrail ? 1 : 0
-  
-  user       = aws_iam_user.ci_user.name
-  policy_arn = "arn:aws:iam::aws:policy/CloudTrailReadOnlyAccess"
-}
+# Note: Commented out - AWS managed policy may not be available in all accounts
+# resource "aws_iam_user_policy_attachment" "ci_user_cloudtrail_readonly" {
+#   count = var.enable_cloudtrail ? 1 : 0
+#   
+#   user       = aws_iam_user.ci_user.name
+#   policy_arn = "arn:aws:iam::aws:policy/AWSCloudTrailReadOnlyAccess"
+# }
 
 # Security: Force MFA after initial setup (optional, commented out)
 # Uncomment to enforce MFA for CI user
