@@ -40,6 +40,7 @@ EXPECTED OUTCOME:
 - Inference speed: <1ms per file classification
 """
 
+import argparse
 import json
 import pickle
 import sys
@@ -52,6 +53,42 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+
+def _parse_cli_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Train the ForgeTrace Random Forest model")
+    parser.add_argument(
+        "--phase",
+        default="ALL",
+        help="Phase context for this training run (default: ALL).",
+        choices=["ALL", "FOUNDATIONAL", "POLYGLOT", "SECURITY", "ENTERPRISE", "RESEARCH"],
+    )
+    parser.add_argument(
+        "--input",
+        dest="input_path",
+        help="Path to training dataset JSONL (falls back to positional argument).",
+    )
+    parser.add_argument(
+        "--output",
+        dest="output_path",
+        help="Where to store the trained model (falls back to positional argument or default).",
+    )
+    parser.add_argument(
+        "--mlflow-experiment",
+        dest="mlflow_experiment",
+        help="Optional MLflow experiment name (reserved for future logging).",
+    )
+    parser.add_argument(
+        "training_file",
+        nargs="?",
+        help="Positional dataset path (optional).",
+    )
+    parser.add_argument(
+        "model_file",
+        nargs="?",
+        help="Positional model output path (optional).",
+    )
+    return parser.parse_args()
 
 
 # Feature engineering controls
@@ -645,14 +682,14 @@ def main():
     - Precision/Recall: >0.80 for all classes
     - Model size: 5-10 MB
     """
-    if len(sys.argv) < 2:
-        print("Usage: python train_random_forest.py <training_data.jsonl>")
-        print("\nExample:")
-        print("  python train_random_forest.py training_output/dataset/training_dataset.jsonl")
-        sys.exit(1)
-    
-    training_file = sys.argv[1]
-    output_path = sys.argv[2] if len(sys.argv) > 2 else "models/ip_classifier_rf.pkl"
+    args = _parse_cli_args()
+    training_file = (
+        args.input_path
+        or args.training_file
+        or "training_output/dataset/complete_training_dataset.jsonl"
+    )
+    output_path = args.output_path or args.model_file or "models/ip_classifier_rf.pkl"
+    phase_context = args.phase.upper()
     
     if not Path(training_file).exists():
         print(f"❌ Error: File not found: {training_file}")
@@ -667,6 +704,9 @@ def main():
     print("\n🎯 Goal: Train ML model to classify code as foreground/third_party/background")
     print("📊 Dataset: 131,731 labeled examples from 54 open-source projects")
     print("⏱️  Estimated time: 2-3 minutes\n")
+    print(f"🎚️  Phase context: {phase_context}")
+    if args.mlflow_experiment:
+        print(f"📡 MLflow experiment: {args.mlflow_experiment}")
     
     # Step 1: Load data
     feature_names = infer_feature_schema(training_file)
