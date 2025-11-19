@@ -1,0 +1,39 @@
+Project: Executive Disorder (Vite + React + TS + Tailwind)
+
+Symptoms:
+- Multiple UI layers render out-of-bounds or underneath others (menus, carousel, settings modal).
+- Some cards/buttons are not clickable; pointer events seem blocked by hidden overlays.
+- Mobile device preview shows clipped content and horizontal scrolling.
+- Vite HMR error overlay takes focus and masks the app.
+- Runtime error: "require is not defined" in EnhancedMainMenu.tsx line ~27.
+
+Expected:
+- All major panels (Title → Main Menu → Leader Carousel → Settings Modal) should stay within a 16:9 safe area and scale responsively.
+- Correct z-index order: Modal (highest) > Menus > Carousels > Ticker/Background.
+- No invisible overlay should consume pointer events.
+- No horizontal scroll on 390–1366px widths.
+- No CommonJS `require` in client bundles.
+
+Please implement:
+1) Replace CommonJS with ESM imports:
+   - `import { characters } from '../../data/characters'` (instead of require) in EnhancedMainMenu.tsx.
+2) Global layout frame:
+   - Create a centered, bounded app shell: max-w-screen-2xl, aspect-[16/9] clamp, and scale within viewport.
+   - Ensure `html, body, #root` are height:100%; remove body horizontal scroll.
+3) Stacking context & overlays:
+   - Add explicit z-index tokens: background(0), ticker(5), carousel(10), menus(20), modal(50), toast(60).
+   - Ensure modals use `position: fixed; inset:0;` with backdrop and `pointer-events: auto`.
+   - Remove/disable any full-screen, transparent overlay that captures clicks.
+4) Overflow & hit-testing:
+   - Where panels scroll, use `overflow-auto` and `pointer-events-auto`; for non-interactive layers use `pointer-events-none`.
+5) Dev overlay:
+   - In vite.config.ts set `server: { hmr: { overlay: false } }` so the error panel doesn’t block UI (we’ll use console for errors).
+6) Tailwind/Reset:
+   - Verify Tailwind content globs include `client/src/**/*.{ts,tsx}`.
+   - Add a minimal CSS reset (box-sizing, img max-width:100%, etc.).
+7) Device preview presets:
+   - Confirm layout is responsive for iPhone 16/SE, Pixel 9, S23, and 1366×768. No horizontal scroll; interactive targets >= 44px.
+
+Deliverables:
+- PR with updated files (EnhancedMainMenu.tsx, AppShell/Layout, ui-fixes.css, tailwind.config, vite.config.ts).
+- Short test plan + screenshots across 4 device sizes.

@@ -1,0 +1,98 @@
+{
+  "created": "2025-10-09T20:59:01.053Z",
+  "game": "Executive Disorder",
+  "totalTracks": 10,
+  "tracks": [
+    {
+      "filename": "main_theme.mp3",
+      "title": "Executive Disorder Main Theme",
+      "description": "Satirical orchestral piece with pompous brass and comedic undertones",
+      "mood": "Grandiose yet comedic",
+      "tempo": "120 BPM",
+      "duration": "3:30",
+      "usage": "Main menu, game intro"
+    },
+    {
+      "filename": "character_selection.mp3",
+      "title": "Choose Your Chaos",
+      "description": "Upbeat, quirky music with political undertones",
+      "mood": "Playful and satirical",
+      "tempo": "130 BPM",
+      "duration": "2:45",
+      "usage": "Character selection screen"
+    },
+    {
+      "filename": "gameplay_ambient.mp3",
+      "title": "Oval Office Blues",
+      "description": "Ambient background music with subtle tension",
+      "mood": "Contemplative with underlying chaos",
+      "tempo": "90 BPM",
+      "duration": "5:00",
+      "usage": "Main gameplay loop"
+    },
+    {
+      "filename": "crisis_mode.mp3",
+      "title": "Political Meltdown",
+      "description": "Intense, fast-paced crisis music with dramatic strings",
+      "mood": "Urgent and chaotic",
+      "tempo": "150 BPM",
+      "duration": "2:00",
+      "usage": "Crisis events, low resources"
+    },
+    {
+      "filename": "victory_fanfare.mp3",
+      "title": "Democracy Prevails",
+      "description": "Triumphant orchestral victory theme with ironic twist",
+      "mood": "Celebratory with satirical edge",
+      "tempo": "140 BPM",
+      "duration": "1:30",
+      "usage": "Game victory, achievements"
+    },
+    {
+      "filename": "defeat_theme.mp3",
+      "title": "Impeachment Blues",
+      "description": "Melancholic yet comedic defeat music",
+      "mood": "Somber with dark humor",
+      "tempo": "70 BPM",
+      "duration": "2:00",
+      "usage": "Game over, defeat scenarios"
+    },
+    {
+      "filename": "diplomatic_tension.mp3",
+      "title": "International Incidents",
+      "description": "Suspenseful music with world instruments",
+      "mood": "Tense diplomatic atmosphere",
+      "tempo": "100 BPM",
+      "duration": "3:00",
+      "usage": "International crisis cards"
+    },
+    {
+      "filename": "media_chaos.mp3",
+      "title": "Breaking News Bedlam",
+      "description": "Fast-paced news theme with comedic breaks",
+      "mood": "Frantic media frenzy",
+      "tempo": "135 BPM",
+      "duration": "2:30",
+      "usage": "Media scandal events"
+    },
+    {
+      "filename": "economic_disaster.mp3",
+      "title": "Market Meltdown Melody",
+      "description": "Descending scales representing economic collapse",
+      "mood": "Ominous financial doom",
+      "tempo": "110 BPM",
+      "duration": "2:15",
+      "usage": "Economic crisis events"
+    },
+    {
+      "filename": "campaign_rally.mp3",
+      "title": "Rally Round the Nonsense",
+      "description": "Energetic campaign music with crowd sounds",
+      "mood": "Populist excitement",
+      "tempo": "125 BPM",
+      "duration": "3:00",
+      "usage": "Campaign events, popularity boosts"
+    }
+  ],
+  "note": "These are placeholder files with metadata. Actual audio generation pending."
+}

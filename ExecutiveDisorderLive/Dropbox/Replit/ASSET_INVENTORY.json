@@ -1,0 +1,1754 @@
+{
+  "createdAt": "2025-10-10T11:44:01.410Z",
+  "totalAssets": 124,
+  "totalSize": 248917323,
+  "totalSizeFormatted": "237.39 MB",
+  "categories": {
+    "Backgrounds": [
+      {
+        "name": "oval-office-alternate-angle.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-alternate-angle.png",
+        "size": 1545222,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-alternate-angle.png"
+      },
+      {
+        "name": "oval-office-dawn.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-dawn.png",
+        "size": 1097196,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-dawn.png"
+      },
+      {
+        "name": "oval-office-night.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-night.png",
+        "size": 939846,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-night.png"
+      },
+      {
+        "name": "oval-office-storm.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-storm.png",
+        "size": 1195201,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-storm.png"
+      },
+      {
+        "name": "oval-office-sunset.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-sunset.png",
+        "size": 1443634,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-sunset.png"
+      },
+      {
+        "name": "oval-office-winter.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-winter.png",
+        "size": 1493828,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-winter.png"
+      },
+      {
+        "name": "press-room-breaking-news.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-breaking-news.png",
+        "size": 1659188,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-breaking-news.png"
+      },
+      {
+        "name": "press-room-chaos.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-chaos.png",
+        "size": 1510287,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-chaos.png"
+      },
+      {
+        "name": "press-room-dramatic-silhouette.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-dramatic-silhouette.png",
+        "size": 786972,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-dramatic-silhouette.png"
+      },
+      {
+        "name": "press-room-night-empty.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-night-empty.png",
+        "size": 1025874,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-night-empty.png"
+      },
+      {
+        "name": "press-room-podium-view.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-podium-view.png",
+        "size": 1676300,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-podium-view.png"
+      },
+      {
+        "name": "press-room-setup-morning.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-setup-morning.png",
+        "size": 1504239,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-setup-morning.png"
+      },
+      {
+        "name": "situation-room-crisis-mode.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-crisis-mode.png",
+        "size": 1556832,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-crisis-mode.png"
+      },
+      {
+        "name": "situation-room-empty-quiet.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-empty-quiet.png",
+        "size": 1300761,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-empty-quiet.png"
+      },
+      {
+        "name": "situation-room-late-night.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-late-night.png",
+        "size": 1378289,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-late-night.png"
+      },
+      {
+        "name": "situation-room-overhead-view.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-overhead-view.png",
+        "size": 1521835,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-overhead-view.png"
+      },
+      {
+        "name": "situation-room-victory-celebration.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-victory-celebration.png",
+        "size": 1415670,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-victory-celebration.png"
+      },
+      {
+        "name": "situation-room-video-angle.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-video-angle.png",
+        "size": 1468668,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-video-angle.png"
+      },
+      {
+        "name": "white-house-aerial.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-aerial.png",
+        "size": 1766808,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-aerial.png"
+      },
+      {
+        "name": "white-house-autumn.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-autumn.png",
+        "size": 2256015,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-autumn.png"
+      },
+      {
+        "name": "white-house-night.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-night.png",
+        "size": 1351447,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-night.png"
+      },
+      {
+        "name": "white-house-snowstorm.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-snowstorm.png",
+        "size": 1258980,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-snowstorm.png"
+      },
+      {
+        "name": "white-house-spring.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-spring.png",
+        "size": 2471504,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-spring.png"
+      },
+      {
+        "name": "white-house-sunrise.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-sunrise.png",
+        "size": 1498998,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-sunrise.png"
+      },
+      {
+        "name": "oval-office.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/oval-office.png",
+        "size": 1650908,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/oval-office.png"
+      },
+      {
+        "name": "press-room.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/press-room.png",
+        "size": 1319686,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/press-room.png"
+      },
+      {
+        "name": "situation-room.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/situation-room.png",
+        "size": 1558628,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/situation-room.png"
+      },
+      {
+        "name": "white-house-exterior.png",
+        "path": "Dropbox/Replit/Scenes/Backgrounds/white-house-exterior.png",
+        "size": 1526093,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/white-house-exterior.png"
+      },
+      {
+        "name": "cyber-attack-active-defense.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-active-defense.png",
+        "size": 1669654,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-active-defense.png"
+      },
+      {
+        "name": "cyber-attack-breach-visualization.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-breach-visualization.png",
+        "size": 1713088,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-breach-visualization.png"
+      },
+      {
+        "name": "cyber-attack-defense-victory.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-defense-victory.png",
+        "size": 1511080,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-defense-victory.png"
+      },
+      {
+        "name": "cyber-attack-hacker-perspective.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-hacker-perspective.png",
+        "size": 1530892,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-hacker-perspective.png"
+      },
+      {
+        "name": "cyber-attack-night-breach.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-night-breach.png",
+        "size": 1674146,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-night-breach.png"
+      },
+      {
+        "name": "cyber-attack-ransomware-crisis.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-ransomware-crisis.png",
+        "size": 1839321,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-ransomware-crisis.png"
+      },
+      {
+        "name": "economic-crisis-aerial-view.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-aerial-view.png",
+        "size": 1679465,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-aerial-view.png"
+      },
+      {
+        "name": "economic-crisis-aftermath-empty.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-aftermath-empty.png",
+        "size": 1272049,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-aftermath-empty.png"
+      },
+      {
+        "name": "economic-crisis-market-close.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-market-close.png",
+        "size": 1578498,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-market-close.png"
+      },
+      {
+        "name": "economic-crisis-night-session.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-night-session.png",
+        "size": 1546844,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-night-session.png"
+      },
+      {
+        "name": "economic-crisis-pre-crash-calm.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-pre-crash-calm.png",
+        "size": 1443311,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-pre-crash-calm.png"
+      },
+      {
+        "name": "economic-crisis-trader-closeup.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-trader-closeup.png",
+        "size": 1418354,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-trader-closeup.png"
+      },
+      {
+        "name": "natural-disaster-aerial-command.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-aerial-command.png",
+        "size": 1866848,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-aerial-command.png"
+      },
+      {
+        "name": "natural-disaster-earthquake-active.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-earthquake-active.png",
+        "size": 1585013,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-earthquake-active.png"
+      },
+      {
+        "name": "natural-disaster-flood-aftermath.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-flood-aftermath.png",
+        "size": 1632931,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-flood-aftermath.png"
+      },
+      {
+        "name": "natural-disaster-hurricane-center.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-hurricane-center.png",
+        "size": 1599015,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-hurricane-center.png"
+      },
+      {
+        "name": "natural-disaster-tornado-warning.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-tornado-warning.png",
+        "size": 1567619,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-tornado-warning.png"
+      },
+      {
+        "name": "natural-disaster-wildfire-night.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-wildfire-night.png",
+        "size": 1406707,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-wildfire-night.png"
+      },
+      {
+        "name": "cyber-attack.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/cyber-attack.png",
+        "size": 1777629,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/cyber-attack.png"
+      },
+      {
+        "name": "economic-crisis.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/economic-crisis.png",
+        "size": 1703329,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/economic-crisis.png"
+      },
+      {
+        "name": "natural-disaster.png",
+        "path": "Dropbox/Replit/Scenes/CrisisScenes/natural-disaster.png",
+        "size": 1955054,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/natural-disaster.png"
+      },
+      {
+        "name": "cabinet-room-celebration-unity.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-celebration-unity.png",
+        "size": 1453285,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-celebration-unity.png"
+      },
+      {
+        "name": "cabinet-room-empty-dawn.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-empty-dawn.png",
+        "size": 1466668,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-empty-dawn.png"
+      },
+      {
+        "name": "cabinet-room-heated-debate.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-heated-debate.png",
+        "size": 1582728,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-heated-debate.png"
+      },
+      {
+        "name": "cabinet-room-night-emergency.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-night-emergency.png",
+        "size": 1242562,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-night-emergency.png"
+      },
+      {
+        "name": "cabinet-room-president-view.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-president-view.png",
+        "size": 1405879,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-president-view.png"
+      },
+      {
+        "name": "cabinet-room-video-briefing.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-video-briefing.png",
+        "size": 1629515,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-video-briefing.png"
+      },
+      {
+        "name": "international-summit-heated-argument.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-heated-argument.png",
+        "size": 1585181,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-heated-argument.png"
+      },
+      {
+        "name": "international-summit-night-marathon.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-night-marathon.png",
+        "size": 1642152,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-night-marathon.png"
+      },
+      {
+        "name": "international-summit-overhead-view.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-overhead-view.png",
+        "size": 2251364,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-overhead-view.png"
+      },
+      {
+        "name": "international-summit-pre-meeting-empty.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-pre-meeting-empty.png",
+        "size": 1634579,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-pre-meeting-empty.png"
+      },
+      {
+        "name": "international-summit-tense-negotiation.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-tense-negotiation.png",
+        "size": 1575007,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-tense-negotiation.png"
+      },
+      {
+        "name": "international-summit-treaty-signing.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-treaty-signing.png",
+        "size": 1974701,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-treaty-signing.png"
+      },
+      {
+        "name": "un-assembly-emergency-vote.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-emergency-vote.png",
+        "size": 1712449,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-emergency-vote.png"
+      },
+      {
+        "name": "un-assembly-empty-chamber.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-empty-chamber.png",
+        "size": 1674874,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-empty-chamber.png"
+      },
+      {
+        "name": "un-assembly-passionate-speech.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-passionate-speech.png",
+        "size": 1387171,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-passionate-speech.png"
+      },
+      {
+        "name": "un-assembly-speaker-view.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-speaker-view.png",
+        "size": 1723929,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-speaker-view.png"
+      },
+      {
+        "name": "un-assembly-standing-ovation.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-standing-ovation.png",
+        "size": 1873637,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-standing-ovation.png"
+      },
+      {
+        "name": "un-assembly-walkout-protest.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-walkout-protest.png",
+        "size": 1653311,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-walkout-protest.png"
+      },
+      {
+        "name": "cabinet-room.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/cabinet-room.png",
+        "size": 1542889,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/cabinet-room.png"
+      },
+      {
+        "name": "international-summit.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/international-summit.png",
+        "size": 1616505,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/international-summit.png"
+      },
+      {
+        "name": "un-assembly.png",
+        "path": "Dropbox/Replit/Scenes/MeetingRooms/un-assembly.png",
+        "size": 1748810,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/un-assembly.png"
+      },
+      {
+        "name": "breaking-news-behind-scenes.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-behind-scenes.png",
+        "size": 1641333,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-behind-scenes.png"
+      },
+      {
+        "name": "breaking-news-crisis-peak.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-crisis-peak.png",
+        "size": 1576182,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-crisis-peak.png"
+      },
+      {
+        "name": "breaking-news-developing-story.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-developing-story.png",
+        "size": 1569593,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-developing-story.png"
+      },
+      {
+        "name": "breaking-news-late-night.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-late-night.png",
+        "size": 1503881,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-late-night.png"
+      },
+      {
+        "name": "breaking-news-special-report.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-special-report.png",
+        "size": 1482361,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-special-report.png"
+      },
+      {
+        "name": "breaking-news-urgent-alert.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-urgent-alert.png",
+        "size": 1357814,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-urgent-alert.png"
+      },
+      {
+        "name": "tv-studio-anchor-perspective.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-anchor-perspective.png",
+        "size": 1585926,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-anchor-perspective.png"
+      },
+      {
+        "name": "tv-studio-breaking-news-chaos.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-breaking-news-chaos.png",
+        "size": 1719857,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-breaking-news-chaos.png"
+      },
+      {
+        "name": "tv-studio-dark-empty.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-dark-empty.png",
+        "size": 1040795,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-dark-empty.png"
+      },
+      {
+        "name": "tv-studio-debate-preparation.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-debate-preparation.png",
+        "size": 1624340,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-debate-preparation.png"
+      },
+      {
+        "name": "tv-studio-late-night.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-late-night.png",
+        "size": 1502229,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-late-night.png"
+      },
+      {
+        "name": "tv-studio-live-broadcast.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-live-broadcast.png",
+        "size": 1685188,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-live-broadcast.png"
+      },
+      {
+        "name": "breaking-news-set.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/breaking-news-set.png",
+        "size": 1545328,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/breaking-news-set.png"
+      },
+      {
+        "name": "tv-studio.png",
+        "path": "Dropbox/Replit/Scenes/NewsScenes/tv-studio.png",
+        "size": 1609242,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/tv-studio.png"
+      },
+      {
+        "name": "airport-arrival-diplomatic-ceremony.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-diplomatic-ceremony.png",
+        "size": 1241489,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-diplomatic-ceremony.png"
+      },
+      {
+        "name": "airport-arrival-emergency-landing.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-emergency-landing.png",
+        "size": 1779936,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-emergency-landing.png"
+      },
+      {
+        "name": "airport-arrival-media-frenzy.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-media-frenzy.png",
+        "size": 1967666,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-media-frenzy.png"
+      },
+      {
+        "name": "airport-arrival-night-landing.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-night-landing.png",
+        "size": 964003,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-night-landing.png"
+      },
+      {
+        "name": "airport-arrival-plane-perspective.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-plane-perspective.png",
+        "size": 1428988,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-plane-perspective.png"
+      },
+      {
+        "name": "airport-arrival-protest-reception.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-protest-reception.png",
+        "size": 1580764,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-protest-reception.png"
+      },
+      {
+        "name": "protest-square-aerial-view.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-aerial-view.png",
+        "size": 2463159,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-aerial-view.png"
+      },
+      {
+        "name": "protest-square-candlelight-vigil.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-candlelight-vigil.png",
+        "size": 1015524,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-candlelight-vigil.png"
+      },
+      {
+        "name": "protest-square-empty-aftermath.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-empty-aftermath.png",
+        "size": 1831658,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-empty-aftermath.png"
+      },
+      {
+        "name": "protest-square-peaceful-demonstration.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-peaceful-demonstration.png",
+        "size": 1937574,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-peaceful-demonstration.png"
+      },
+      {
+        "name": "protest-square-tense-standoff.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-tense-standoff.png",
+        "size": 1588068,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-tense-standoff.png"
+      },
+      {
+        "name": "protest-square-victory-celebration.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-victory-celebration.png",
+        "size": 1624482,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-victory-celebration.png"
+      },
+      {
+        "name": "rally-stage-divided-reactions.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-divided-reactions.png",
+        "size": 1565960,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-divided-reactions.png"
+      },
+      {
+        "name": "rally-stage-empty-preparation.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-empty-preparation.png",
+        "size": 1748800,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-empty-preparation.png"
+      },
+      {
+        "name": "rally-stage-massive-crowd.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-massive-crowd.png",
+        "size": 1667496,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-massive-crowd.png"
+      },
+      {
+        "name": "rally-stage-night-spotlights.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-night-spotlights.png",
+        "size": 1399779,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-night-spotlights.png"
+      },
+      {
+        "name": "rally-stage-podium-view.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-podium-view.png",
+        "size": 1744442,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-podium-view.png"
+      },
+      {
+        "name": "rally-stage-rain-weather.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-rain-weather.png",
+        "size": 1737834,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-rain-weather.png"
+      },
+      {
+        "name": "airport-arrival.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/airport-arrival.png",
+        "size": 1582561,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/airport-arrival.png"
+      },
+      {
+        "name": "protest-square.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/protest-square.png",
+        "size": 2000151,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/protest-square.png"
+      },
+      {
+        "name": "rally-stage.png",
+        "path": "Dropbox/Replit/Scenes/PublicSpaces/rally-stage.png",
+        "size": 1922530,
+        "category": "Backgrounds",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/rally-stage.png"
+      }
+    ],
+    "Videos": [
+      {
+        "name": "breaking-news-set-animated.mp4",
+        "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/breaking-news-set-animated.mp4",
+        "size": 7470828,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/breaking-news-set-animated.mp4"
+      },
+      {
+        "name": "oval-office-animated.mp4",
+        "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/oval-office-animated.mp4",
+        "size": 7211672,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/oval-office-animated.mp4"
+      },
+      {
+        "name": "press-room-animated.mp4",
+        "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/press-room-animated.mp4",
+        "size": 4158402,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/press-room-animated.mp4"
+      },
+      {
+        "name": "rally-stage-animated.mp4",
+        "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/rally-stage-animated.mp4",
+        "size": 11943875,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/rally-stage-animated.mp4"
+      },
+      {
+        "name": "white-house-exterior-animated.mp4",
+        "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/white-house-exterior-animated.mp4",
+        "size": 7996170,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/white-house-exterior-animated.mp4"
+      },
+      {
+        "name": "event-breaking-news.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-breaking-news.mp4",
+        "size": 3851495,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-breaking-news.mp4"
+      },
+      {
+        "name": "event-crisis-alert.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-crisis-alert.mp4",
+        "size": 4565859,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-crisis-alert.mp4"
+      },
+      {
+        "name": "event-defeat.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-defeat.mp4",
+        "size": 3841408,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-defeat.mp4"
+      },
+      {
+        "name": "event-diplomatic-tension.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-diplomatic-tension.mp4",
+        "size": 4475469,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-diplomatic-tension.mp4"
+      },
+      {
+        "name": "event-economic-crash.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-economic-crash.mp4",
+        "size": 4799887,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-economic-crash.mp4"
+      },
+      {
+        "name": "event-media-chaos.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-media-chaos.mp4",
+        "size": 4628388,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-media-chaos.mp4"
+      },
+      {
+        "name": "event-protest-escalation.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-protest-escalation.mp4",
+        "size": 6396392,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-protest-escalation.mp4"
+      },
+      {
+        "name": "event-scandal-reveal.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-scandal-reveal.mp4",
+        "size": 2878457,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-scandal-reveal.mp4"
+      },
+      {
+        "name": "event-victory-celebration.mp4",
+        "path": "Dropbox/Replit/Videos/Events/event-victory-celebration.mp4",
+        "size": 8049318,
+        "category": "Videos",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-victory-celebration.mp4"
+      }
+    ],
+    "Audio": [
+      {
+        "name": "background.mp3",
+        "path": "client/public/sounds/background.mp3",
+        "size": 854493,
+        "category": "Audio",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/background.mp3"
+      },
+      {
+        "name": "hit.mp3",
+        "path": "client/public/sounds/hit.mp3",
+        "size": 1197,
+        "category": "Audio",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/hit.mp3"
+      },
+      {
+        "name": "success.mp3",
+        "path": "client/public/sounds/success.mp3",
+        "size": 12165,
+        "category": "Audio",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/success.mp3"
+      }
+    ],
+    "Documentation": [
+      {
+        "name": "ZAPSPLAT_DOWNLOAD_LIST.md",
+        "path": "ZAPSPLAT_DOWNLOAD_LIST.md",
+        "size": 10732,
+        "category": "Documentation",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/08_Data_Files/ZAPSPLAT_DOWNLOAD_LIST.md"
+      },
+      {
+        "name": "replit.md",
+        "path": "replit.md",
+        "size": 7231,
+        "category": "Documentation",
+        "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/08_Data_Files/replit.md"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "name": "oval-office-alternate-angle.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-alternate-angle.png",
+      "size": 1545222,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-alternate-angle.png"
+    },
+    {
+      "name": "oval-office-dawn.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-dawn.png",
+      "size": 1097196,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-dawn.png"
+    },
+    {
+      "name": "oval-office-night.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-night.png",
+      "size": 939846,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-night.png"
+    },
+    {
+      "name": "oval-office-storm.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-storm.png",
+      "size": 1195201,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-storm.png"
+    },
+    {
+      "name": "oval-office-sunset.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-sunset.png",
+      "size": 1443634,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-sunset.png"
+    },
+    {
+      "name": "oval-office-winter.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/oval-office-winter.png",
+      "size": 1493828,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/oval-office-winter.png"
+    },
+    {
+      "name": "press-room-breaking-news.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-breaking-news.png",
+      "size": 1659188,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-breaking-news.png"
+    },
+    {
+      "name": "press-room-chaos.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-chaos.png",
+      "size": 1510287,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-chaos.png"
+    },
+    {
+      "name": "press-room-dramatic-silhouette.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-dramatic-silhouette.png",
+      "size": 786972,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-dramatic-silhouette.png"
+    },
+    {
+      "name": "press-room-night-empty.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-night-empty.png",
+      "size": 1025874,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-night-empty.png"
+    },
+    {
+      "name": "press-room-podium-view.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-podium-view.png",
+      "size": 1676300,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-podium-view.png"
+    },
+    {
+      "name": "press-room-setup-morning.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/press-room-setup-morning.png",
+      "size": 1504239,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/press-room-setup-morning.png"
+    },
+    {
+      "name": "situation-room-crisis-mode.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-crisis-mode.png",
+      "size": 1556832,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-crisis-mode.png"
+    },
+    {
+      "name": "situation-room-empty-quiet.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-empty-quiet.png",
+      "size": 1300761,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-empty-quiet.png"
+    },
+    {
+      "name": "situation-room-late-night.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-late-night.png",
+      "size": 1378289,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-late-night.png"
+    },
+    {
+      "name": "situation-room-overhead-view.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-overhead-view.png",
+      "size": 1521835,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-overhead-view.png"
+    },
+    {
+      "name": "situation-room-victory-celebration.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-victory-celebration.png",
+      "size": 1415670,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-victory-celebration.png"
+    },
+    {
+      "name": "situation-room-video-angle.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/situation-room-video-angle.png",
+      "size": 1468668,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/situation-room-video-angle.png"
+    },
+    {
+      "name": "white-house-aerial.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-aerial.png",
+      "size": 1766808,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-aerial.png"
+    },
+    {
+      "name": "white-house-autumn.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-autumn.png",
+      "size": 2256015,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-autumn.png"
+    },
+    {
+      "name": "white-house-night.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-night.png",
+      "size": 1351447,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-night.png"
+    },
+    {
+      "name": "white-house-snowstorm.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-snowstorm.png",
+      "size": 1258980,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-snowstorm.png"
+    },
+    {
+      "name": "white-house-spring.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-spring.png",
+      "size": 2471504,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-spring.png"
+    },
+    {
+      "name": "white-house-sunrise.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/Variations/white-house-sunrise.png",
+      "size": 1498998,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/Variations/white-house-sunrise.png"
+    },
+    {
+      "name": "oval-office.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/oval-office.png",
+      "size": 1650908,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/oval-office.png"
+    },
+    {
+      "name": "press-room.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/press-room.png",
+      "size": 1319686,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/press-room.png"
+    },
+    {
+      "name": "situation-room.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/situation-room.png",
+      "size": 1558628,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/situation-room.png"
+    },
+    {
+      "name": "white-house-exterior.png",
+      "path": "Dropbox/Replit/Scenes/Backgrounds/white-house-exterior.png",
+      "size": 1526093,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/Backgrounds/white-house-exterior.png"
+    },
+    {
+      "name": "cyber-attack-active-defense.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-active-defense.png",
+      "size": 1669654,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-active-defense.png"
+    },
+    {
+      "name": "cyber-attack-breach-visualization.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-breach-visualization.png",
+      "size": 1713088,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-breach-visualization.png"
+    },
+    {
+      "name": "cyber-attack-defense-victory.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-defense-victory.png",
+      "size": 1511080,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-defense-victory.png"
+    },
+    {
+      "name": "cyber-attack-hacker-perspective.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-hacker-perspective.png",
+      "size": 1530892,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-hacker-perspective.png"
+    },
+    {
+      "name": "cyber-attack-night-breach.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-night-breach.png",
+      "size": 1674146,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-night-breach.png"
+    },
+    {
+      "name": "cyber-attack-ransomware-crisis.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/cyber-attack-ransomware-crisis.png",
+      "size": 1839321,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/cyber-attack-ransomware-crisis.png"
+    },
+    {
+      "name": "economic-crisis-aerial-view.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-aerial-view.png",
+      "size": 1679465,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-aerial-view.png"
+    },
+    {
+      "name": "economic-crisis-aftermath-empty.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-aftermath-empty.png",
+      "size": 1272049,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-aftermath-empty.png"
+    },
+    {
+      "name": "economic-crisis-market-close.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-market-close.png",
+      "size": 1578498,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-market-close.png"
+    },
+    {
+      "name": "economic-crisis-night-session.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-night-session.png",
+      "size": 1546844,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-night-session.png"
+    },
+    {
+      "name": "economic-crisis-pre-crash-calm.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-pre-crash-calm.png",
+      "size": 1443311,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-pre-crash-calm.png"
+    },
+    {
+      "name": "economic-crisis-trader-closeup.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/economic-crisis-trader-closeup.png",
+      "size": 1418354,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/economic-crisis-trader-closeup.png"
+    },
+    {
+      "name": "natural-disaster-aerial-command.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-aerial-command.png",
+      "size": 1866848,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-aerial-command.png"
+    },
+    {
+      "name": "natural-disaster-earthquake-active.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-earthquake-active.png",
+      "size": 1585013,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-earthquake-active.png"
+    },
+    {
+      "name": "natural-disaster-flood-aftermath.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-flood-aftermath.png",
+      "size": 1632931,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-flood-aftermath.png"
+    },
+    {
+      "name": "natural-disaster-hurricane-center.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-hurricane-center.png",
+      "size": 1599015,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-hurricane-center.png"
+    },
+    {
+      "name": "natural-disaster-tornado-warning.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-tornado-warning.png",
+      "size": 1567619,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-tornado-warning.png"
+    },
+    {
+      "name": "natural-disaster-wildfire-night.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/Variations/natural-disaster-wildfire-night.png",
+      "size": 1406707,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/Variations/natural-disaster-wildfire-night.png"
+    },
+    {
+      "name": "cyber-attack.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/cyber-attack.png",
+      "size": 1777629,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/cyber-attack.png"
+    },
+    {
+      "name": "economic-crisis.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/economic-crisis.png",
+      "size": 1703329,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/economic-crisis.png"
+    },
+    {
+      "name": "natural-disaster.png",
+      "path": "Dropbox/Replit/Scenes/CrisisScenes/natural-disaster.png",
+      "size": 1955054,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/CrisisScenes/natural-disaster.png"
+    },
+    {
+      "name": "cabinet-room-celebration-unity.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-celebration-unity.png",
+      "size": 1453285,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-celebration-unity.png"
+    },
+    {
+      "name": "cabinet-room-empty-dawn.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-empty-dawn.png",
+      "size": 1466668,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-empty-dawn.png"
+    },
+    {
+      "name": "cabinet-room-heated-debate.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-heated-debate.png",
+      "size": 1582728,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-heated-debate.png"
+    },
+    {
+      "name": "cabinet-room-night-emergency.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-night-emergency.png",
+      "size": 1242562,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-night-emergency.png"
+    },
+    {
+      "name": "cabinet-room-president-view.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-president-view.png",
+      "size": 1405879,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-president-view.png"
+    },
+    {
+      "name": "cabinet-room-video-briefing.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/cabinet-room-video-briefing.png",
+      "size": 1629515,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/cabinet-room-video-briefing.png"
+    },
+    {
+      "name": "international-summit-heated-argument.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-heated-argument.png",
+      "size": 1585181,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-heated-argument.png"
+    },
+    {
+      "name": "international-summit-night-marathon.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-night-marathon.png",
+      "size": 1642152,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-night-marathon.png"
+    },
+    {
+      "name": "international-summit-overhead-view.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-overhead-view.png",
+      "size": 2251364,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-overhead-view.png"
+    },
+    {
+      "name": "international-summit-pre-meeting-empty.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-pre-meeting-empty.png",
+      "size": 1634579,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-pre-meeting-empty.png"
+    },
+    {
+      "name": "international-summit-tense-negotiation.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-tense-negotiation.png",
+      "size": 1575007,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-tense-negotiation.png"
+    },
+    {
+      "name": "international-summit-treaty-signing.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/international-summit-treaty-signing.png",
+      "size": 1974701,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/international-summit-treaty-signing.png"
+    },
+    {
+      "name": "un-assembly-emergency-vote.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-emergency-vote.png",
+      "size": 1712449,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-emergency-vote.png"
+    },
+    {
+      "name": "un-assembly-empty-chamber.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-empty-chamber.png",
+      "size": 1674874,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-empty-chamber.png"
+    },
+    {
+      "name": "un-assembly-passionate-speech.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-passionate-speech.png",
+      "size": 1387171,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-passionate-speech.png"
+    },
+    {
+      "name": "un-assembly-speaker-view.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-speaker-view.png",
+      "size": 1723929,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-speaker-view.png"
+    },
+    {
+      "name": "un-assembly-standing-ovation.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-standing-ovation.png",
+      "size": 1873637,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-standing-ovation.png"
+    },
+    {
+      "name": "un-assembly-walkout-protest.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/Variations/un-assembly-walkout-protest.png",
+      "size": 1653311,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/Variations/un-assembly-walkout-protest.png"
+    },
+    {
+      "name": "cabinet-room.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/cabinet-room.png",
+      "size": 1542889,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/cabinet-room.png"
+    },
+    {
+      "name": "international-summit.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/international-summit.png",
+      "size": 1616505,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/international-summit.png"
+    },
+    {
+      "name": "un-assembly.png",
+      "path": "Dropbox/Replit/Scenes/MeetingRooms/un-assembly.png",
+      "size": 1748810,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/MeetingRooms/un-assembly.png"
+    },
+    {
+      "name": "breaking-news-behind-scenes.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-behind-scenes.png",
+      "size": 1641333,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-behind-scenes.png"
+    },
+    {
+      "name": "breaking-news-crisis-peak.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-crisis-peak.png",
+      "size": 1576182,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-crisis-peak.png"
+    },
+    {
+      "name": "breaking-news-developing-story.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-developing-story.png",
+      "size": 1569593,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-developing-story.png"
+    },
+    {
+      "name": "breaking-news-late-night.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-late-night.png",
+      "size": 1503881,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-late-night.png"
+    },
+    {
+      "name": "breaking-news-special-report.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-special-report.png",
+      "size": 1482361,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-special-report.png"
+    },
+    {
+      "name": "breaking-news-urgent-alert.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/breaking-news-urgent-alert.png",
+      "size": 1357814,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/breaking-news-urgent-alert.png"
+    },
+    {
+      "name": "tv-studio-anchor-perspective.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-anchor-perspective.png",
+      "size": 1585926,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-anchor-perspective.png"
+    },
+    {
+      "name": "tv-studio-breaking-news-chaos.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-breaking-news-chaos.png",
+      "size": 1719857,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-breaking-news-chaos.png"
+    },
+    {
+      "name": "tv-studio-dark-empty.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-dark-empty.png",
+      "size": 1040795,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-dark-empty.png"
+    },
+    {
+      "name": "tv-studio-debate-preparation.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-debate-preparation.png",
+      "size": 1624340,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-debate-preparation.png"
+    },
+    {
+      "name": "tv-studio-late-night.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-late-night.png",
+      "size": 1502229,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-late-night.png"
+    },
+    {
+      "name": "tv-studio-live-broadcast.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/Variations/tv-studio-live-broadcast.png",
+      "size": 1685188,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/Variations/tv-studio-live-broadcast.png"
+    },
+    {
+      "name": "breaking-news-set.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/breaking-news-set.png",
+      "size": 1545328,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/breaking-news-set.png"
+    },
+    {
+      "name": "tv-studio.png",
+      "path": "Dropbox/Replit/Scenes/NewsScenes/tv-studio.png",
+      "size": 1609242,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/NewsScenes/tv-studio.png"
+    },
+    {
+      "name": "airport-arrival-diplomatic-ceremony.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-diplomatic-ceremony.png",
+      "size": 1241489,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-diplomatic-ceremony.png"
+    },
+    {
+      "name": "airport-arrival-emergency-landing.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-emergency-landing.png",
+      "size": 1779936,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-emergency-landing.png"
+    },
+    {
+      "name": "airport-arrival-media-frenzy.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-media-frenzy.png",
+      "size": 1967666,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-media-frenzy.png"
+    },
+    {
+      "name": "airport-arrival-night-landing.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-night-landing.png",
+      "size": 964003,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-night-landing.png"
+    },
+    {
+      "name": "airport-arrival-plane-perspective.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-plane-perspective.png",
+      "size": 1428988,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-plane-perspective.png"
+    },
+    {
+      "name": "airport-arrival-protest-reception.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/airport-arrival-protest-reception.png",
+      "size": 1580764,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/airport-arrival-protest-reception.png"
+    },
+    {
+      "name": "protest-square-aerial-view.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-aerial-view.png",
+      "size": 2463159,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-aerial-view.png"
+    },
+    {
+      "name": "protest-square-candlelight-vigil.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-candlelight-vigil.png",
+      "size": 1015524,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-candlelight-vigil.png"
+    },
+    {
+      "name": "protest-square-empty-aftermath.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-empty-aftermath.png",
+      "size": 1831658,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-empty-aftermath.png"
+    },
+    {
+      "name": "protest-square-peaceful-demonstration.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-peaceful-demonstration.png",
+      "size": 1937574,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-peaceful-demonstration.png"
+    },
+    {
+      "name": "protest-square-tense-standoff.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-tense-standoff.png",
+      "size": 1588068,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-tense-standoff.png"
+    },
+    {
+      "name": "protest-square-victory-celebration.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/protest-square-victory-celebration.png",
+      "size": 1624482,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/protest-square-victory-celebration.png"
+    },
+    {
+      "name": "rally-stage-divided-reactions.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-divided-reactions.png",
+      "size": 1565960,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-divided-reactions.png"
+    },
+    {
+      "name": "rally-stage-empty-preparation.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-empty-preparation.png",
+      "size": 1748800,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-empty-preparation.png"
+    },
+    {
+      "name": "rally-stage-massive-crowd.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-massive-crowd.png",
+      "size": 1667496,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-massive-crowd.png"
+    },
+    {
+      "name": "rally-stage-night-spotlights.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-night-spotlights.png",
+      "size": 1399779,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-night-spotlights.png"
+    },
+    {
+      "name": "rally-stage-podium-view.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-podium-view.png",
+      "size": 1744442,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-podium-view.png"
+    },
+    {
+      "name": "rally-stage-rain-weather.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/Variations/rally-stage-rain-weather.png",
+      "size": 1737834,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/Variations/rally-stage-rain-weather.png"
+    },
+    {
+      "name": "airport-arrival.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/airport-arrival.png",
+      "size": 1582561,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/airport-arrival.png"
+    },
+    {
+      "name": "protest-square.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/protest-square.png",
+      "size": 2000151,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/protest-square.png"
+    },
+    {
+      "name": "rally-stage.png",
+      "path": "Dropbox/Replit/Scenes/PublicSpaces/rally-stage.png",
+      "size": 1922530,
+      "category": "Backgrounds",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/05_Backgrounds/PublicSpaces/rally-stage.png"
+    },
+    {
+      "name": "breaking-news-set-animated.mp4",
+      "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/breaking-news-set-animated.mp4",
+      "size": 7470828,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/breaking-news-set-animated.mp4"
+    },
+    {
+      "name": "oval-office-animated.mp4",
+      "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/oval-office-animated.mp4",
+      "size": 7211672,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/oval-office-animated.mp4"
+    },
+    {
+      "name": "press-room-animated.mp4",
+      "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/press-room-animated.mp4",
+      "size": 4158402,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/press-room-animated.mp4"
+    },
+    {
+      "name": "rally-stage-animated.mp4",
+      "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/rally-stage-animated.mp4",
+      "size": 11943875,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/rally-stage-animated.mp4"
+    },
+    {
+      "name": "white-house-exterior-animated.mp4",
+      "path": "Dropbox/Replit/Videos/AnimatedBackgrounds/white-house-exterior-animated.mp4",
+      "size": 7996170,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/AnimatedBackgrounds/white-house-exterior-animated.mp4"
+    },
+    {
+      "name": "event-breaking-news.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-breaking-news.mp4",
+      "size": 3851495,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-breaking-news.mp4"
+    },
+    {
+      "name": "event-crisis-alert.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-crisis-alert.mp4",
+      "size": 4565859,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-crisis-alert.mp4"
+    },
+    {
+      "name": "event-defeat.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-defeat.mp4",
+      "size": 3841408,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-defeat.mp4"
+    },
+    {
+      "name": "event-diplomatic-tension.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-diplomatic-tension.mp4",
+      "size": 4475469,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-diplomatic-tension.mp4"
+    },
+    {
+      "name": "event-economic-crash.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-economic-crash.mp4",
+      "size": 4799887,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-economic-crash.mp4"
+    },
+    {
+      "name": "event-media-chaos.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-media-chaos.mp4",
+      "size": 4628388,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-media-chaos.mp4"
+    },
+    {
+      "name": "event-protest-escalation.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-protest-escalation.mp4",
+      "size": 6396392,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-protest-escalation.mp4"
+    },
+    {
+      "name": "event-scandal-reveal.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-scandal-reveal.mp4",
+      "size": 2878457,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-scandal-reveal.mp4"
+    },
+    {
+      "name": "event-victory-celebration.mp4",
+      "path": "Dropbox/Replit/Videos/Events/event-victory-celebration.mp4",
+      "size": 8049318,
+      "category": "Videos",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/09_Video_Assets/Events/event-victory-celebration.mp4"
+    },
+    {
+      "name": "background.mp3",
+      "path": "client/public/sounds/background.mp3",
+      "size": 854493,
+      "category": "Audio",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/background.mp3"
+    },
+    {
+      "name": "hit.mp3",
+      "path": "client/public/sounds/hit.mp3",
+      "size": 1197,
+      "category": "Audio",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/hit.mp3"
+    },
+    {
+      "name": "success.mp3",
+      "path": "client/public/sounds/success.mp3",
+      "size": 12165,
+      "category": "Audio",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/06_Audio/success.mp3"
+    },
+    {
+      "name": "ZAPSPLAT_DOWNLOAD_LIST.md",
+      "path": "ZAPSPLAT_DOWNLOAD_LIST.md",
+      "size": 10732,
+      "category": "Documentation",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/08_Data_Files/ZAPSPLAT_DOWNLOAD_LIST.md"
+    },
+    {
+      "name": "replit.md",
+      "path": "replit.md",
+      "size": 7231,
+      "category": "Documentation",
+      "destination": "Dropbox/Replit/ExecutiveDisorder_Assets/08_Data_Files/replit.md"
+    }
+  ]
+}

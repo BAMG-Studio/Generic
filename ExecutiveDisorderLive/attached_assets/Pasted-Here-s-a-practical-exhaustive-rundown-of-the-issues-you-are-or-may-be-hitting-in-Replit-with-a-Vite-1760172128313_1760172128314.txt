@@ -1,0 +1,271 @@
+Here’s a practical, exhaustive rundown of the issues you are or may be hitting in Replit with a Vite + React/TS + Tailwind app like Executive Disorder, plus clear fixes and quick diagnostics.
+
+1) “require is not defined” (CommonJS in the browser)
+
+Symptom: Red overlay shows require is not defined from a .tsx file.
+Why: Vite ships ESM to the browser; require is Node-only.
+Fix: Replace with ESM imports and proper exports.
+
+// data file
+export const characters = [/*...*/];
+
+// consumer
+import { characters } from '../../data/characters';
+
+
+Quick check: If you must load JSON dynamically, use:
+
+const data = await import('../../data/characters.json', { assert: { type: 'json' }});
+
+2) Vite HMR error overlay blocks the UI
+
+Symptom: Big red overlay covers everything; can’t click.
+Fix (dev only):
+
+// vite.config.ts
+export default defineConfig({
+  server: { hmr: { overlay: false } }
+});
+
+
+Tip: Keep the browser console open so you still see stack traces.
+
+3) Elements out-of-bounds / clipped / not clickable
+
+Root causes (most common):
+
+Missing global guardrails (overflow-x visible on body)
+
+Accidental stacking contexts (e.g., transform/filter on parents) reset z-index
+
+Full-screen invisible layers capturing clicks (pointer-events: auto)
+
+100vw/absolute elements fighting responsive containers
+
+Fix kit (drop-in):
+
+/* ui-fixes.css */
+*{box-sizing:border-box}
+html,body,#root{height:100%;margin:0;overflow-x:hidden}
+.app-shell{position:relative;max-width:1280px;margin:0 auto;padding:12px}
+.layer-bg{position:relative;z-index:0}
+.layer-ticker{position:relative;z-index:5;pointer-events:none}
+.layer-ui{position:relative;z-index:10}
+.layer-menu{position:relative;z-index:20}
+.layer-modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center}
+.panel-scroll{overflow:auto;-webkit-overflow-scrolling:touch}
+.visual-bg{pointer-events:none}
+.interactive{pointer-events:auto}
+
+
+Wrap your app:
+
+<div className="app-shell layer-ui">{/* UI here */}</div>
+
+
+Debug clicks fast: In DevTools console:
+
+document.addEventListener('click', e=>{
+  console.log('clicked', document.elementFromPoint(e.clientX,e.clientY));
+});
+
+
+If the logged element is a “cover”, add pointer-events:none to it, or raise your target’s z-index.
+
+4) Tailwind classes “not working” or randomly missing
+
+Symptom: Some classes don’t apply; production build looks stripped.
+Why: Purge/glob doesn’t include your files.
+Fix: Tailwind content must cover the client src.
+
+// tailwind.config.js
+module.exports = {
+  content: ["./client/index.html","./client/src/**/*.{js,ts,jsx,tsx}"],
+  theme:{extend:{}}, plugins:[]
+}
+
+
+Tip: Don’t generate classes dynamically (e.g., bg-${color}) without safelisting.
+
+5) Assets not loading (images, fonts), or show as broken
+
+Causes & fixes:
+
+Wrong paths with Vite base URL: use new URL('./img.png', import.meta.url).href or /public folder:
+
+Put files in client/public/logo.png → reference as /logo.png.
+
+Case sensitivity: Replit FS is case-sensitive; Logo.png ≠ logo.png.
+
+Missing vite.config.ts base if you deploy under a subpath:
+
+export default defineConfig({ base: '/', /*...*/ });
+
+6) Device preview chrome vs. real viewport
+
+Symptom: Looks fine “Full size”, breaks on iPhone/Pixel presets.
+Causes: No meta viewport, hardcoded widths, 100vh on mobile (address bar issues).
+Fixes:
+
+index.html:
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+
+Replace height:100vh with min-h-screen + container padding; avoid fixed pixel widths; use max-w-[1280px] w-full.
+
+7) “Nothing happens on click” (inside Replit preview)
+
+Cause: Replit embeds your app in an iframe; some full-screen layers (position: fixed) or pointer-events on parents behave unexpectedly.
+Fixes:
+
+Use the “Open in new tab” icon for a clean, top-level context.
+
+Ensure modals use .layer-modal (fixed + inset:0) and backdrop child below content.
+
+8) CORS / Mixed content (HTTP → HTTPS)
+
+Symptom: Network calls fail only on Replit.
+Why: The preview runs on HTTPS; HTTP API calls are blocked.
+Fix: Call HTTPS endpoints or proxy through Vite:
+
+// vite.config.ts
+server: {
+  proxy: {
+    '/api': { target: 'https://your-api.example.com', changeOrigin: true, secure: true }
+  }
+}
+
+9) Environment variables not available at runtime
+
+Symptom: process.env.X is undefined in the browser.
+Why: Vite only exposes VITE_* vars at build-time.
+Fix: Add in Replit “Secrets” as VITE_API_URL, etc., and reference:
+
+const api = import.meta.env.VITE_API_URL;
+
+10) Node/TypeScript version mismatches
+
+Symptom: Build/type errors that “don’t happen locally”.
+Fixes:
+
+Pin Node in package.json:
+
+"engines": { "node": ">=20 <21" }
+
+
+Ensure TS target and libs match your usage:
+
+// tsconfig.json
+{ "compilerOptions": { "target":"ES2020", "module":"ESNext", "lib":["ES2020","DOM"] } }
+
+11) Module path aliases failing
+
+Symptom: @/components/... imports fail in Replit.
+Fixes:
+
+// tsconfig.json
+"baseUrl":"./client/src",
+"paths":{ "@/*": ["*"] }
+
+// vite.config.ts
+resolve:{ alias: { '@': fileURLToPath(new URL('./client/src', import.meta.url)) } }
+
+12) Slow hot-reload / “changes not reflected”
+
+Causes: File watcher limits, heavy image assets, big dependency graph.
+Fixes:
+
+Restart the Repl if watcher stalls.
+
+Exclude huge folders from Vite optimize if needed.
+
+Keep images in /public and compress them (WebP/AVIF).
+
+Turn on Vite FS polling (last resort):
+
+server:{ watch:{ usePolling:true, interval:200 } }
+
+13) CSS transforms create unexpected stacking contexts
+
+Symptom: z-index “doesn’t work”.
+Why: Any transform, filter, opacity<1, position combos can create a new stacking context.
+Fix: Remove transform on parents or move the child you need on top to a higher DOM level; use the layer classes with explicit position + z-index.
+
+14) Scroll-jank on modals and panels
+
+Symptom: Background scrolls when modal open; mobile bounce.
+Fix:
+
+// on modal open
+document.documentElement.style.overflow = 'hidden';
+// on close
+document.documentElement.style.overflow = '';
+
+
+Or use a library modal that handles body scroll locking.
+
+15) Fonts look different or flicker
+
+Symptom: FOUT/FOIT in preview.
+Fixes:
+
+Self-host fonts in /public/fonts and preload:
+
+<link rel="preload" as="font" href="/fonts/Inter-var.woff2" type="font/woff2" crossorigin>
+
+
+Don’t load large Google fonts variants you don’t use.
+
+16) Service Worker cache confusion (if you tested PWA)
+
+Symptom: Old UI keeps showing.
+Fix: Disable SW in dev; if you built one, unregister:
+
+navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));
+caches.keys().then(keys=>keys.forEach(k=>caches.delete(k)));
+
+17) Large memory/CPU spikes during build
+
+Symptom: Replit build crashes or is very slow.
+Fixes:
+
+Use Vite’s defaults; avoid Babel-heavy plugins in dev.
+
+Defer expensive code paths (lazy load routes/components).
+
+Split vendor chunks only in prod builds.
+
+18) Git commit churn / lost changes
+
+Symptom: Replit restarts and you lose context.
+Fixes:
+
+Commit small, frequent changes via the Git tab.
+
+Use branches for risky UI refactors.
+
+19) Image drag/scroll blocking clicks on cards
+
+Symptom: Clicking card hits the img element, not the button.
+Fix:
+
+.card img { pointer-events: none; user-select: none; }
+
+
+Place the button above with higher z-index or wrap correctly.
+
+20) “Modal opens behind blur” (backdrop-filter pitfalls)
+
+Why: backdrop-filter + position can create odd stacking on some browsers.
+Fix: Use a separate dark backdrop div (no backdrop-filter), and a foreground dialog with z-index:50.
+
+21) Horizontal ticker layer steals touches
+
+Symptom: News ticker blocks taps near header.
+Fix: Add pointer-events: none to the ticker container, and pointer-events: auto only on its links (if clickable).
+
+22) Mixed canvas/WebGL artifacts (if you add shaders later)
+
+Symptom: Fixed elements shake or overlap incorrectly on scroll.
+Fix: Move the canvas to .layer-bg and ensure UI layers have will-change: transform removed unless necessary.

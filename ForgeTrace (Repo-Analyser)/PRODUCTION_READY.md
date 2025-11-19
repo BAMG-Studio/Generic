@@ -195,6 +195,45 @@ python -m forgetrace preview validation/
 ```
 
 
+### Phase-Scoped ML Training
+
+| Phase        | Minimum Free Disk | Notes                                |
+|--------------|-------------------|--------------------------------------|
+| POLYGLOT     | 80 GB             | Largest clones (LLVM, Kubernetes)    |
+| FOUNDATIONAL | 40 GB             | Python frameworks                    |
+| SECURITY     | 40 GB             | Tools like Trivy, Syft               |
+| ENTERPRISE   | 40 GB             | GitLab, Metabase, Grafana            |
+| RESEARCH     | 40 GB             | ML/AI runtimes                       |
+
+- Run `scripts/preflight_check.sh --phase <PHASE>` before invoking the workflow to validate disk, DVC remote, and arguments.
+- Trigger GitHub Actions with explicit phase input (defaults to `ALL`):
+
+```bash
+gh workflow run ml-training.yml \
+   --ref main \
+   --field phase=POLYGLOT \
+   --field tiers="1,2"
+```
+
+- The training pipeline now accepts multiple repeated `--phase` flags and optional `--tiers` for large runs:
+
+```bash
+python scripts/run_training_pipeline.py \
+   --phase POLYGLOT \
+   --phase SECURITY \
+   --tiers "1,2"
+```
+
+- Model training is aware of the same phase context:
+
+```bash
+python scripts/train_random_forest.py \
+   --phase POLYGLOT \
+   --input training_output/dataset/complete_training_dataset.jsonl \
+   --output models/ip_classifier_rf.pkl
+```
+
+
 ---
 
 ## 🔍 Monitoring & Logs

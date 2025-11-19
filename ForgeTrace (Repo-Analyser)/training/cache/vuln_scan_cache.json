@@ -1,0 +1,641 @@
+{
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/apple-swift:6e68130897086aada0507111e9edcabc83400fe8": {
+    "timestamp": 1762846538.281313,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/golang-go:5241d114f55cfa69a4bf8f2051f5d83d1f618859": {
+    "timestamp": 1762846652.4200952,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 1.77,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/encode-httpx:def4778d622e8bf49a9fea4dda78cca4cf666d8a": {
+    "timestamp": 1762846677.702227,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.83,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/django-django:2b0f24e6223bf7e294fba63741f58eb7b0bf49ff": {
+    "timestamp": 1762846918.9291463,
+    "metrics": {
+      "repo_vuln_density": 0.9090909090909091,
+      "repo_vuln_weighted_score": 5.0,
+      "repo_osv_noise_ratio": 0.9090909090909091,
+      "repo_vulnerability_count": 10.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/flask-flask:88a65bb374e87a18816a780dbd4ae69d307aa85c": {
+    "timestamp": 1762846925.035579,
+    "metrics": {
+      "repo_vuln_density": 0.09523809523809523,
+      "repo_vuln_weighted_score": 2.3,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 2.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/numpy-numpy:3abf57958fd9d4adc48261359d549ca78de29a44": {
+    "timestamp": 1762846925.5894508,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/pandas-dev-pandas:3157d077fd9ecc67d522e68a8e4d5b30f3208cf4": {
+    "timestamp": 1762846939.2472281,
+    "metrics": {
+      "repo_vuln_density": 0.45348837209302323,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.43023255813953487,
+      "repo_vulnerability_count": 39.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/pytest-dev-pytest:962a344ad8edb8b8abb12935d6b2c0c4a3b72ecc": {
+    "timestamp": 1762846946.8745444,
+    "metrics": {
+      "repo_vuln_density": 0.28,
+      "repo_vuln_weighted_score": 4.1,
+      "repo_osv_noise_ratio": 0.24,
+      "repo_vulnerability_count": 7.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/tiangolo-fastapi:6fae64ff49e8328048872714652a4dfa15406e41": {
+    "timestamp": 1762846952.5739443,
+    "metrics": {
+      "repo_vuln_density": 0.48717948717948717,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.46153846153846156,
+      "repo_vulnerability_count": 19.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/llvm-llvm-project:321afc76062482fb6a8852806f16d7c71a22e135": {
+    "timestamp": 1762847122.7697527,
+    "metrics": {
+      "repo_vuln_density": 0.09314586994727592,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.08787346221441125,
+      "repo_vulnerability_count": 53.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/python-cpython:92741c59f89e114474bdb2cb539107ef6bae0b9c": {
+    "timestamp": 1762847223.0194452,
+    "metrics": {
+      "repo_vuln_density": 0.08823529411764706,
+      "repo_vuln_weighted_score": 3.0,
+      "repo_osv_noise_ratio": 0.08823529411764706,
+      "repo_vulnerability_count": 6.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/rust-lang-rust:ab67c37c6dbea849aa3425146bfe99fb1f1d117a": {
+    "timestamp": 1762847448.068485,
+    "metrics": {
+      "repo_vuln_density": 0.04473684210526316,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.04342105263157895,
+      "repo_vulnerability_count": 34.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/dotnet-runtime:a571a94c9aed0b8b75271b1de25ec742ca6c4b8f": {
+    "timestamp": 1762847561.3188593,
+    "metrics": {
+      "repo_vuln_density": 0.03345724907063197,
+      "repo_vuln_weighted_score": 4.5,
+      "repo_osv_noise_ratio": 0.03345724907063197,
+      "repo_vulnerability_count": 9.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/microsoft-vscode:e75b1768984cdc056743a7793dbc2e0787cc983b": {
+    "timestamp": 1762848336.1073282,
+    "metrics": {
+      "repo_vuln_density": 0.09817430244574578,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.09782983120909404,
+      "repo_vulnerability_count": 285.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/apache-spark:2d16baea577cc933f6f3c0e0899389ad55234c13": {
+    "timestamp": 1762848478.9867058,
+    "metrics": {
+      "repo_vuln_density": 0.050966608084358524,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.04745166959578207,
+      "repo_vulnerability_count": 29.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/spring-projects-spring-framework:e4f8ae033864128f38464658c71e20bb169f2db1": {
+    "timestamp": 1762848489.6165226,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.62,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/elastic-elasticsearch:f2afb8855efc053142ee78d8cb3e7465c5802095": {
+    "timestamp": 1762848499.676223,
+    "metrics": {
+      "repo_vuln_density": 1.0,
+      "repo_vuln_weighted_score": 1.5,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 3.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/kubernetes-kubernetes:5a26d2af610d1b9d3aba01ebd608282d06b193fc": {
+    "timestamp": 1762848527.0391245,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.21,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/hashicorp-terraform:af0aaba5210b334c1f830fc6fa179b59ee52462e": {
+    "timestamp": 1762848541.574139,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/paritytech-substrate:033d4e86cc7eff0066cd376b9375f815761d653c": {
+    "timestamp": 1762848544.3049273,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/laravel-laravel:181249000391597d80b872169680f3921e951928": {
+    "timestamp": 1762848546.8262656,
+    "metrics": {
+      "repo_vuln_density": 1.1666666666666667,
+      "repo_vuln_weighted_score": 4.0,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 7.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/facebook-react:100fc4a8cf3b97de53b3566ed726b8ea7e6d7f81": {
+    "timestamp": 1762848721.6193829,
+    "metrics": {
+      "repo_vuln_density": 0.4175824175824176,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.4167371090448014,
+      "repo_vulnerability_count": 494.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/angular-angular:ec9dc94ceeb3c026c64e01c6889b7f5c6fd25a66": {
+    "timestamp": 1762849003.4482477,
+    "metrics": {
+      "repo_vuln_density": 0.13875598086124402,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.13875598086124402,
+      "repo_vulnerability_count": 174.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/denoland-deno:0d838faf17d5174a1e5894d77f533d754f4b05c5": {
+    "timestamp": 1762849023.7827847,
+    "metrics": {
+      "repo_vuln_density": 0.5434782608695652,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.5434782608695652,
+      "repo_vulnerability_count": 75.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/serde-rs-serde:e42684f9a773f0bd0d85f293f0a9034c1ba6c984": {
+    "timestamp": 1762849026.9596996,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/WordPress-WordPress:5bb704aa84e440d28f657b88c0ace3fb45bbf7cc": {
+    "timestamp": 1762849453.338125,
+    "metrics": {
+      "repo_vuln_density": 0.01782421634910879,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.016594960049170254,
+      "repo_vulnerability_count": 29.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/evanw-esbuild:d6427c91edab734da686c4c5d29ed580b08b9fd5": {
+    "timestamp": 1762849577.0916502,
+    "metrics": {
+      "repo_vuln_density": 0.006772009029345372,
+      "repo_vuln_weighted_score": 1.5,
+      "repo_osv_noise_ratio": 0.006772009029345372,
+      "repo_vulnerability_count": 3.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/zricethezav-gitleaks:ed65b65095eb699c614aa5ac058f6724539fb03f": {
+    "timestamp": 1762849579.6507783,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/github-codeql:eda23902baef03894bd0ce21c254e81097bb1ae3": {
+    "timestamp": 1762849603.3690815,
+    "metrics": {
+      "repo_vuln_density": 0.6483516483516484,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.6373626373626373,
+      "repo_vulnerability_count": 118.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/aquasecurity-trivy:2c3aca51953c820c574c9cadb0dc13e0c1ebd870": {
+    "timestamp": 1762849727.5517297,
+    "metrics": {
+      "repo_vuln_density": 0.44,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.42782608695652175,
+      "repo_vulnerability_count": 253.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/anchore-syft:66c78d44aff07d60195f5812999a90195f82eb93": {
+    "timestamp": 1762850012.7712417,
+    "metrics": {
+      "repo_vuln_density": 0.18264462809917356,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.18099173553719008,
+      "repo_vulnerability_count": 221.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/anchore-grype:9fb4183bfc5475a8909daed76a4e3a22c4b4f489": {
+    "timestamp": 1762850016.8496091,
+    "metrics": {
+      "repo_vuln_density": 0.75,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.7083333333333334,
+      "repo_vulnerability_count": 18.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/projectdiscovery-nuclei:cc0f1e96063be4914e681f42f30c81e6d68b2c08": {
+    "timestamp": 1762850017.908358,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/ossf-scorecard:1cefd4386d725580417420612abec5baf2323e4b": {
+    "timestamp": 1762850019.1419837,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/snyk-cli:588014ecf4be6db18cc4cb8e0b528ffd8839cd38": {
+    "timestamp": 1762851157.8718326,
+    "metrics": {
+      "repo_vuln_density": 0.20391312152216837,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.20301561658589123,
+      "repo_vulnerability_count": 1136.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/jeremylong-DependencyCheck:58b4ddccbdafcb7347979c6551c4f56049126dcc": {
+    "timestamp": 1762851377.271938,
+    "metrics": {
+      "repo_vuln_density": 0.1764032073310424,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.1706758304696449,
+      "repo_vulnerability_count": 154.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/odoo-odoo:b1b31aad88703c8c2ba067c656e3cef272e3f6fe": {
+    "timestamp": 1762851386.0308964,
+    "metrics": {
+      "repo_vuln_density": 0.8598130841121495,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.8317757009345794,
+      "repo_vulnerability_count": 92.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/gitlab-org-gitlab:edf105ce2a675813872305e467136266cc114fe1": {
+    "timestamp": 1762852095.302063,
+    "metrics": {
+      "repo_vuln_density": 0.1091314031180401,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.10764662212323682,
+      "repo_vulnerability_count": 294.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/metabase-metabase:e02de4a3bb6f75dc8ac060144c1c29b06b925624": {
+    "timestamp": 1762852425.776815,
+    "metrics": {
+      "repo_vuln_density": 0.27529761904761907,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.27529761904761907,
+      "repo_vulnerability_count": 370.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/apache-airflow:e6448226ed5a68ec4cedba377750c242e10f5729": {
+    "timestamp": 1762852762.9275541,
+    "metrics": {
+      "repo_vuln_density": 0.1264546159813809,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.12412723041117145,
+      "repo_vulnerability_count": 163.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/grafana-grafana:34e85113d2664c198e0fd62a80978c0b80c45863": {
+    "timestamp": 1762852865.629994,
+    "metrics": {
+      "repo_vuln_density": 0.3965183752417795,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.390715667311412,
+      "repo_vulnerability_count": 205.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/supabase-supabase:1d54b9d72b0ff9efa8bdfb1bf8598a936168279b": {
+    "timestamp": 1762854073.0966809,
+    "metrics": {
+      "repo_vuln_density": 0.13567421566590485,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.13525867442343653,
+      "repo_vulnerability_count": 653.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/zulip-zulip:14161ad7f08d84d7ecbd431734fca337e5c43b10": {
+    "timestamp": 1762854075.6980267,
+    "metrics": {
+      "repo_vuln_density": 1.00990099009901,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 204.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/mattermost-mattermost:e882a16c6b021c6379774270c5ed8b3f385ca582": {
+    "timestamp": 1762854965.7172306,
+    "metrics": {
+      "repo_vuln_density": 0.009207009207009207,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.008613008613008613,
+      "repo_vulnerability_count": 31.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/redashlabs-redash:772b160a7995d5248281680f7c5c6e7df9fb6887": {
+    "timestamp": 1762854974.930112,
+    "metrics": {
+      "repo_vuln_density": 0.9342105263157895,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.9210526315789473,
+      "repo_vulnerability_count": 142.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/hashicorp-nomad:68f51ff734fc2bab3efadbe392aaff9606cff1ff": {
+    "timestamp": 1762855294.6023552,
+    "metrics": {
+      "repo_vuln_density": 0.0950479233226837,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.09424920127795527,
+      "repo_vulnerability_count": 119.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/openai-whisper:c0d2f624c09dc18e709e37c2ad90c039a4eb72a2": {
+    "timestamp": 1762855299.0926223,
+    "metrics": {
+      "repo_vuln_density": 1.0,
+      "repo_vuln_weighted_score": 3.5,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 7.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/deepmind-alphafold:40be3ec6c764fd7e8f4478ac6280f438058e271a": {
+    "timestamp": 1762855311.861802,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.75,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/microsoft-DeepSpeed:df59f203f40c8a292dd019ae68c9e6c88f107026": {
+    "timestamp": 1762855319.3248987,
+    "metrics": {
+      "repo_vuln_density": 0.6862745098039216,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.6862745098039216,
+      "repo_vulnerability_count": 35.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/google-research-bert:eedf5716ce1268e56f0a50264a88cafad334ac61": {
+    "timestamp": 1762855330.702628,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.21,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/facebookresearch-segment-anything:dca509fe793f601edb92606367a655c15ac00fdf": {
+    "timestamp": 1762855331.0174513,
+    "metrics": {
+      "repo_vuln_density": 1.0,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 45.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/huggingface-diffusers:5a47442f9221eba3abe3e27c7af8304241ac58ca": {
+    "timestamp": 1762855364.2467387,
+    "metrics": {
+      "repo_vuln_density": 0.33093525179856115,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.30935251798561153,
+      "repo_vulnerability_count": 46.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/google-research-t5x:f74917cc8f311f323c90c6b1412e7a6c555837d5": {
+    "timestamp": 1762855368.6656227,
+    "metrics": {
+      "repo_vuln_density": 0.6666666666666666,
+      "repo_vuln_weighted_score": 2.0,
+      "repo_osv_noise_ratio": 0.6666666666666666,
+      "repo_vulnerability_count": 4.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/facebookresearch-detectron2:a9c0821a12ad353fb2a96f019515990d5460c5ac": {
+    "timestamp": 1762855370.2002861,
+    "metrics": {
+      "repo_vuln_density": 0.75,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.75,
+      "repo_vulnerability_count": 15.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/pytest-dev-pytest:3d80757431c209eaae411909119bcc38a6847739": {
+    "timestamp": 1762855380.9706483,
+    "metrics": {
+      "repo_vuln_density": 0.28,
+      "repo_vuln_weighted_score": 4.1,
+      "repo_osv_noise_ratio": 0.24,
+      "repo_vulnerability_count": 7.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/llvm-llvm-project:5cb2c6806e8c78776935b2972e4c8b6dfcda697d": {
+    "timestamp": 1762855562.0620146,
+    "metrics": {
+      "repo_vuln_density": 0.09314586994727592,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.08787346221441125,
+      "repo_vulnerability_count": 53.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/python-cpython:8435a2278f964f48d36edbc5092be5ebecfcb120": {
+    "timestamp": 1762855671.811124,
+    "metrics": {
+      "repo_vuln_density": 0.08823529411764706,
+      "repo_vuln_weighted_score": 3.0,
+      "repo_osv_noise_ratio": 0.08823529411764706,
+      "repo_vulnerability_count": 6.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/apple-swift:de51fed13d9283f7652331348314229333e9d308": {
+    "timestamp": 1762855713.7841563,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.0,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/microsoft-vscode:5b098aa18f691179a52bc9bd50378177bf585394": {
+    "timestamp": 1762856637.5242407,
+    "metrics": {
+      "repo_vuln_density": 0.09817430244574578,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.09782983120909404,
+      "repo_vulnerability_count": 285.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/elastic-elasticsearch:4a6fd8a9a9a7aa9d89a1a69fae222d6fffea39ad": {
+    "timestamp": 1762856666.6481488,
+    "metrics": {
+      "repo_vuln_density": 1.0,
+      "repo_vuln_weighted_score": 1.5,
+      "repo_osv_noise_ratio": 1.0,
+      "repo_vulnerability_count": 3.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/github-codeql:8624f9c6608ad963282963f1cc8454a7b93ccc67": {
+    "timestamp": 1762856759.646017,
+    "metrics": {
+      "repo_vuln_density": 0.6483516483516484,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.6373626373626373,
+      "repo_vulnerability_count": 118.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/aquasecurity-trivy:09ea608a3b21b42defae1401598c26dfbc698f9e": {
+    "timestamp": 1762856893.6337833,
+    "metrics": {
+      "repo_vuln_density": 0.44076655052264807,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.42857142857142855,
+      "repo_vulnerability_count": 253.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/gitlab-org-gitlab:1e0b48496ce47b384aceff8d7a97594f23c02f65": {
+    "timestamp": 1762857652.1693506,
+    "metrics": {
+      "repo_vuln_density": 0.1091314031180401,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.10764662212323682,
+      "repo_vulnerability_count": 294.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/metabase-metabase:3c92dcd0715c8d0dd9453c58f887df08ca28a0df": {
+    "timestamp": 1762857965.4252465,
+    "metrics": {
+      "repo_vuln_density": 0.27529761904761907,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.27529761904761907,
+      "repo_vulnerability_count": 370.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/apache-airflow:da0940431b39ad9378215bb0fedd80bc786056df": {
+    "timestamp": 1762858316.8030617,
+    "metrics": {
+      "repo_vuln_density": 0.1264546159813809,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.12412723041117145,
+      "repo_vulnerability_count": 163.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/grafana-grafana:f34f7579a2d031f0f2aa9c251b2f5dd19a8b615c": {
+    "timestamp": 1762858406.0995722,
+    "metrics": {
+      "repo_vuln_density": 0.3965183752417795,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.390715667311412,
+      "repo_vulnerability_count": 205.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/supabase-supabase:cf18948dcffd635b3628c6608734e8985d53ea6c": {
+    "timestamp": 1762859575.148732,
+    "metrics": {
+      "repo_vuln_density": 0.13567421566590485,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.13525867442343653,
+      "repo_vulnerability_count": 653.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/mattermost-mattermost:fddb7eee1416c0335530f303e3d62a3da56f424b": {
+    "timestamp": 1762860464.3537571,
+    "metrics": {
+      "repo_vuln_density": 0.009207009207009207,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.008613008613008613,
+      "repo_vulnerability_count": 31.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/huggingface-diffusers:66e6a0215fc2cb6be3b26f1b0a8c6622ab79a85c": {
+    "timestamp": 1762860512.2745721,
+    "metrics": {
+      "repo_vuln_density": 0.33093525179856115,
+      "repo_vuln_weighted_score": 6.0,
+      "repo_osv_noise_ratio": 0.30935251798561153,
+      "repo_vulnerability_count": 46.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/spring-projects-spring-framework:3ac7f839007cc1c2c16d3e38de3f2df725bc6465": {
+    "timestamp": 1762960518.6200566,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.62,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  },
+  "/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/.forgetrace-cache/repos/kubernetes-kubernetes:f33a6e5a92594a84193129635e0a9e5ac5824d69": {
+    "timestamp": 1762960606.4592168,
+    "metrics": {
+      "repo_vuln_density": 0.0,
+      "repo_vuln_weighted_score": 0.21,
+      "repo_osv_noise_ratio": 0.0,
+      "repo_vulnerability_count": 0.0
+    }
+  }
+}

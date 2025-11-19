@@ -1,0 +1,339 @@
+TOOLS TO REQUEST
+Use Vite + React + TypeScript + Tailwind CSS + Framer Motion for animations.
+Add Radix UI for accessible components and Lucide React for icons.
+Include video.js for advanced video playback control.
+Set up Intersection Observer API for scroll-triggered effects.
+
+Copy
+
+Insert at cursor
+🎬 VIDEO BACKGROUND INTEGRATION
+Prompt for Replit Agent:
+Create a full-screen video background component with these features:
+- MP4/WebM format support with fallback poster image
+- Aspect ratio preservation (object-fit: cover)
+- Lazy loading and intersection observer
+- Reduced motion support for accessibility
+- Overlay gradient for text readability
+- Mobile-optimized (pause on mobile, show poster)
+- Preload metadata only, autoplay muted loop
+
+Copy
+
+Insert at cursor
+Copy-Paste Component Request:
+// Ask Replit: "Create VideoBackground.tsx with these specs:"
+
+interface VideoBackgroundProps {
+  src: string;
+  poster: string;
+  overlay?: 'dark' | 'light' | 'gradient';
+  blur?: boolean;
+}
+
+// Features needed:
+// - object-fit: cover for no distortion
+// - position: fixed with inset-0
+// - z-index: -1 for background layer
+// - preload="metadata" for performance
+// - playsInline muted loop autoplay
+// - Pause on mobile devices
+// - Respect prefers-reduced-motion
+
+Copy
+
+Insert at cursor
+tsx
+🎨 MODERN STYLE SYSTEMS
+1. Design Tokens (Request this structure)
+Create a design system with:
+- Color palette: Primary (blue-600), Secondary (purple-600), Accent (amber-500)
+- Glassmorphism: backdrop-blur-xl with bg-white/10
+- Neumorphism shadows for cards
+- Dark mode support with CSS variables
+- Smooth transitions (duration-300 ease-in-out)
+
+Copy
+
+Insert at cursor
+2. Tailwind Config Extension
+// Prompt: "Add these to tailwind.config.js theme.extend:"
+
+{
+  colors: {
+    primary: { 50: '#eff6ff', 600: '#2563eb', 900: '#1e3a8a' },
+    glass: 'rgba(255,255,255,0.1)'
+  },
+  backdropBlur: { xs: '2px', '3xl': '64px' },
+  animation: {
+    'fade-in': 'fadeIn 0.5s ease-in',
+    'slide-up': 'slideUp 0.6s cubic-bezier(0.16,1,0.3,1)',
+    'float': 'float 3s ease-in-out infinite'
+  },
+  keyframes: {
+    fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+    slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+    float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } }
+  }
+}
+
+Copy
+
+Insert at cursor
+js
+🔤 FONT RECOMMENDATIONS
+Prompt for Fonts:
+Add these Google Fonts to index.html:
+- Inter (weights: 400, 500, 600, 700) for UI text
+- Space Grotesk (weights: 500, 700) for headings
+- JetBrains Mono (weight: 400) for code/stats
+
+Preload with:
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+Update tailwind.config.js fontFamily:
+fontFamily: {
+  sans: ['Inter', 'system-ui', 'sans-serif'],
+  display: ['Space Grotesk', 'sans-serif'],
+  mono: ['JetBrains Mono', 'monospace']
+}
+
+Copy
+
+Insert at cursor
+🧩 UI COMPONENTS TO REQUEST
+1. Glassmorphic Card
+Create a reusable Card component with:
+- backdrop-blur-xl bg-white/10 border border-white/20
+- Hover effect: scale-105 transition-transform
+- Shadow: shadow-2xl shadow-black/50
+- Rounded corners: rounded-2xl
+- Padding: p-6
+
+Copy
+
+Insert at cursor
+2. Animated Button Variants
+Create Button component with variants:
+- Primary: bg-gradient-to-r from-blue-600 to-purple-600
+- Ghost: bg-transparent border-2 border-white/30 hover:bg-white/10
+- Glow: shadow-lg shadow-blue-500/50 hover:shadow-blue-500/80
+- All with: transition-all duration-300 ease-out
+
+Copy
+
+Insert at cursor
+3. Hero Section with Video
+Create Hero component:
+- Full viewport height (min-h-screen)
+- Video background with dark overlay (bg-black/40)
+- Centered content with z-index: 10
+- Animated text: animate-slide-up with stagger delays
+- CTA buttons with hover:scale-110
+
+Copy
+
+Insert at cursor
+4. Resource Meter (for game stats)
+Create ResourceMeter component:
+- Progress bar with gradient fill
+- Animated width transition (transition-all duration-500)
+- Icon + label + percentage
+- Glow effect when value changes
+- Color coding: green (>70%), yellow (30-70%), red (<30%)
+
+Copy
+
+Insert at cursor
+5. Modal/Dialog
+Use Radix UI Dialog with:
+- Backdrop: fixed inset-0 bg-black/80 backdrop-blur-sm
+- Content: glassmorphic card centered
+- Framer Motion: initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+- Close button with Lucide X icon
+
+Copy
+
+Insert at cursor
+📐 LAYOUT PATTERNS
+Request these structures:
+1. Grid Layout for Cards:
+   grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr
+
+2. Flex Container for Navigation:
+   flex items-center justify-between px-6 py-4 backdrop-blur-md fixed top-0 w-full z-50
+
+3. Centered Content Wrapper:
+   max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+
+4. Sticky Sidebar:
+   sticky top-20 h-[calc(100vh-5rem)] overflow-y-auto
+
+5. Full-bleed Section:
+   relative w-screen left-[50%] right-[50%] ml-[-50vw] mr-[-50vw]
+
+Copy
+
+Insert at cursor
+🎭 ANIMATION LIBRARIES
+Prompt for installation:
+Install Framer Motion:
+npm install framer-motion
+
+Use for:
+- Page transitions
+- Scroll-triggered animations (useScroll, useTransform)
+- Gesture animations (drag, hover, tap)
+- Layout animations (layoutId for shared element transitions)
+
+Copy
+
+Insert at cursor
+Example Request:
+// "Create animated card grid with stagger effect:"
+
+import { motion } from 'framer-motion';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const item = {
+  hidden: { y: 20, opacity: 0 },
+  show: { y: 0, opacity: 1 }
+};
+
+<motion.div variants={container} initial="hidden" animate="show" className="grid...">
+  {items.map(i => <motion.div key={i} variants={item}>...</motion.div>)}
+</motion.div>
+
+Copy
+
+Insert at cursor
+tsx
+🎨 VISUAL EFFECTS TO REQUEST
+1. Parallax Scrolling
+Add react-scroll-parallax:
+npm install react-scroll-parallax
+
+Use ParallaxProvider wrapper and Parallax component with speed={-20} for background layers
+
+Copy
+
+Insert at cursor
+2. Particle Background
+Install tsparticles:
+npm install tsparticles @tsparticles/react @tsparticles/slim
+
+Request: "Create subtle particle effect with 50 white dots, slow movement, no links"
+
+Copy
+
+Insert at cursor
+3. Text Gradient Animation
+Create utility class:
+.text-gradient {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient 3s linear infinite;
+}
+
+@keyframes gradient {
+  to { background-position: 200% center; }
+}
+
+Copy
+
+Insert at cursor
+4. Glow Effects
+Add to components:
+- box-shadow: 0 0 20px rgba(59, 130, 246, 0.5)
+- filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.7))
+- Animate on hover with transition-shadow duration-300
+
+Copy
+
+Insert at cursor
+🔧 ACCESSIBILITY FEATURES
+Request these:
+Add to all interactive elements:
+- focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2
+- aria-label for icon-only buttons
+- Keyboard navigation support (Tab, Enter, Escape)
+- prefers-reduced-motion media query checks
+- ARIA live regions for dynamic content
+- Color contrast ratio ≥ 4.5:1 for text
+
+Copy
+
+Insert at cursor
+📱 RESPONSIVE BREAKPOINTS
+Tailwind defaults to use:
+sm: 640px   (mobile landscape)
+md: 768px   (tablet)
+lg: 1024px  (desktop)
+xl: 1280px  (large desktop)
+2xl: 1536px (ultra-wide)
+
+Pattern: mobile-first
+<div className="text-sm md:text-base lg:text-lg">
+
+Copy
+
+Insert at cursor
+🎯 COMPLETE REPLIT PROMPT TEMPLATE
+Create a modern React app with:
+
+TECH STACK:
+- Vite + React 18 + TypeScript
+- Tailwind CSS with custom config
+- Framer Motion for animations
+- Radix UI for accessible components
+- Lucide React for icons
+
+VIDEO BACKGROUND:
+- Full-screen video with no distortion (object-fit: cover)
+- Dark overlay for text readability
+- Mobile fallback to poster image
+- Respect prefers-reduced-motion
+
+DESIGN SYSTEM:
+- Glassmorphism style (backdrop-blur-xl, bg-white/10)
+- Color palette: Blue primary, Purple secondary, Amber accent
+- Fonts: Inter (body), Space Grotesk (headings)
+- Dark theme with smooth transitions
+
+COMPONENTS NEEDED:
+1. VideoBackground with overlay options
+2. GlassCard with hover effects
+3. AnimatedButton with variants (primary, ghost, glow)
+4. ResourceMeter with color-coded progress
+5. Modal using Radix Dialog
+6. Navigation with backdrop blur
+
+ANIMATIONS:
+- Fade-in on page load
+- Slide-up for cards with stagger
+- Hover scale effects (scale-105)
+- Smooth transitions (duration-300)
+
+LAYOUT:
+- Responsive grid (1/2/3 columns)
+- Max-width container (max-w-7xl)
+- Sticky navigation
+- Mobile-first approach
+
+Make it production-ready with proper TypeScript types and accessibility.
+
+
+Copy
+
+Insert at cursor

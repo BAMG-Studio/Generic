@@ -1,0 +1,130 @@
+{
+  "sbom": {
+    "tool": "syft",
+    "format": "syft-json",
+    "packages": [
+      {
+        "id": "21ce5e236ab6b5c2",
+        "name": "requests",
+        "version": "2.31.0",
+        "type": "python",
+        "foundBy": "python-package-cataloger",
+        "locations": [
+          {
+            "path": "/requirements.txt",
+            "accessPath": "/requirements.txt",
+            "annotations": {
+              "evidence": "primary"
+            }
+          }
+        ],
+        "licenses": [],
+        "language": "python",
+        "cpes": [
+          {
+            "cpe": "cpe:2.3:a:python:requests:2.31.0:*:*:*:*:*:*:*",
+            "source": "nvd-cpe-dictionary"
+          }
+        ],
+        "purl": "pkg:pypi/requests@2.31.0",
+        "metadataType": "python-pip-requirements-entry",
+        "metadata": {
+          "name": "requests",
+          "versionConstraint": "==2.31.0"
+        }
+      }
+    ],
+    "exports": [
+      {
+        "format": "cyclonedx-json",
+        "content": "{\"$schema\":\"http://cyclonedx.org/schema/bom-1.6.schema.json\",\"bomFormat\":\"CycloneDX\",\"specVersion\":\"1.6\",\"serialNumber\":\"urn:uuid:026dc9d2-c3ca-413c-ae06-f71e9572204f\",\"version\":1,\"metadata\":{\"timestamp\":\"2025-11-18T12:19:05-06:00\",\"tools\":{\"components\":[{\"type\":\"application\",\"author\":\"anchore\",\"name\":\"syft\",\"version\":\"1.32.0\"}]},\"component\":{\"bom-ref\":\"df907cb577882f90\",\"type\":\"file\",\"name\":\"test_output/ml_demo_repo\"}},\"components\":[{\"bom-ref\":\"pkg:pypi/requests@2.31.0?package-id=21ce5e236ab6b5c2\",\"type\":\"library\",\"name\":\"requests\",\"version\":\"2.31.0\",\"cpe\":\"cpe:2.3:a:python:requests:2.31.0:*:*:*:*:*:*:*\",\"purl\":\"pkg:pypi/requests@2.31.0\",\"properties\":[{\"name\":\"syft:package:foundBy\",\"value\":\"python-package-cataloger\"},{\"name\":\"syft:package:language\",\"value\":\"python\"},{\"name\":\"syft:package:type\",\"value\":\"python\"},{\"name\":\"syft:package:metadataType\",\"value\":\"python-pip-requirements-entry\"},{\"name\":\"syft:location:0:path\",\"value\":\"/requirements.txt\"}]},{\"bom-ref\":\"26ca2b7dc025d550\",\"type\":\"file\",\"name\":\"/home/papaert/projects/lab/ForgeTrace (Repo-Analyser)/test_output/ml_demo_repo/requirements.txt\",\"hashes\":[{\"alg\":\"SHA-1\",\"content\":\"a2bfe473aa5adb335c40ae7bc7b7729540c0e3a4\"},{\"alg\":\"SHA-256\",\"content\":\"6e5cb17864f3c3c67d46e6f481ef087b28d11de424243b78b4c74bcbbd677479\"}]}]}\n"
+      },
+      {
+        "format": "spdx-json",
+        "content": "{\"spdxVersion\":\"SPDX-2.3\",\"dataLicense\":\"CC0-1.0\",\"SPDXID\":\"SPDXRef-DOCUMENT\",\"name\":\"test_output/ml_demo_repo\",\"documentNamespace\":\"https://anchore.com/syft/dir/test_output/ml_demo_repo-2901a090-8cf7-44f1-a492-de02ddbdce64\",\"creationInfo\":{\"licenseListVersion\":\"3.27\",\"creators\":[\"Organization: Anchore, Inc\",\"Tool: syft-1.32.0\"],\"created\":\"2025-11-18T18:19:06Z\"},\"packages\":[{\"name\":\"requests\",\"SPDXID\":\"SPDXRef-Package-python-requests-21ce5e236ab6b5c2\",\"versionInfo\":\"2.31.0\",\"supplier\":\"NOASSERTION\",\"downloadLocation\":\"NOASSERTION\",\"filesAnalyzed\":false,\"sourceInfo\":\"acquired package info from installed python package manifest file: /requirements.txt\",\"licenseConcluded\":\"NOASSERTION\",\"licenseDeclared\":\"NOASSERTION\",\"copyrightText\":\"NOASSERTION\",\"externalRefs\":[{\"referenceCategory\":\"SECURITY\",\"referenceType\":\"cpe23Type\",\"referenceLocator\":\"cpe:2.3:a:python:requests:2.31.0:*:*:*:*:*:*:*\"},{\"referenceCategory\":\"PACKAGE-MANAGER\",\"referenceType\":\"purl\",\"referenceLocator\":\"pkg:pypi/requests@2.31.0\"}]},{\"name\":\"test_output/ml_demo_repo\",\"SPDXID\":\"SPDXRef-DocumentRoot-Directory-test-output-ml-demo-repo\",\"supplier\":\"NOASSERTION\",\"downloadLocation\":\"NOASSERTION\",\"filesAnalyzed\":false,\"licenseConcluded\":\"NOASSERTION\",\"licenseDeclared\":\"NOASSERTION\",\"copyrightText\":\"NOASSERTION\",\"primaryPackagePurpose\":\"FILE\"}],\"files\":[{\"fileName\":\"requirements.txt\",\"SPDXID\":\"SPDXRef-File-requirements.txt-26ca2b7dc025d550\",\"fileTypes\":[\"TEXT\"],\"checksums\":[{\"algorithm\":\"SHA1\",\"checksumValue\":\"a2bfe473aa5adb335c40ae7bc7b7729540c0e3a4\"},{\"algorithm\":\"SHA256\",\"checksumValue\":\"6e5cb17864f3c3c67d46e6f481ef087b28d11de424243b78b4c74bcbbd677479\"}],\"licenseConcluded\":\"NOASSERTION\",\"licenseInfoInFiles\":[\"NOASSERTION\"],\"copyrightText\":\"NOASSERTION\"}],\"relationships\":[{\"spdxElementId\":\"SPDXRef-Package-python-requests-21ce5e236ab6b5c2\",\"relatedSpdxElement\":\"SPDXRef-File-requirements.txt-26ca2b7dc025d550\",\"relationshipType\":\"OTHER\",\"comment\":\"evident-by: indicates the package's existence is evident by the given file\"},{\"spdxElementId\":\"SPDXRef-DocumentRoot-Directory-test-output-ml-demo-repo\",\"relatedSpdxElement\":\"SPDXRef-Package-python-requests-21ce5e236ab6b5c2\",\"relationshipType\":\"CONTAINS\"},{\"spdxElementId\":\"SPDXRef-DOCUMENT\",\"relatedSpdxElement\":\"SPDXRef-DocumentRoot-Directory-test-output-ml-demo-repo\",\"relationshipType\":\"DESCRIBES\"}]}\n"
+      }
+    ]
+  },
+  "git": {
+    "authors": {
+      "Sample User": {
+        "commits": 1,
+        "lines_added": 0,
+        "lines_removed": 0
+      }
+    },
+    "churn": {
+      "Sample User": {
+        "added": 16,
+        "removed": 0,
+        "files": 3
+      }
+    },
+    "timeline": [
+      {
+        "author": "Sample User",
+        "date": "2025-11-05T23:10:45-06:00"
+      }
+    ],
+    "total_commits": 1
+  },
+  "similarity": {
+    "total_files": 1,
+    "duplicates": [],
+    "fuzzy_hashes": {},
+    "has_tlsh": false,
+    "has_ssdeep": false
+  },
+  "licenses": {
+    "tool": "heuristic",
+    "findings": []
+  },
+  "secrets": {
+    "findings": [],
+    "count": 0
+  },
+  "sast": {
+    "findings": [],
+    "count": 0
+  },
+  "vulnerabilities": {
+    "total_packages": 2,
+    "vulnerable_packages": 0,
+    "total_vulnerabilities": 0,
+    "by_severity": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "UNKNOWN": 0
+    },
+    "vulnerabilities": [],
+    "scan_timestamp": "2025-11-18T18:19:07.366034+00:00",
+    "sources": [
+      "OSV",
+      "GitHub Advisory",
+      "OWASP Dependency-Check"
+    ],
+    "normalized_vuln_density": 0.0,
+    "weighted_vuln_score": 0.0,
+    "osv_noise_ratio": 0.0,
+    "risk_analysis": {
+      "total_packages": 2.0,
+      "unpinned_packages": 0.0,
+      "unpinned_ratio": 0.0,
+      "risky_dependency_count": 1.0,
+      "risky_dependency_ratio": 0.5,
+      "weighted_risk_score": 1.0
+    }
+  },
+  "classification": {},
+  "rewriteability": {},
+  "cost_estimate": {
+    "total_loc": 0,
+    "foreground_loc": 0,
+    "estimated_days": 0.0,
+    "estimated_hours": 0.0,
+    "estimated_cost_usd": 0.0
+  },
+  "policy_violations": []
+}

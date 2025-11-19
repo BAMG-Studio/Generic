@@ -1,0 +1,32 @@
+{
+  "lastUpdated": "2025-10-10T11:44:45.401Z",
+  "generations": {
+    "scenes": {
+      "provider": "Stock Image Tool",
+      "count": 105,
+      "mainScenes": 15,
+      "variations": 90,
+      "totalSize": "158 MB",
+      "location": "05_Backgrounds/"
+    },
+    "videos": {
+      "provider": "Runway ML Gen-3 Alpha Turbo",
+      "count": 14,
+      "animatedBackgrounds": 5,
+      "eventClips": 9,
+      "totalSize": "78 MB",
+      "location": "09_Video_Assets/"
+    },
+    "audio": {
+      "provider": "Pending - Zapsplat Manual Download",
+      "count": 74,
+      "status": "Manual download required",
+      "location": "06_Audio/SFX/"
+    },
+    "music": {
+      "provider": "Pending - Mubert API",
+      "status": "Awaiting API key",
+      "location": "06_Audio/Music/"
+    }
+  }
+}

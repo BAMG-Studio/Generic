@@ -1,0 +1,59 @@
+You are generating a polished Unity opening for the satirical political game “Executive Disorder” (tone: sharp, witty, modern). Build a Title→Main Menu flow using UGUI + TextMeshPro for Unity 2021+.
+
+Implement:
+
+Boot.unity → instantly loads TitleScreen.unity (BootLoader.cs)
+TitleScreen.unity → animated logo + tagline + “Press Any Key” pulse → transitions to MainMenu.unity on input or 2.5s (TitleScreenController.cs, PressAnyKeyPrompt.cs)
+MainMenu.unity → buttons: New Game, Continue (only if save exists), Character Gallery, Settings, Quit (MainMenuController.cs)
+Leader carousel (LeaderCarousel.cs) showing 12 leader tiles (portrait, name, 1‑line hook). Click → Character Selection scene (existing or placeholder).
+Headline ticker (HeadlineTicker.cs) scrolling absurd headlines from JSON if available (Resources/Data/Cards/*.json) or fallback list.
+Settings (SettingsMenu.cs) with music/SFX sliders, subtitle toggle, and “Chaos Level” (Normal/Chaotic/Pandemonium) persisted via PlayerPrefs.
+Visual + UX:
+
+Title: animated logo + tagline “Democracy: Optional. Chaos: Guaranteed.”
+Subtle parallax or animated background (no heavy shaders).
+Clean satirical UI, hover/press states, short SFX for focus/confirm.
+Safe defaults if data/analytics missing.
+If analytics JSON exists at ~/Dropbox/Replit/ExecutiveDisorder_Assets/analytics/analytics_*.json, surface: Total Players, Avg Survival Days in footer; otherwise hide.
+
+Deliver:
+
+C# scripts (full code): BootLoader.cs, TitleScreenController.cs, PressAnyKeyPrompt.cs, MainMenuController.cs, LeaderCarousel.cs, HeadlineTicker.cs, SettingsMenu.cs
+Prefab hierarchies and Canvas/Rect settings
+Scene wiring checklist (which GameObject each script goes on, required references)
+Minimal test steps to verify input, scaling, and fallbacks
+Keep dependencies to UGUI + TextMeshPro only. No third‑party packages. Handle missing files gracefully.
+“““
+
+Opening Narrative (VO/Text)
+
+Goal: 20–30s intro that sets stakes and tone, then cleanly hands off to “Press Any Key.”
+Paste into Replit:
+“““
+Write a 120–160 word opening monologue for the game “Executive Disorder” that plays over the Title screen. Tone: satirical, sharp, modern political absurdism. It should hint at the four resources (Popularity, Stability, Media Trust, Economic Health) and the idea that the player’s tiny choices cause outsized chaos. End with a short punchy line that pairs with a “Press Any Key” prompt. No direct tutorial language. 2–3 short paragraphs max.
+“““
+Sample you can use:
+
+“Welcome to the nation where every decision trends, crashes, and gets a documentary within 24 hours. Your approval’s a seesaw, the markets are a mood, and the press has the attention span of a caffeinated squirrel…” (Replit can rewrite/extend in style.)
+Web Alternative (if iterating on Replit Web)
+
+Goal: A single responsive landing page that mimics the Unity opening.
+Deliverables: index.html, styles.css, main.js
+Features: animated title + tagline, “Press Any Key” or “Start” button, leader carousel (12 cards, image + hook), scrolling headline ticker from cards.json, settings modal (sliders/toggles stored in localStorage), continue button if save.json present, analytics footer if analytics.json present.
+Paste into Replit:
+“““
+Build a responsive landing page for “Executive Disorder” with:
+Animated title + tagline, satirical political design.
+Press Any Key (keyboard) OR Start button (mobile) that reveals a main menu.
+Menu: New Game, Continue (enabled only if save.json exists), Character Gallery, Settings, Quit (disabled on web).
+Leader carousel (12 cards with image, name, 1‑line hook); click returns selection id.
+Headline ticker reading from cards.json (fallback to hardcoded list).
+Settings modal: music/SFX sliders, subtitle toggle, “Chaos Level” choice saved in localStorage.
+Analytics footer: show Total Players + Avg Survival if analytics.json present, otherwise hide.
+Provide complete HTML/CSS/JS and a brief wire‑up guide. No external libraries.
+“““
+Nice‑to‑Have Follow‑ups
+
+Add short stinger SFX and fade transition between scenes.
+Add 3 difficulty presets affecting early resource volatility.
+Cycle backgrounds with time‑of‑day tint.
