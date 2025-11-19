@@ -1,0 +1,5 @@
+outs:
+- md5: 18671d83ddc143be0d258ab95d268c3f
+  size: 3457564
+  hash: md5
+  path: ip_classifier_rf.pkl

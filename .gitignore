@@ -44,7 +44,7 @@ deployment/nginx/ssl/
 # MLflow and DVC
 mlruns/
 .dvc/cache/
-*.dvc
+!.dvc/
 
 # Client profiling data (sensitive)
 training/profiling_datasets/*/samples/
