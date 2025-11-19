@@ -6,7 +6,9 @@ import socketserver
 import sys
 import webbrowser
 from pathlib import Path
+
 import yaml
+
 from .audit import AuditEngine
 
 
@@ -14,14 +16,14 @@ def cmd_audit(args, config):
     """Run audit command"""
     engine = AuditEngine(args.repo_path, args.out, config)
     engine.run()
-    
+
     # Print output paths
     out_dir = Path(args.out).resolve()
     print(f"\n{'='*60}")
-    print(f"✓ Audit complete!")
+    print("✓ Audit complete!")
     print(f"{'='*60}\n")
     print("📁 Output Files:")
-    
+
     files_to_check = [
         ("audit.json", "Complete findings (JSON)"),
         ("ip_contribution_table.md", "IP contribution table"),
@@ -29,7 +31,7 @@ def cmd_audit(args, config):
         ("executive_summary.html", "Executive summary (HTML)"),
         ("executive_summary.pdf", "Executive summary (PDF)"),
     ]
-    
+
     for filename, description in files_to_check:
         filepath = out_dir / filename
         if filepath.exists():
@@ -37,62 +39,66 @@ def cmd_audit(args, config):
             print(f"    file://{filepath}")
         else:
             print(f"  ✗ {filename:<30} - Not generated")
-    
-    print(f"\n💡 View reports:")
+
+    print("\n💡 View reports:")
     print(f"   forgetrace preview {args.out}")
-    print(f"   (or open files manually with your browser)\n")
+    print("   (or open files manually with your browser)\n")
 
 
 def cmd_preview(args):
     """Launch HTTP server to preview reports"""
     output_dir = Path(args.output_dir).resolve()
-    
+
     if not output_dir.exists():
         print(f"Error: Directory not found: {output_dir}", file=sys.stderr)
         sys.exit(1)
-    
+
     # Find HTML report
     report_html = output_dir / "report.html"
     exec_html = output_dir / "executive_summary.html"
-    
-    html_file = report_html if report_html.exists() else exec_html if exec_html.exists() else None
-    
+
+    html_file = (
+        report_html
+        if report_html.exists()
+        else exec_html if exec_html.exists() else None
+    )
+
     if not html_file:
         print(f"Warning: No HTML reports found in {output_dir}", file=sys.stderr)
         print("Looking for: report.html or executive_summary.html\n")
-    
+
     # Start HTTP server
     port = args.port
-    
+
     class Handler(http.server.SimpleHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
             super().__init__(*args, directory=str(output_dir), **kwargs)
-    
-    print(f"🚀 Starting HTTP server...")
+
+    print("🚀 Starting HTTP server...")
     print(f"   Directory: {output_dir}")
     print(f"   URL: http://localhost:{port}/")
-    
+
     if html_file:
         print(f"   Report: http://localhost:{port}/{html_file.name}")
-    
-    print(f"\n📊 Available files:")
+
+    print("\n📊 Available files:")
     for file in sorted(output_dir.iterdir()):
         if file.is_file():
             print(f"   - {file.name}")
-    
-    print(f"\n💡 Press Ctrl+C to stop the server\n")
-    
+
+    print("\n💡 Press Ctrl+C to stop the server\n")
+
     # Auto-open browser if requested
     if args.browser and html_file:
         url = f"http://localhost:{port}/{html_file.name}"
         print(f"🌐 Opening {url} in browser...")
         webbrowser.open(url)
-    
+
     try:
         with socketserver.TCPServer(("", port), Handler) as httpd:
             httpd.serve_forever()
     except KeyboardInterrupt:
-        print(f"\n\n✓ Server stopped.")
+        print("\n\n✓ Server stopped.")
 
 
 def main():
@@ -109,23 +115,27 @@ Examples:
 
   # Preview on custom port with auto-open
   forgetrace preview ./results --port 8080 --browser
-        """
+        """,
     )
-    
+
     subparsers = parser.add_subparsers(dest="command", help="Command to run")
-    
+
     # Audit command
     audit_parser = subparsers.add_parser("audit", help="Run IP audit on repository")
     audit_parser.add_argument("repo_path", help="Path to repository")
     audit_parser.add_argument("--out", default="./out", help="Output directory")
     audit_parser.add_argument("--config", default="config.yaml", help="Config file")
-    
+
     # Metadata arguments for report generation
     audit_parser.add_argument("--client-name", help="Client/project name for reports")
-    audit_parser.add_argument("--engagement-window", help="Engagement timeframe (e.g., 'Q4 2025')")
-    audit_parser.add_argument("--prepared-by", help="Name of person/team preparing report")
+    audit_parser.add_argument(
+        "--engagement-window", help="Engagement timeframe (e.g., 'Q4 2025')"
+    )
+    audit_parser.add_argument(
+        "--prepared-by", help="Name of person/team preparing report"
+    )
     audit_parser.add_argument("--contact-email", help="Contact email for report")
-    
+
     # Tool path overrides
     audit_parser.add_argument("--syft", help="Path to syft binary")
     audit_parser.add_argument("--scancode", help="Path to scancode")
@@ -135,30 +145,44 @@ Examples:
     audit_parser.add_argument(
         "--exec-mode",
         choices=["board", "executive", "detailed"],
-        help="Executive summary depth (board, executive, detailed)"
+        help="Executive summary depth (board, executive, detailed)",
     )
-    
+    audit_parser.add_argument(
+        "--sbom-format",
+        action="append",
+        help=(
+            "Request additional SBOM export formats (e.g., cyclonedx-json, spdx-json). "
+            "Can be specified multiple times"
+        ),
+    )
+
     # Preview command
-    preview_parser = subparsers.add_parser("preview", help="Launch HTTP server to view reports")
+    preview_parser = subparsers.add_parser(
+        "preview", help="Launch HTTP server to view reports"
+    )
     preview_parser.add_argument("output_dir", help="Directory containing audit results")
-    preview_parser.add_argument("--port", type=int, default=8000, help="HTTP server port (default: 8000)")
-    preview_parser.add_argument("--browser", action="store_true", help="Auto-open browser")
-    
+    preview_parser.add_argument(
+        "--port", type=int, default=8000, help="HTTP server port (default: 8000)"
+    )
+    preview_parser.add_argument(
+        "--browser", action="store_true", help="Auto-open browser"
+    )
+
     args = parser.parse_args()
-    
+
     if not args.command:
         parser.print_help()
         sys.exit(1)
-    
+
     if args.command == "audit":
         config_path = Path(args.config)
         if not config_path.exists():
             print(f"Config not found: {args.config}", file=sys.stderr)
             sys.exit(1)
-        
+
         with open(config_path) as f:
             config = yaml.safe_load(f)
-        
+
         # Override metadata from CLI
         if not config.get("metadata"):
             config["metadata"] = {}
@@ -170,7 +194,7 @@ Examples:
             config["metadata"]["prepared_by"] = args.prepared_by
         if args.contact_email:
             config["metadata"]["contact_email"] = args.contact_email
-        
+
         # Override tool paths from CLI
         if args.syft:
             config["tools"]["syft"] = args.syft
@@ -187,11 +211,17 @@ Examples:
             if "output" not in config or not isinstance(config["output"], dict):
                 config["output"] = {}
             config["output"]["executive_mode"] = args.exec_mode
-        
+
+        if args.sbom_format:
+            if "output" not in config or not isinstance(config["output"], dict):
+                config["output"] = {}
+            config["output"]["sbom_formats"] = args.sbom_format
+
         cmd_audit(args, config)
-    
+
     elif args.command == "preview":
         cmd_preview(args)
+
 
 if __name__ == "__main__":
     main()

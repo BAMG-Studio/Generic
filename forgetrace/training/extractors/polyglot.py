@@ -11,7 +11,6 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 from ..core import RepoSpec, TrainingExample
 from .base import BaseExtractor
 
-
 LANGUAGE_EXTENSIONS: Dict[str, Tuple[str, ...]] = {
     "python": (".py",),
     "javascript": (".js", ".jsx", ".mjs", ".cjs"),
@@ -131,12 +130,18 @@ class PolyglotExtractor(BaseExtractor):
                 return language
         return None
 
-    def _language_features(self, language: str, file_path: Path, text: str) -> Dict[str, float]:
+    def _language_features(
+        self, language: str, file_path: Path, text: str
+    ) -> Dict[str, float]:
         lines = text.splitlines()
         imports = self._import_metrics(language, lines)
         entropy = self._token_entropy(text)
         nesting = self._nesting_depth(language, text)
-        vendor_indicator = 1.0 if any(part.lower() in THIRD_PARTY_DIRS for part in file_path.parts) else 0.0
+        vendor_indicator = (
+            1.0
+            if any(part.lower() in THIRD_PARTY_DIRS for part in file_path.parts)
+            else 0.0
+        )
 
         return {
             "language_entropy": entropy,
@@ -257,18 +262,22 @@ class PolyglotExtractor(BaseExtractor):
                     return parts[1].split("::")[0]
         elif language == "java":
             if line.startswith("import "):
-                return line[len("import "):].rstrip(";")
+                return line[len("import ") :].rstrip(";")
         elif language == "scala":
             if line.startswith("import "):
-                return line[len("import "):].strip()
+                return line[len("import ") :].strip()
         elif language in {"cpp", "c"}:
             match = re.search(r"#include\s*[<\"]([^>\"]+)[>\"]", line)
             if match:
                 token = match.group(1)
-                return f"<{token}>" if line.strip().startswith("#include <") else f'"{token}"'
+                return (
+                    f"<{token}>"
+                    if line.strip().startswith("#include <")
+                    else f'"{token}"'
+                )
         elif language == "php":
             if line.startswith("use "):
-                return line[len("use "):].rstrip(";")
+                return line[len("use ") :].rstrip(";")
         return None
 
     def _matches_any(self, target: str, hints: Iterable[str]) -> bool:
@@ -280,12 +289,18 @@ class PolyglotExtractor(BaseExtractor):
             return 0.0
         counts = Counter(tokens)
         total = sum(counts.values())
-        entropy = -sum((count / total) * math.log(count / total, 2) for count in counts.values())
+        entropy = -sum(
+            (count / total) * math.log(count / total, 2) for count in counts.values()
+        )
         return float(entropy)
 
     def _nesting_depth(self, language: str, text: str) -> float:
         if language in {"python"}:
-            indent_levels = [len(line) - len(line.lstrip(" ")) for line in text.splitlines() if line.strip()]
+            indent_levels = [
+                len(line) - len(line.lstrip(" "))
+                for line in text.splitlines()
+                if line.strip()
+            ]
             if not indent_levels:
                 return 0.0
             normalized = [level // 4 for level in indent_levels]

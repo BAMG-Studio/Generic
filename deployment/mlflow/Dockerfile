@@ -1,5 +1,5 @@
 # MLflow with PostgreSQL support
-FROM ghcr.io/mlflow/mlflow:v2.9.0
+FROM ghcr.io/mlflow/mlflow:v3.6.0
 
 # Install PostgreSQL driver and AWS SDK
 RUN pip install --no-cache-dir \

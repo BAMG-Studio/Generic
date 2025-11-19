@@ -9,7 +9,6 @@ from typing import Dict, List
 from ..core import RepoSpec, TrainingExample
 from .base import BaseExtractor
 
-
 SPDX_PATTERN = re.compile(r"SPDX-License-Identifier:\s*(?P<license>[A-Za-z0-9\-\.]+)")
 
 
@@ -47,16 +46,29 @@ class FoundationalExtractor(BaseExtractor):
 
     def _additional_features(self, file_path: Path) -> Dict[str, float]:
         text = file_path.read_text(errors="ignore")
-        has_spdx = bool(SPDX_PATTERN.search(text.split("\n", 20)[0]))
-        is_test = 1.0 if "test" in {part.lower() for part in file_path.parts} else 0.0
-        is_docs = 1.0 if "docs" in {part.lower() for part in file_path.parts} else 0.0
+        head = "\n".join(text.splitlines()[:30])
+        has_spdx = bool(SPDX_PATTERN.search(head))
+
+        lower_parts = [part.lower() for part in file_path.parts]
+        is_test = 1.0 if any("test" in part for part in lower_parts) else 0.0
+
+        docs_keywords = {"docs", "doc", "documentation", "guides", "manual"}
+        is_docs = (
+            1.0
+            if any(part in docs_keywords or "docs" in part for part in lower_parts)
+            else 0.0
+        )
+        if file_path.suffix.lower() in {".md", ".rst", ".adoc", ".txt"}:
+            is_docs = 1.0
         return {
             "has_spdx_header": 1.0 if has_spdx else 0.0,
             "is_test_path": is_test,
             "is_docs_path": is_docs,
         }
 
-    def _infer_label(self, file_path: Path, features: Dict[str, float]) -> tuple[str, float]:
+    def _infer_label(
+        self, file_path: Path, features: Dict[str, float]
+    ) -> tuple[str, float]:
         lower_parts = [part.lower() for part in file_path.parts]
         if any(part in {"vendor", "third_party", "external"} for part in lower_parts):
             return "third_party", 0.95

@@ -39,56 +39,100 @@ def build_narrative(
 
     exec_lines: List[str] = []
     exec_lines.append(
-        f"Recommendation: {recommendation.get('text', 'Monitor')} — {recommendation.get('reason', 'No blockers detected.')}."
+        (
+            f"Recommendation: {recommendation.get('text', 'Monitor')} — "
+            f"{recommendation.get('reason', 'No blockers detected.')}."
+        )
     )
     exec_lines.append(
-        f"IP composition is {foreground_share:.1f}% foreground and {third_party_share:.1f}% third-party across {total_components:,} audited components."
+        (
+            f"IP composition is {foreground_share:.1f}% foreground and "
+            f"{third_party_share:.1f}% third-party across {total_components:,} audited components."
+        )
     )
     if high_risk_licenses:
-        exec_lines.append(f"High-risk licenses present: {high_risk_licenses}. Engage counsel before disclosures.")
+        exec_lines.append(
+            f"High-risk licenses present: {high_risk_licenses}. Engage counsel before disclosures."
+        )
     else:
         exec_lines.append("No high-risk licenses surfaced across sampled manifests.")
     if open_vulns:
         exec_lines.append(
-            f"Dependency backlog: {open_vulns} items ({vuln_density_pct:.1f}% density, weighted score {weighted_vuln_score:.2f})."
+            (
+                f"Dependency backlog: {open_vulns} items ("
+                f"{vuln_density_pct:.1f}% density, weighted score {weighted_vuln_score:.2f})."
+            )
         )
     else:
         exec_lines.append(
             "Dependency scan cleared noise-floor filters; no actionable vulnerabilities in scope."
         )
     if total_findings:
-        exec_lines.append(f"{total_findings} aggregate risk signals remain; top watch item: {highest_risk}.")
+        exec_lines.append(
+            f"{total_findings} aggregate risk signals remain; top watch item: {highest_risk}."
+        )
     else:
-        exec_lines.append("Security, similarity, and dependency scanners reported a clean baseline.")
+        exec_lines.append(
+            "Security, similarity, and dependency scanners reported a clean baseline."
+        )
 
     board_lines: List[str] = []
     board_lines.append(
-        f"Foreground ownership at {foreground_share:.1f}% signals clear provenance; {third_party_share:.1f}% external footprint requires contract alignment."
+        (
+            f"Foreground ownership at {foreground_share:.1f}% signals clear provenance; "
+            f"{third_party_share:.1f}% external footprint requires contract alignment."
+        )
     )
     if clean_room_candidates:
         board_lines.append(
-            f"{clean_room_candidates} clean-room candidates identified. Expect diligence dialogue on escrow readiness."
+            (
+                f"{clean_room_candidates} clean-room candidates identified. "
+                "Expect diligence dialogue on escrow readiness."
+            )
         )
     else:
-        board_lines.append("No clean-room blockers identified in this pass; keep hygiene checks active.")
+        board_lines.append(
+            "No clean-room blockers identified in this pass; keep hygiene checks active."
+        )
     if open_vulns:
         board_lines.append(
-            f"Dependency risk: {open_vulns} vulnerabilities retained after filters, {vuln_noise_pct:.1f}% of OSV noise suppressed."
+            (
+                f"Dependency risk: {open_vulns} vulnerabilities retained after filters, "
+                f"{vuln_noise_pct:.1f}% of OSV noise suppressed."
+            )
         )
     else:
-        board_lines.append("Dependency risk nominal; OSV noise filters suppressed all non-actionable hits.")
-    board_lines.append(f"Risk snapshot: {total_findings} open findings, primary theme is {highest_risk}.")
+        board_lines.append(
+            "Dependency risk nominal; OSV noise filters suppressed all non-actionable hits."
+        )
+    board_lines.append(
+        f"Risk snapshot: {total_findings} open findings, primary theme is {highest_risk}."
+    )
 
     engineering_lines: List[str] = []
-    engineering_lines.append(f"Average rewriteability score: {rewrite_avg}. Focus on {rewrite_low} low-score modules for isolation.")
     engineering_lines.append(
-        f"Vulnerability queue: {open_vulns} items (noise rejection {vuln_noise_pct:.1f}%). Patch highest-weight findings ({weighted_vuln_score:.2f} avg score)."
+        (
+            f"Average rewriteability score: {rewrite_avg}. "
+            f"Focus on {rewrite_low} low-score modules for isolation."
+        )
     )
     engineering_lines.append(
-        f"Secrets + SAST backlog totals {total_findings} items. Prioritise rotation and triage workflows next sprint."
+        (
+            f"Vulnerability queue: {open_vulns} items (noise rejection {vuln_noise_pct:.1f}%). "
+            f"Patch highest-weight findings ({weighted_vuln_score:.2f} avg score)."
+        )
     )
     engineering_lines.append(
-        f"License scan flagged {high_risk_licenses} reciprocal obligations; confirm NOTICE files before pushing release builds."
+        (
+            f"Secrets + SAST backlog totals {total_findings} items. "
+            "Prioritise rotation and triage workflows next sprint."
+        )
+    )
+    engineering_lines.append(
+        (
+            f"License scan flagged {high_risk_licenses} reciprocal obligations; "
+            "confirm NOTICE files before pushing release builds."
+        )
     )
     if vuln_sources:
         engineering_lines.append(f"Vulnerability coverage: {', '.join(vuln_sources)}.")

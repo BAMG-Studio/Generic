@@ -1,4 +1,5 @@
 """Tests for Git Scanner functionality."""
+
 from pathlib import Path
 from typing import Any, Callable, Type, cast
 
@@ -10,14 +11,18 @@ ScannerFactory = Callable[[Type[Any], Path | str], Any]
 class TestGitScanner:
     """Test suite for GitScanner."""
 
-    def test_scanner_initialization(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scanner_initialization(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that scanner initializes correctly."""
 
         scanner: Any = scanner_factory(GitScanner, temp_dir)
         assert scanner is not None
         assert hasattr(scanner, "scan")
 
-    def test_scan_basic_repo(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_basic_repo(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a basic repository."""
 
         scanner: Any = scanner_factory(GitScanner, sample_repo)
@@ -29,7 +34,9 @@ class TestGitScanner:
         assert "timeline" in results
         assert results.get("total_commits", 0) >= 1
 
-    def test_scan_commit_metadata(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_commit_metadata(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that commit metadata is captured correctly."""
 
         scanner: Any = scanner_factory(GitScanner, sample_repo)
@@ -56,7 +63,9 @@ class TestGitScanner:
         for author_data in authors.values():
             assert "commits" in author_data
 
-    def test_scan_file_changes(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_file_changes(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test file change tracking."""
 
         scanner: Any = scanner_factory(GitScanner, sample_repo)
@@ -69,7 +78,9 @@ class TestGitScanner:
             assert "removed" in sample
             assert "files" in sample
 
-    def test_scan_nonexistent_repo(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_nonexistent_repo(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a non-existent repository."""
 
         missing_path = Path(temp_dir) / "nonexistent"
@@ -78,7 +89,9 @@ class TestGitScanner:
 
         assert "error" in results
 
-    def test_scan_non_git_directory(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_non_git_directory(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a directory that's not a git repo."""
 
         test_dir = Path(temp_dir) / "not_a_repo"
@@ -89,7 +102,9 @@ class TestGitScanner:
 
         assert "error" in results
 
-    def test_scan_empty_repo(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_empty_repo(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning an empty git repository."""
 
         from git import Repo

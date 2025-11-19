@@ -1,11 +1,62 @@
 """Pytest configuration and shared fixtures for ForgeTrace tests."""
+
+import os
 import shutil
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterator, Type
 
+import mlflow
 import pytest
 from git import Repo
+
+
+@dataclass
+class MlflowTestEnv:
+    """Encapsulate MLflow URIs provisioned for isolated tests."""
+
+    tracking_uri: str
+    artifact_uri: str
+
+
+@pytest.fixture
+def mlflow_local_env(
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Iterator[MlflowTestEnv]:
+    """Provide an isolated MLflow tracking/registry backed by SQLite + local artifacts."""
+
+    base_dir = Path(tmp_path_factory.mktemp("mlflow-tests"))
+    tracking_db = base_dir / "mlflow.db"
+    artifact_dir = base_dir / "artifacts"
+    artifact_dir.mkdir(parents=True, exist_ok=True)
+
+    tracking_uri = f"sqlite:///{tracking_db}"
+    artifact_uri = artifact_dir.as_uri()
+
+    previous_tracking_uri = mlflow.get_tracking_uri()
+    previous_registry_uri = mlflow.get_registry_uri()
+    previous_artifact_uri = os.environ.get("MLFLOW_ARTIFACT_URI")
+
+    mlflow.set_tracking_uri(tracking_uri)
+    mlflow.set_registry_uri(tracking_uri)
+    os.environ["MLFLOW_ARTIFACT_URI"] = artifact_uri
+
+    env = MlflowTestEnv(tracking_uri=tracking_uri, artifact_uri=artifact_uri)
+
+    try:
+        yield env
+    finally:
+        if mlflow.active_run():
+            mlflow.end_run()
+        if previous_tracking_uri is not None:
+            mlflow.set_tracking_uri(previous_tracking_uri)
+        if previous_registry_uri is not None:
+            mlflow.set_registry_uri(previous_registry_uri)
+        if previous_artifact_uri is not None:
+            os.environ["MLFLOW_ARTIFACT_URI"] = previous_artifact_uri
+        else:
+            os.environ.pop("MLFLOW_ARTIFACT_URI", None)
 
 
 @pytest.fixture
@@ -24,21 +75,22 @@ def sample_repo(temp_dir: str) -> Iterator[Path]:
     """Create a sample git repository for testing."""
     repo_path = Path(temp_dir) / "test_repo"
     repo_path.mkdir()
-    
+
     # Initialize git repo
     repo = Repo.init(repo_path)
     index: Any = repo.index
     index: Any = repo.index
-    
+
     # Configure git user
     with repo.config_writer() as config:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test@example.com")
-    
+
     # Create sample files
     (repo_path / "README.md").write_text("# Test Repository\n\nThis is a test repo.\n")
-    
-    (repo_path / "main.py").write_text("""#!/usr/bin/env python3
+
+    (repo_path / "main.py").write_text(
+        """#!/usr/bin/env python3
 \"\"\"Main application module.\"\"\"
 
 def hello():
@@ -51,12 +103,14 @@ def main():
 
 if __name__ == "__main__":
     main()
-""")
-    
+"""
+    )
+
     (repo_path / "requirements.txt").write_text("requests==2.28.0\npyyaml>=6.0\n")
-    
+
     # Create LICENSE file
-    (repo_path / "LICENSE").write_text("""MIT License
+    (repo_path / "LICENSE").write_text(
+        """MIT License
 
 Copyright (c) 2024 Test User
 
@@ -77,14 +131,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-""")
-    
+"""
+    )
+
     # Initial commit
     index.add(["README.md", "main.py", "requirements.txt", "LICENSE"])
     index.commit("Initial commit")
-    
+
     # Add another commit
-    (repo_path / "utils.py").write_text("""\"\"\"Utility functions.\"\"\"
+    (repo_path / "utils.py").write_text(
+        """\"\"\"Utility functions.\"\"\"
 
 def add(a, b):
     \"\"\"Add two numbers.\"\"\"
@@ -93,10 +149,11 @@ def add(a, b):
 def multiply(a, b):
     \"\"\"Multiply two numbers.\"\"\"
     return a * b
-""")
+"""
+    )
     index.add(["utils.py"])
     index.commit("Add utils module")
-    
+
     yield repo_path
 
 
@@ -105,25 +162,27 @@ def sample_repo_with_secrets(temp_dir: str) -> Iterator[Path]:
     """Create a repo with hardcoded secrets for testing."""
     repo_path = Path(temp_dir) / "secrets_repo"
     repo_path.mkdir()
-    
+
     repo = Repo.init(repo_path)
     index: Any = repo.index
 
     with repo.config_writer() as config:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test@example.com")
-    
+
     # Create file with fake secrets
-    (repo_path / "config.py").write_text("""# Configuration file
+    (repo_path / "config.py").write_text(
+        """# Configuration file
 API_KEY = "sk-1234567890abcdef1234567890abcdef"
 AWS_SECRET = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 PASSWORD = "admin123"
 DATABASE_URL = "postgresql://user:password@localhost:5432/db"
-""")
-    
+"""
+    )
+
     index.add(["config.py"])
     index.commit("Add config with secrets")
-    
+
     yield repo_path
 
 
@@ -132,7 +191,7 @@ def sample_repo_with_multiple_authors(temp_dir: str) -> Iterator[Path]:
     """Create a repo with multiple authors."""
     repo_path = Path(temp_dir) / "multi_author_repo"
     repo_path.mkdir()
-    
+
     repo = Repo.init(repo_path)
     index: Any = repo.index
 
@@ -140,29 +199,35 @@ def sample_repo_with_multiple_authors(temp_dir: str) -> Iterator[Path]:
     with repo.config_writer() as config:
         config.set_value("user", "name", "Alice")
         config.set_value("user", "email", "alice@example.com")
-    
-    (repo_path / "alice.py").write_text("# Alice's code\ndef alice_func():\n    return 'Alice'\n")
+
+    (repo_path / "alice.py").write_text(
+        "# Alice's code\ndef alice_func():\n    return 'Alice'\n"
+    )
     index.add(["alice.py"])
     index.commit("Alice's commit")
-    
+
     # Second author
     with repo.config_writer() as config:
         config.set_value("user", "name", "Bob")
         config.set_value("user", "email", "bob@example.com")
-    
-    (repo_path / "bob.py").write_text("# Bob's code\ndef bob_func():\n    return 'Bob'\n")
+
+    (repo_path / "bob.py").write_text(
+        "# Bob's code\ndef bob_func():\n    return 'Bob'\n"
+    )
     index.add(["bob.py"])
     index.commit("Bob's commit")
-    
+
     # Third author
     with repo.config_writer() as config:
         config.set_value("user", "name", "Charlie")
         config.set_value("user", "email", "charlie@example.com")
-    
-    (repo_path / "charlie.py").write_text("# Charlie's code\ndef charlie_func():\n    return 'Charlie'\n")
+
+    (repo_path / "charlie.py").write_text(
+        "# Charlie's code\ndef charlie_func():\n    return 'Charlie'\n"
+    )
     index.add(["charlie.py"])
     index.commit("Charlie's commit")
-    
+
     yield repo_path
 
 
@@ -171,14 +236,14 @@ def sample_repo_with_duplicates(temp_dir: str) -> Iterator[Path]:
     """Create a repo with duplicate/similar code."""
     repo_path = Path(temp_dir) / "dup_repo"
     repo_path.mkdir()
-    
+
     repo = Repo.init(repo_path)
     index: Any = repo.index
 
     with repo.config_writer() as config:
         config.set_value("user", "name", "Test User")
         config.set_value("user", "email", "test@example.com")
-    
+
     # Create identical files
     code = """def hello():
     return 'Hello, World!'
@@ -191,7 +256,7 @@ def farewell():
 """
     (repo_path / "file1.py").write_text(code)
     (repo_path / "file2.py").write_text(code)
-    
+
     # Create similar but not identical file
     similar_code = """def hello():
     return 'Hello, World!'
@@ -203,10 +268,10 @@ def farewell():
     return 'Bye!'
 """
     (repo_path / "file3.py").write_text(similar_code)
-    
+
     index.add(["file1.py", "file2.py", "file3.py"])
     index.commit("Add files with duplicates")
-    
+
     yield repo_path
 
 
@@ -236,7 +301,9 @@ def mock_config() -> Dict[str, Any]:
 
 
 @pytest.fixture
-def scanner_factory(mock_config: Dict[str, Any]) -> Callable[[Type[Any], Path | str], Any]:
+def scanner_factory(
+    mock_config: Dict[str, Any],
+) -> Callable[[Type[Any], Path | str], Any]:
     """Factory to construct scanners with required parameters."""
 
     def _factory(scanner_cls: Type[Any], repo_path: Path | str) -> Any:

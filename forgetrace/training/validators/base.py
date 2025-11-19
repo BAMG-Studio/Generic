@@ -7,7 +7,6 @@ from collections import Counter
 from statistics import mean
 from typing import TYPE_CHECKING, Dict, List, Sequence
 
-
 if TYPE_CHECKING:
     from ..core import ExtractionConfig, TrainingExample
 else:  # pragma: no cover
@@ -19,14 +18,18 @@ class PhaseValidator(ABC):
     """Base validator enforcing per-phase quality requirements."""
 
     @abstractmethod
-    def validate(self, examples: Sequence["TrainingExample"], config: "ExtractionConfig") -> List["TrainingExample"]:
+    def validate(
+        self, examples: Sequence["TrainingExample"], config: "ExtractionConfig"
+    ) -> List["TrainingExample"]:
         """Validate and possibly filter training examples."""
 
 
 class QualityValidator(PhaseValidator):
     """Generic validator applying confidence and coverage checks."""
 
-    def validate(self, examples: Sequence["TrainingExample"], config: "ExtractionConfig") -> List["TrainingExample"]:
+    def validate(
+        self, examples: Sequence["TrainingExample"], config: "ExtractionConfig"
+    ) -> List["TrainingExample"]:
         if not examples:
             return []
 
@@ -41,7 +44,9 @@ class QualityValidator(PhaseValidator):
                 filtered.append(example)
 
         if len(filtered) < min_files:
-            print(f"⚠️  Phase {config.phase.name}: only {len(filtered)} examples >= confidence {min_conf}")
+            print(
+                f"⚠️  Phase {config.phase.name}: only {len(filtered)} examples >= confidence {min_conf}"
+            )
         return filtered
 
 
@@ -52,7 +57,9 @@ class DatasetValidator:
         if not examples:
             raise ValueError("No training examples generated")
 
-        by_phase: Dict[str, int] = Counter(example.repo.phase.name for example in examples)
+        by_phase: Dict[str, int] = Counter(
+            example.repo.phase.name for example in examples
+        )
         print("📊 Dataset distribution by phase:")
         for phase, count in by_phase.items():
             print(f"   {phase}: {count}")

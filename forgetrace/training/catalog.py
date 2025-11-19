@@ -6,7 +6,6 @@ from typing import Dict, List
 
 from .core import ExtractionConfig, Phase, RepoSpec
 
-
 FOUNDATIONAL_REPOS: List[RepoSpec] = [
     RepoSpec(
         name="django/django",

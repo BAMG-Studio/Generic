@@ -10,8 +10,9 @@ from typing import Dict, List, Tuple
 from ..core import RepoSpec, TrainingExample
 from .base import BaseExtractor
 
-
-PAPER_REFERENCE_REGEX = re.compile(r"\b(?:arxiv|doi|icml|neurips|cvpr|acl|sigir|iclr|kdd)[\w/:.-]*", re.IGNORECASE)
+PAPER_REFERENCE_REGEX = re.compile(
+    r"\b(?:arxiv|doi|icml|neurips|cvpr|acl|sigir|iclr|kdd)[\w/:.-]*", re.IGNORECASE
+)
 
 CITATION_REGEX = re.compile(r"\[[0-9]{1,3}\]")
 
@@ -90,6 +91,7 @@ FIGURE_KEYWORDS = (
 
 LICENSE_PERMISSIVE = {"mit", "bsd", "apache", "isc", "cc-by"}
 
+
 def _safe_entropy(text: str) -> float:
     if not text:
         return 0.0
@@ -147,7 +149,9 @@ class ResearchExtractor(BaseExtractor):
             return True
         if name in EXPERIMENT_CONFIG_NAMES:
             return True
-        if any(segment.lower() in EXPERIMENT_DIR_KEYWORDS for segment in file_path.parts):
+        if any(
+            segment.lower() in EXPERIMENT_DIR_KEYWORDS for segment in file_path.parts
+        ):
             return True
         if suffix in {".md", ".pdf", ".tex"} and "paper" in name:
             return True
@@ -158,22 +162,71 @@ class ResearchExtractor(BaseExtractor):
 
         citation_matches = len(CITATION_REGEX.findall(text))
         paper_reference_hits = len(PAPER_REFERENCE_REGEX.findall(text))
+        paper_reference_hits += lower_text.count("arxiv:")
+        paper_reference_hits += lower_text.count("doi:")
 
-        dataset_mentions = sum(lower_text.count(keyword) for keyword in DATASET_KEYWORDS)
-        framework_mentions = sum(lower_text.count(keyword) for keyword in ML_FRAMEWORK_KEYWORDS)
+        dataset_mentions = sum(
+            lower_text.count(keyword) for keyword in DATASET_KEYWORDS
+        )
+        framework_mentions = sum(
+            lower_text.count(keyword) for keyword in ML_FRAMEWORK_KEYWORDS
+        )
         metric_mentions = sum(lower_text.count(keyword) for keyword in METRIC_KEYWORDS)
         figure_mentions = sum(lower_text.count(keyword) for keyword in FIGURE_KEYWORDS)
+        figure_mentions += len(re.findall(r"figure\s+[0-9]+", lower_text))
 
-        notebook_indicator = 1.0 if file_path.suffix.lower() in NOTEBOOK_SUFFIXES else 0.0
-        experiment_config_indicator = 1.0 if file_path.name.lower() in EXPERIMENT_CONFIG_NAMES else 0.0
-        experiment_path_indicator = 1.0 if any(
-            segment.lower() in EXPERIMENT_DIR_KEYWORDS for segment in file_path.parts
-        ) else 0.0
+        notebook_indicator = (
+            1.0 if file_path.suffix.lower() in NOTEBOOK_SUFFIXES else 0.0
+        )
+        name_lower = file_path.name.lower()
+        experiment_config_indicator = (
+            1.0
+            if (
+                name_lower in EXPERIMENT_CONFIG_NAMES
+                or "config" in name_lower
+                or "hparam" in name_lower
+            )
+            else 0.0
+        )
+        experiment_path_indicator = (
+            1.0
+            if any(
+                segment.lower() in EXPERIMENT_DIR_KEYWORDS
+                or "experiment" in segment.lower()
+                or "trial" in segment.lower()
+                for segment in file_path.parts
+            )
+            else 0.0
+        )
 
-        permissive_license_indicator = 1.0 if any(license_name in lower_text for license_name in LICENSE_PERMISSIVE) else 0.0
+        permissive_license_indicator = (
+            1.0
+            if any(license_name in lower_text for license_name in LICENSE_PERMISSIVE)
+            else 0.0
+        )
 
-        abstract_indicator = 1.0 if "abstract" in lower_text[:200] else 0.0
-        methodology_indicator = 1.0 if "methodology" in lower_text or "proposed method" in lower_text else 0.0
+        abstract_window = lower_text[:800]
+        abstract_indicator = (
+            1.0
+            if "abstract" in abstract_window or "summary" in abstract_window
+            else 0.0
+        )
+
+        methodology_indicator = (
+            1.0
+            if any(
+                phrase in lower_text
+                for phrase in (
+                    "methodology",
+                    "proposed method",
+                    "our method",
+                    "methods",
+                    "approach",
+                    "experimental setup",
+                )
+            )
+            else 0.0
+        )
 
         entropy = _safe_entropy(text[:5000])
         code_ratio = self._code_to_text_ratio(text)
@@ -204,7 +257,7 @@ class ResearchExtractor(BaseExtractor):
             stripped = line.strip()
             if not stripped:
                 continue
-            if stripped.startswith(("#", "//", "/*", "*") ):
+            if stripped.startswith(("#", "//", "/*", "*")):
                 prose_lines += 1
             elif re.search(r"[=+\-*/<>]", stripped) and len(stripped) < 160:
                 code_lines += 1
@@ -218,7 +271,10 @@ class ResearchExtractor(BaseExtractor):
         return code_lines / total
 
     def _infer_label(self, features: Dict[str, float]) -> Tuple[str, float]:
-        if features.get("permissive_license_indicator", 0.0) >= 1.0 and features.get("paper_reference_hits", 0.0) >= 2.0:
+        if (
+            features.get("permissive_license_indicator", 0.0) >= 1.0
+            and features.get("paper_reference_hits", 0.0) >= 2.0
+        ):
             return "third_party", 0.9
         if (
             features.get("notebook_indicator", 0.0) >= 1.0
@@ -226,7 +282,10 @@ class ResearchExtractor(BaseExtractor):
             or features.get("experiment_path_indicator", 0.0) >= 1.0
         ) and features.get("dataset_mentions", 0.0) >= 1.0:
             return "foreground", 0.85
-        if features.get("citation_count", 0.0) >= 3.0 or features.get("paper_reference_hits", 0.0) >= 3.0:
+        if (
+            features.get("citation_count", 0.0) >= 3.0
+            or features.get("paper_reference_hits", 0.0) >= 3.0
+        ):
             return "background", 0.8
         if (
             features.get("framework_mentions", 0.0) >= 2.0

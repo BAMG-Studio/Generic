@@ -1,6 +1,6 @@
 """Validator exports for training pipeline."""
 
-from .base import PhaseValidator, QualityValidator, DatasetValidator
+from .base import DatasetValidator, PhaseValidator, QualityValidator
 from .foundational import FoundationalValidator
 
 __all__ = [

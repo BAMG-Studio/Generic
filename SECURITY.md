@@ -210,10 +210,25 @@ ForgeTrace handles the following data types:
 | AWS CloudTrail | API audit logging | ⚠️ To configure |
 | MLflow Authentication | Access control | ⚠️ Optional |
 
+## Dependency Risk Tracker
+
+| Package | Version | CVEs | Mitigation Status |
+|---------|---------|------|-------------------|
+| pip | 25.3 | PVE-2025-75180, CVE-2025-8869 | ✅ Upgraded from 24.0 in `.venv` to remove arbitrary file overwrite vectors. |
+| mlflow | 3.6.0 | CVE-2024-37052/CVE-2024-37053/CVE-2024-37054/CVE-2024-37055/CVE-2024-37056/CVE-2024-37057/CVE-2024-37059/CVE-2024-37060 | ⚠️ Awaiting upstream patch |
+
+### Next Actions
+
+- Keep MLflow tracking servers on private networks behind nginx basic auth until a patched release is available.
+- Reject untrusted MLflow artifact uploads; only allow authenticated CI jobs to interact with the tracking endpoint.
+- Re-run `safety scan --full-report` weekly and upgrade MLflow immediately when maintainers publish a fixed series.
+- Capture MLflow experiment exports regularly to speed up rollback/upgrade once patches land.
+
 ## Contact
 
 For security-related questions:
-- **Primary**: Peter Kolawole (peter@beaconagile.net)
+
+- **Primary**: Peter Kolawole ([peter@beaconagile.net](mailto:peter@beaconagile.net))
 - **Organization**: BAMG Studio LLC
 
 ---

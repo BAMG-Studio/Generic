@@ -77,6 +77,13 @@ output:
   executive_mode: "executive"  # board | executive | detailed
   include_pdf: true
   include_sbom: true
+  sbom_formats:
+    - cyclonedx-json
+    - spdx-json
+  archive:
+    enabled: true
+    root_dir: "analysis_outputs/live"
+    max_runs_per_repo: 50
   report_layout:
     include_cover: true
     include_narrative: true

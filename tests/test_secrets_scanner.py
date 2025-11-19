@@ -1,4 +1,5 @@
 """Tests for Secrets Scanner functionality."""
+
 from pathlib import Path
 from typing import Any, Callable, Type, cast
 
@@ -10,14 +11,18 @@ ScannerFactory = Callable[[Type[Any], Path | str], Any]
 class TestSecretsScanner:
     """Test suite for SecretsScanner."""
 
-    def test_scanner_initialization(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scanner_initialization(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that scanner initializes correctly."""
 
         scanner: Any = scanner_factory(SecretsScanner, temp_dir)
         assert scanner is not None
         assert hasattr(scanner, "scan")
 
-    def test_scan_with_secrets(self, sample_repo_with_secrets: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_with_secrets(
+        self, sample_repo_with_secrets: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting hardcoded secrets."""
 
         scanner: Any = scanner_factory(SecretsScanner, sample_repo_with_secrets)
@@ -26,7 +31,9 @@ class TestSecretsScanner:
         findings = cast(list[dict[str, Any]], results.get("findings", []))
         assert isinstance(findings, list)
 
-    def test_scan_clean_repo(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_clean_repo(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo without secrets."""
 
         scanner: Any = scanner_factory(SecretsScanner, sample_repo)
@@ -35,7 +42,9 @@ class TestSecretsScanner:
         findings = cast(list[dict[str, Any]], results.get("findings", []))
         assert isinstance(findings, list)
 
-    def test_scan_multiple_secret_types(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_multiple_secret_types(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting different types of secrets."""
 
         from git import Repo
@@ -76,7 +85,9 @@ PRIVATE_KEY = "-----BEGIN RSA " + "PRIVATE KEY-----\nFAKE..."
         findings = cast(list[dict[str, Any]], results.get("findings", []))
         assert isinstance(findings, list)
 
-    def test_scan_secrets_in_comments(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_secrets_in_comments(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting secrets in code comments."""
 
         from git import Repo
@@ -109,7 +120,9 @@ def connect():
 
         assert isinstance(results, dict)
 
-    def test_scan_env_files(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_env_files(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning environment variable files."""
 
         from git import Repo

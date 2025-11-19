@@ -13,7 +13,9 @@ if TYPE_CHECKING:
 class FoundationalValidator(PhaseValidator):
     """Ensure foundational dataset keeps only high-confidence examples."""
 
-    def validate(self, examples: Sequence["TrainingExample"], config: "ExtractionConfig") -> List["TrainingExample"]:
+    def validate(
+        self, examples: Sequence["TrainingExample"], config: "ExtractionConfig"
+    ) -> List["TrainingExample"]:
         min_conf = config.quality_thresholds.get("min_confidence", 0.85)
         filtered: List["TrainingExample"] = []
         for example in examples:

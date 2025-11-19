@@ -1,4 +1,5 @@
 """Tests for SBOM Scanner functionality."""
+
 from pathlib import Path
 from typing import Any, Callable, Type, cast
 
@@ -10,14 +11,18 @@ ScannerFactory = Callable[[Type[Any], Path | str], Any]
 class TestSBOMScanner:
     """Test suite for SBOMScanner."""
 
-    def test_scanner_initialization(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scanner_initialization(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that scanner initializes correctly."""
 
         scanner: Any = scanner_factory(SBOMScanner, temp_dir)
         assert scanner is not None
         assert hasattr(scanner, "scan")
 
-    def test_scan_with_requirements_txt(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_with_requirements_txt(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo with requirements.txt."""
 
         scanner: Any = scanner_factory(SBOMScanner, sample_repo)
@@ -29,7 +34,9 @@ class TestSBOMScanner:
         dep_names = [pkg.get("name", "").lower() for pkg in packages]
         assert any("request" in name for name in dep_names)
 
-    def test_scan_dependency_structure(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_dependency_structure(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that dependency structure is correct."""
 
         scanner: Any = scanner_factory(SBOMScanner, sample_repo)
@@ -39,7 +46,9 @@ class TestSBOMScanner:
         for pkg in packages:
             assert "name" in pkg
 
-    def test_scan_empty_repo(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_empty_repo(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo with no dependencies."""
 
         repo_path = Path(temp_dir) / "empty_repo"
@@ -51,7 +60,9 @@ class TestSBOMScanner:
         packages = cast(list[dict[str, Any]], results.get("packages", []))
         assert isinstance(packages, list)
 
-    def test_scan_with_package_json(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_with_package_json(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo with package.json."""
 
         from git import Repo
@@ -86,7 +97,9 @@ class TestSBOMScanner:
         packages = cast(list[dict[str, Any]], results.get("packages", []))
         assert isinstance(packages, list)
 
-    def test_scan_multiple_dependency_files(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_multiple_dependency_files(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo with multiple dependency files."""
 
         from git import Repo
