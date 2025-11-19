@@ -1,7 +1,9 @@
 """License Scanner - Author: Peter"""
-import subprocess
+
 import re
+import subprocess
 from pathlib import Path
+
 
 class LicenseScanner:
     SPDX_PATTERNS = {
@@ -12,31 +14,34 @@ class LicenseScanner:
         "BSD-3-Clause": r"BSD 3-Clause|Redistribution and use in source and binary",
         "ISC": r"ISC License|Permission to use, copy, modify",
     }
-    
+
     def __init__(self, repo_path, config):
         self.repo_path = Path(repo_path)
         self.config = config
-        
+
     def scan(self):
         scancode_path = self.config.get("tools", {}).get("scancode")
         if scancode_path:
             return self._scan_scancode(scancode_path)
         return self._scan_heuristic()
-    
+
     def _scan_scancode(self, scancode_path):
         try:
             result = subprocess.run(
                 [scancode_path, "--license", "--json-pp", "-", str(self.repo_path)],
-                capture_output=True, text=True, timeout=600
+                capture_output=True,
+                text=True,
+                timeout=600,
             )
             if result.returncode == 0:
                 import json
+
                 data = json.loads(result.stdout)
                 return {"tool": "scancode", "findings": data.get("files", [])}
         except Exception as e:
             print(f"ScanCode failed: {e}")
         return self._scan_heuristic()
-    
+
     def _scan_heuristic(self):
         findings = []
         for lic_file in self.repo_path.rglob("LICENSE*"):
@@ -45,7 +50,7 @@ class LicenseScanner:
             if src.stat().st_size < 100000:
                 findings.append(self._detect_license(src))
         return {"tool": "heuristic", "findings": [f for f in findings if f["license"]]}
-    
+
     def _detect_license(self, path):
         try:
             content = path.read_text(errors="ignore")[:5000]
@@ -53,5 +58,5 @@ class LicenseScanner:
                 if re.search(pattern, content, re.IGNORECASE):
                     return {"file": str(path), "license": spdx, "confidence": "high"}
             return {"file": str(path), "license": None, "confidence": "none"}
-        except:
+        except OSError:
             return {"file": str(path), "license": None, "confidence": "error"}

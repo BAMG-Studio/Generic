@@ -11,7 +11,7 @@ MODULES:
 
 USAGE:
     from forgetrace.classifiers import IPClassifier
-    
+
     classifier = IPClassifier(findings, config)
     classifications = classifier.classify()
 
@@ -22,6 +22,7 @@ The IPClassifier automatically uses ML if:
 
 Otherwise, falls back to rule-based classification.
 """
+
 from .ml_classifier import IPClassifier, MLIPClassifier
 
 __all__ = ["IPClassifier", "MLIPClassifier"]

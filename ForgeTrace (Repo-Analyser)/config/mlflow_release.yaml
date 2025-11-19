@@ -1,0 +1,23 @@
+current_version: 3.6.0
+container_image: ghcr.io/mlflow/mlflow:v3.6.0
+last_verified: '2025-11-18'
+safety_cves:
+- CVE-2024-37052
+- CVE-2024-37053
+- CVE-2024-37054
+- CVE-2024-37055
+- CVE-2024-37056
+- CVE-2024-37057
+- CVE-2024-37059
+- CVE-2024-37060
+release_notes_url: https://github.com/mlflow/mlflow/releases/tag/v3.6.0
+upgrade_status: blocked
+mitigations:
+- Restrict MLflow server to private network via nginx basic auth
+- Disallow artifact uploads outside CI/CD service accounts
+- Export experiments weekly for fast rollback
+verification_checklist:
+- Run pytest -m 'not slow'
+- Run tests/mlflow suite
+- Run safety check
+- Run docker-compose up -d mlflow && smoke test /health

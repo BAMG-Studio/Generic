@@ -10,7 +10,6 @@ from typing import Dict, List, Tuple
 from ..core import RepoSpec, TrainingExample
 from .base import BaseExtractor
 
-
 MANIFEST_FILENAMES = {
     "requirements.txt",
     "requirements-dev.txt",
@@ -61,7 +60,9 @@ LICENSE_KEYWORDS = (
 
 SPDX_REGEX = re.compile(r"spdx-license-identifier:\s*[A-Za-z0-9.+-]+", re.IGNORECASE)
 
-PRIVATE_KEY_REGEX = re.compile(r"-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----", re.IGNORECASE)
+PRIVATE_KEY_REGEX = re.compile(
+    r"-----BEGIN (?:RSA |DSA |EC |OPENSSH )?PRIVATE KEY-----", re.IGNORECASE
+)
 
 SECRET_PATTERNS = (
     re.compile(r"AKIA[0-9A-Z]{16}"),
@@ -148,12 +149,25 @@ class SecurityExtractor(BaseExtractor):
         entropy_ratio = self._high_entropy_literal_ratio(text)
         url_count = float(len(URL_REGEX.findall(text)))
 
-        manifest_indicator = 1.0 if file_path.name.lower() in MANIFEST_FILENAMES else 0.0
+        manifest_indicator = (
+            1.0 if file_path.name.lower() in MANIFEST_FILENAMES else 0.0
+        )
         sbom_indicator = 1.0 if self._is_sbom_file(file_path, text) else 0.0
-        config_indicator = 1.0 if file_path.suffix.lower() in CONFIG_SUFFIXES or file_path.name.lower() in {".env", ".env.example"} else 0.0
-        vendor_path_indicator = 1.0 if any(part.lower() in THIRD_PARTY_DIRS for part in file_path.parts) else 0.0
+        config_indicator = (
+            1.0
+            if file_path.suffix.lower() in CONFIG_SUFFIXES
+            or file_path.name.lower() in {".env", ".env.example"}
+            else 0.0
+        )
+        vendor_path_indicator = (
+            1.0
+            if any(part.lower() in THIRD_PARTY_DIRS for part in file_path.parts)
+            else 0.0
+        )
 
-        secret_risk_score = self._secret_risk(secret_hits, private_key_indicator, entropy_ratio, sensitive_assignments)
+        secret_risk_score = self._secret_risk(
+            secret_hits, private_key_indicator, entropy_ratio, sensitive_assignments
+        )
 
         return {
             "license_keyword_hits": float(license_hits),
@@ -171,19 +185,30 @@ class SecurityExtractor(BaseExtractor):
             "secret_risk_score": secret_risk_score,
         }
 
-    def _infer_label(self, file_path: Path, features: Dict[str, float]) -> Tuple[str, float]:
+    def _infer_label(
+        self, file_path: Path, features: Dict[str, float]
+    ) -> Tuple[str, float]:
         if features.get("vendor_path_indicator", 0.0) >= 1.0:
             return "third_party", 0.92
-        if features.get("manifest_indicator", 0.0) >= 1.0 or features.get("sbom_indicator", 0.0) >= 1.0:
+        if (
+            features.get("manifest_indicator", 0.0) >= 1.0
+            or features.get("sbom_indicator", 0.0) >= 1.0
+        ):
             return "third_party", 0.9
-        if features.get("license_keyword_hits", 0.0) >= 2.0 or features.get("spdx_header_present", 0.0) >= 0.5:
+        if (
+            features.get("license_keyword_hits", 0.0) >= 2.0
+            or features.get("spdx_header_present", 0.0) >= 0.5
+        ):
             return "third_party", 0.85
         if features.get("private_key_indicator", 0.0) >= 1.0:
             return "foreground", 0.92
         if features.get("secret_pattern_hits", 0.0) >= 1.0:
             confidence = min(0.9, 0.75 + 0.05 * features["secret_pattern_hits"])
             return "foreground", float(confidence)
-        if features.get("config_indicator", 0.0) >= 1.0 and features.get("credential_keyword_density", 0.0) >= 0.01:
+        if (
+            features.get("config_indicator", 0.0) >= 1.0
+            and features.get("credential_keyword_density", 0.0) >= 0.01
+        ):
             return "foreground", 0.78
         if features.get("high_entropy_literal_ratio", 0.0) >= 0.6:
             return "foreground", 0.72
@@ -201,7 +226,9 @@ class SecurityExtractor(BaseExtractor):
         for pattern in SECRET_PATTERNS:
             matches = list(pattern.finditer(text))
             secret_hits += len(matches)
-        assignment_pattern = re.compile(r"(?i)(password|secret|token|apikey|api_key)\s*[:=]\s*[\"']?[^\s\"']{6,}")
+        assignment_pattern = re.compile(
+            r"(?i)(password|secret|token|apikey|api_key)\s*[:=]\s*[\"']?[^\s\"']{6,}"
+        )
         sensitive_assignments = len(assignment_pattern.findall(text))
         return secret_hits, sensitive_assignments
 
@@ -211,14 +238,22 @@ class SecurityExtractor(BaseExtractor):
         words = text.lower().split()
         if not words:
             return 0.0
-        matches = sum(1 for word in words if any(keyword in word for keyword in CREDENTIAL_KEYWORDS))
+        matches = sum(
+            1
+            for word in words
+            if any(keyword in word for keyword in CREDENTIAL_KEYWORDS)
+        )
         return matches / max(len(text.splitlines()), 1)
 
     def _high_entropy_literal_ratio(self, text: str) -> float:
         literals = re.findall(r"[\"']([A-Za-z0-9/_\-+=]{8,})[\"']", text)
         if not literals:
             return 0.0
-        high_entropy = sum(1 for literal in literals if self._shannon_entropy(literal) >= HIGH_ENTROPY_THRESHOLD)
+        high_entropy = sum(
+            1
+            for literal in literals
+            if self._shannon_entropy(literal) >= HIGH_ENTROPY_THRESHOLD
+        )
         return high_entropy / len(literals)
 
     def _shannon_entropy(self, value: str) -> float:
@@ -240,6 +275,17 @@ class SecurityExtractor(BaseExtractor):
             return True
         return False
 
-    def _secret_risk(self, secret_hits: int, private_key: float, entropy_ratio: float, sensitive_assignments: int) -> float:
-        score = secret_hits * 0.25 + sensitive_assignments * 0.2 + entropy_ratio * 0.8 + private_key * 1.0
+    def _secret_risk(
+        self,
+        secret_hits: int,
+        private_key: float,
+        entropy_ratio: float,
+        sensitive_assignments: int,
+    ) -> float:
+        score = (
+            secret_hits * 0.25
+            + sensitive_assignments * 0.2
+            + entropy_ratio * 0.8
+            + private_key * 1.0
+        )
         return min(1.0, score)

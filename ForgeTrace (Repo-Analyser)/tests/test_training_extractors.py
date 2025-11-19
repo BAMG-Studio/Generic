@@ -2,16 +2,14 @@
 
 from __future__ import annotations
 
+import time
 from pathlib import Path
 from typing import Dict
-import sys
-
-sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 import pytest
 
-from forgetrace.training.core import ExtractionConfig, Phase, RepoSpec
 from forgetrace.classifiers.ml_classifier import FileFeatures
+from forgetrace.training.core import ExtractionConfig, Phase, RepoSpec
 from forgetrace.training.extractors.enterprise import EnterpriseExtractor
 from forgetrace.training.extractors.research import ResearchExtractor
 from forgetrace.training.extractors.security import SecurityExtractor
@@ -56,12 +54,14 @@ def research_extractor(tmp_path: Path) -> ResearchExtractor:
     return extractor
 
 
-def test_security_features_detect_secrets(tmp_path: Path, security_extractor: SecurityExtractor) -> None:
+def test_security_features_detect_secrets(
+    tmp_path: Path, security_extractor: SecurityExtractor
+) -> None:
     file_path = tmp_path / ".env"
     file_path.parent.mkdir(parents=True, exist_ok=True)
     secret_text = (
-        "API_KEY = \"AKIAABCDEFGHIJKLMNOP\"\n"
-        "SECRET_TOKEN = \"sk-1234567890abcdef1234567890abcdef\"\n"
+        'API_KEY = "AKIAABCDEFGHIJKLMNOP"\n'
+        'SECRET_TOKEN = "sk-1234567890abcdef1234567890abcdef"\n'
         "DATABASE_PASSWORD = 'StrongPass123'\n"
     )
     file_path.write_text(secret_text)
@@ -122,7 +122,9 @@ def test_research_features_detect_citations(
 
 
 def test_training_examples_include_vulnerability_metrics(
-    tmp_path: Path, security_extractor: SecurityExtractor, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path,
+    security_extractor: SecurityExtractor,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     repo_dir = tmp_path / "sample-repo"
     repo_dir.mkdir(parents=True, exist_ok=True)
@@ -140,7 +142,10 @@ def test_training_examples_include_vulnerability_metrics(
         "repo_osv_noise_ratio": 0.05,
         "repo_vulnerability_count": 4.0,
     }
-    def _mock_vuln_features(self: SecurityExtractor, _repo_dir: Path) -> Dict[str, float]:
+
+    def _mock_vuln_features(
+        self: SecurityExtractor, _repo_dir: Path
+    ) -> Dict[str, float]:
         return mocked_metrics
 
     monkeypatch.setattr(
@@ -197,3 +202,41 @@ def test_file_features_to_array_includes_repo_metrics() -> None:
     vector = features.to_array()
     assert len(vector) == 23
     assert vector[-4:] == [0.12, 6.5, 0.25, 4.0]
+
+
+def test_vulnerability_metrics_cache_hits(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    config = ExtractionConfig(
+        phase=Phase.SECURITY,
+        features=("dummy",),
+        quality_thresholds={},
+        validation_rules=(),
+    )
+    extractor = SecurityExtractor(config)
+    extractor.cache_dir = tmp_path
+
+    cached_metrics = {
+        "repo_vuln_density": 0.15,
+        "repo_vuln_weighted_score": 4.2,
+        "repo_osv_noise_ratio": 0.1,
+        "repo_vulnerability_count": 3.0,
+    }
+
+    extractor._vuln_cache_store = {  # type: ignore[attr-defined]
+        "cache-key": {"timestamp": time.time(), "metrics": cached_metrics}
+    }
+
+    def _fake_cache_key(self: SecurityExtractor, _path: Path) -> str:
+        return "cache-key"
+
+    def _noop_persist(
+        self: SecurityExtractor, key: str, metrics: Dict[str, float]
+    ) -> None:
+        return None
+
+    monkeypatch.setattr(SecurityExtractor, "_build_vuln_cache_key", _fake_cache_key)
+    monkeypatch.setattr(SecurityExtractor, "_persist_vuln_metrics", _noop_persist)
+
+    result = extractor._repo_vulnerability_features(tmp_path)  # type: ignore[reportPrivateUsage]
+    assert result == cached_metrics

@@ -12,6 +12,7 @@ setup(
         "pyyaml>=6.0",
         "jinja2>=3.1.0",
         "gitpython>=3.1.0",
+        "joblib>=1.3.0",
     ],
     extras_require={
         "full": [

@@ -6,12 +6,11 @@ from typing import Dict, Type
 
 from ..core import ExtractionConfig, Phase
 from .base import BaseExtractor
+from .enterprise import EnterpriseExtractor
 from .foundational import FoundationalExtractor
 from .polyglot import PolyglotExtractor
-from .security import SecurityExtractor
-from .enterprise import EnterpriseExtractor
 from .research import ResearchExtractor
-
+from .security import SecurityExtractor
 
 EXTRACTOR_MAP: Dict[Phase, Type[BaseExtractor]] = {
     Phase.FOUNDATIONAL: FoundationalExtractor,

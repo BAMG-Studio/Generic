@@ -44,7 +44,7 @@ import json
 import pickle
 import sys
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Sequence, Optional, Set
 from collections import Counter
 import time
 
@@ -52,6 +52,64 @@ import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+
+# Feature engineering controls
+AUTO_PRUNE_THRESHOLD: Optional[float] = 0.001  # Remove features contributing less than 0.1%
+PROTECTED_FEATURES: Set[str] = {
+    "repo_vuln_density",
+    "repo_vuln_weighted_score",
+    "repo_osv_noise_ratio",
+    "repo_vulnerability_count",
+}
+
+LOG_TRANSFORM_FEATURES: Sequence[str] = (
+    "lines_of_code",
+    "file_size_bytes",
+)
+
+
+def apply_log_transforms(
+    X: np.ndarray,
+    feature_names: List[str],
+    features_to_transform: Sequence[str],
+) -> Tuple[np.ndarray, List[str]]:
+    """Apply log1p scaling to high-variance features."""
+
+    transformed: List[str] = []
+    feature_index = {name: idx for idx, name in enumerate(feature_names)}
+
+    for feature in features_to_transform:
+        idx = feature_index.get(feature)
+        if idx is None:
+            continue
+
+        column = X[:, idx]
+        min_val = float(np.min(column))
+        adjusted = column - min_val if min_val < 0 else column
+        X[:, idx] = np.log1p(adjusted)
+        transformed.append(feature)
+
+    if transformed:
+        print("\n🔧 Applied log1p transform to:")
+        for name in transformed:
+            print(f"   • {name}")
+
+    return X, transformed
+
+
+def collect_low_importance_features(
+    feature_names: Sequence[str],
+    importances: np.ndarray,
+    threshold: float,
+) -> List[Tuple[str, float]]:
+    """Return features with importance below threshold."""
+
+    low_features: List[Tuple[str, float]] = []
+    for name, importance in zip(feature_names, importances):
+        if importance < threshold:
+            low_features.append((name, float(importance)))
+    return sorted(low_features, key=lambda item: item[1])
 
 
 def print_section(title: str):
@@ -65,7 +123,7 @@ def infer_feature_schema(jsonl_path: str) -> List[str]:
     """Infer canonical feature ordering across all training examples."""
 
     feature_names: List[str] = []
-    seen = set()
+    seen: set[str] = set()
 
     with open(jsonl_path, "r", encoding="utf-8") as fh:
         for line in fh:
@@ -125,9 +183,9 @@ def load_training_data(jsonl_path: str, feature_names: List[str]) -> Tuple[np.nd
     
     start_time = time.time()
     
-    X_list = []  # Will hold feature arrays
-    y_list = []  # Will hold labels
-    file_paths = []  # For reference
+    X_list: List[np.ndarray] = []  # Will hold feature arrays
+    y_list: List[str] = []  # Will hold labels
+    file_paths: List[str] = []  # For reference
     
     feature_index = {name: idx for idx, name in enumerate(feature_names)}
 
@@ -162,7 +220,7 @@ def load_training_data(jsonl_path: str, feature_names: List[str]) -> Tuple[np.nd
                 y_list.append(label)
                 file_paths.append(example.get('file_path', f'unknown_{line_num}'))
                 
-            except Exception as e:
+            except Exception:
                 # Skip malformed lines
                 continue
     
@@ -516,8 +574,13 @@ def analyze_feature_importance(model: RandomForestClassifier, feature_names: Lis
         print("   → Could be removed to simplify model (tradeoff: slightly lower accuracy)")
 
 
-def save_model(model: RandomForestClassifier, feature_names: List[str], output_path: str = "models/ip_classifier_rf.pkl") -> None:
-    """Persist trained model and feature schema to disk."""
+def save_model(
+    model: RandomForestClassifier,
+    feature_names: List[str],
+    output_path: str = "models/ip_classifier_rf.pkl",
+    metadata: Optional[Dict[str, Any]] = None,
+) -> None:
+    """Persist trained model, feature schema, and metadata to disk."""
 
     print_section("STEP 6: Saving Trained Model")
 
@@ -526,8 +589,12 @@ def save_model(model: RandomForestClassifier, feature_names: List[str], output_p
 
     print(f"💾 Saving model to: {output_file}")
 
+    payload: Dict[str, Any] = {"model": model, "feature_names": feature_names}
+    if metadata:
+        payload.update(metadata)
+
     with open(output_file, 'wb') as f:
-        pickle.dump({"model": model, "feature_names": feature_names}, f)
+        pickle.dump(payload, f)
 
     model_size_kb = output_file.stat().st_size / 1024
     model_size_mb = model_size_kb / 1024
@@ -604,28 +671,71 @@ def main():
     # Step 1: Load data
     feature_names = infer_feature_schema(training_file)
     print(f"🧬 Discovered {len(feature_names)} unique features across all phases")
-    X, y, _ = load_training_data(training_file, feature_names)
-    
-    # Step 2: Explain and perform train/test split
-    explain_train_test_split()
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+    feature_matrix, y, _ = load_training_data(training_file, feature_names)
+
+    # Step 2: Apply feature engineering before splitting
+    feature_matrix, transformed_features = apply_log_transforms(
+        feature_matrix, feature_names, LOG_TRANSFORM_FEATURES
     )
+
+    # Step 3: Explain and perform train/test split
+    explain_train_test_split()
+    x_train, x_test, y_train, y_test = train_test_split(
+        feature_matrix, y, test_size=0.2, random_state=42, stratify=y
+    )
+    total_examples = len(feature_matrix)
     print(f"✅ Split complete:")
-    print(f"   Training set: {len(X_train):,} examples ({len(X_train)/len(X)*100:.1f}%)")
-    print(f"   Test set:     {len(X_test):,} examples ({len(X_test)/len(X)*100:.1f}%)")
+    print(f"   Training set: {len(x_train):,} examples ({len(x_train)/total_examples*100:.1f}%)")
+    print(f"   Test set:     {len(x_test):,} examples ({len(x_test)/total_examples*100:.1f}%)")
     
-    # Step 3: Train model
-    model = train_model(X_train, y_train)
-    
-    # Step 4: Evaluate
-    evaluate_model(model, X_train, y_train, X_test, y_test)
-    
-    # Step 5: Feature importance
+    # Step 4: Train initial model (used for pruning analysis)
+    model = train_model(x_train, y_train)
+
+    removed_features: List[str] = []
+    if AUTO_PRUNE_THRESHOLD and AUTO_PRUNE_THRESHOLD > 0:
+        threshold = AUTO_PRUNE_THRESHOLD
+        low_features = collect_low_importance_features(
+            feature_names, model.feature_importances_, threshold
+        )
+
+        removable = [(name, importance) for name, importance in low_features if name not in PROTECTED_FEATURES]
+        protected = [(name, importance) for name, importance in low_features if name in PROTECTED_FEATURES]
+
+        if removable:
+            print("\n🧹 Pruning low-importance features (<0.1% importance):")
+            for name, importance in removable:
+                print(f"   • {name:35s} {importance:.6f}")
+
+            removed_features = [name for name, _ in removable]
+            removed_set = set(removed_features)
+            keep_indices = [idx for idx, name in enumerate(feature_names) if name not in removed_set]
+
+            feature_names = [feature_names[idx] for idx in keep_indices]
+            feature_matrix = feature_matrix[:, keep_indices]
+            x_train = x_train[:, keep_indices]
+            x_test = x_test[:, keep_indices]
+
+            print(f"\n🔁 Retraining after removing {len(removed_features)} features...")
+            model = train_model(x_train, y_train)
+
+        if protected:
+            print("\nℹ️  Retained protected low-importance features (pending upstream fixes):")
+            for name, importance in protected:
+                print(f"   • {name:35s} {importance:.6f}")
+
+    # Step 5: Evaluate final model
+    evaluate_model(model, x_train, y_train, x_test, y_test)
+
+    # Step 6: Feature importance summary
     analyze_feature_importance(model, feature_names)
-    
-    # Step 6: Save model
-    save_model(model, feature_names, output_path)
+
+    # Step 7: Save model with metadata for inference parity
+    model_metadata: Dict[str, Any] = {"log_transformed_features": transformed_features}
+    if removed_features:
+        model_metadata["removed_features"] = removed_features
+        model_metadata["auto_prune_threshold"] = AUTO_PRUNE_THRESHOLD
+
+    save_model(model, feature_names, output_path, metadata=model_metadata)
     
     print("\n" + "█"*70)
     print("█" + " "*68 + "█")

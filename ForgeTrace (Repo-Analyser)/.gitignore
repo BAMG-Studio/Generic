@@ -30,6 +30,7 @@ training_output/
 .forgetrace-cache/
 test_output/
 repo_audit/
+analysis_outputs/
 
 # Production secrets and environment
 .env

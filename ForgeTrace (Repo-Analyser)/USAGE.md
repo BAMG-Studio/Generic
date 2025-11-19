@@ -53,6 +53,53 @@ After running an audit, you'll find:
 - `ip_contribution_table.md` - Negotiation-ready Markdown table
 - `report.html` - Interactive HTML report
 - `report.pdf` - Comprehensive PDF report (if WeasyPrint installed)
+- `sbom.*.json` - CycloneDX/SPDX exports when Syft is configured
+
+## Live Client Archives
+
+ForgeTrace automatically mirrors every successful audit into a permanent, human-friendly archive so live client data never mixes with throwaway test runs. By default, archives are written to `analysis_outputs/live/<owner>/<repo>/<YYYY/MM/DD>/<HHMMSS>/` with a `metadata.json` manifest plus a `latest` symlink for fast access.
+
+- Remote repository URLs are parsed to determine the `<owner>/<repo>` folders (falls back to the local directory name when no Git metadata is available).
+- Archives keep up to 50 runs per repository (configurable via `output.archive.max_runs_per_repo`). Older runs are pruned automatically, preventing clutter.
+- Temporary locations such as `/tmp/...` are still written when you pass `--out`, ensuring automated workflows remain unchanged while the curated archive receives a clean copy.
+
+You can customize the archive root or disable mirroring entirely:
+
+```yaml
+output:
+  archive:
+    enabled: true
+    root_dir: "/secure/path/for/clients"
+    max_runs_per_repo: 25
+```
+
+Every archive includes:
+
+- A copy of all generated reports
+- `metadata.json` with source path, Git commit/branch (when available), timestamp, and report list
+- A rolling `latest` symlink for integrations that only need the freshest audit
+
+## SBOM & Dependency Exports
+
+ForgeTrace can now emit standard SBOMs for downstream tooling. Install Syft once (via `./scripts/install_tools.sh` or manually) and either set the path in `config.yaml` or pass `--syft /path/to/syft` at runtime.
+
+```yaml
+output:
+  include_sbom: true
+  sbom_formats:
+    - cyclonedx-json
+    - spdx-json
+tools:
+  syft: "/usr/local/bin/syft"
+```
+
+Override formats per run:
+
+```bash
+forgetrace audit /repo/path --sbom-format cyclonedx-json --sbom-format spdx-json
+```
+
+The HTML/PDF reports now include a **Software Bill of Materials** section with download links, and the raw files (e.g., `sbom.cyclonedx-json.json`) live alongside `report.html` and in the `analysis_outputs/live/...` archive tree.
 
 ## Configuration
 
@@ -62,7 +109,42 @@ Edit `config.yaml` to customize:
 - **Similarity thresholds**: Control duplicate detection sensitivity
 - **Cost parameters**: Set hourly rate, days per KLOC, complexity multiplier
 - **Tool paths**: Specify custom locations for external tools
-- **Vulnerability filters**: Tune OSV noise suppression via `min_cvss_*`, `confidence_floor`, and severity weights
+- **Vulnerability filters**: Tune OSV noise suppression via `min_cvss_ingest`, `min_cvss_context`, `confidence_floor`, and severity weights
+
+### Vulnerability Filtering (OSV)
+
+ForgeTrace applies intelligent filtering to reduce false positives in vulnerability reports:
+
+```yaml
+vulnerability_filters:
+  # Minimum CVSS score to ingest vulnerability (0.0-10.0)
+  min_cvss_ingest: 4.0
+  
+  # Minimum CVSS score for contextual display (show only if relevant)
+  min_cvss_context: 6.0
+  
+  # Confidence floor: filter vulnerabilities below this certainty (0.0-1.0)
+  confidence_floor: 0.3
+  
+  # Severity score weights (used in vulnerability_weighted_score calculation)
+  severity_weights:
+    CRITICAL: 1.0
+    HIGH: 0.75
+    MEDIUM: 0.5
+    LOW: 0.25
+    UNKNOWN: 0.1
+```
+
+**Key Parameters:**
+- `min_cvss_ingest`: Filters out low-severity vulnerabilities at ingestion time
+- `min_cvss_context`: Additional filter for display; vulnerabilities between `min_cvss_ingest` and `min_cvss_context` are tracked but not prominently shown
+- `confidence_floor`: Removes speculative/low-confidence vulnerability matches (useful for polyglot repos with high false-positive rates)
+- `severity_weights`: Adjust importance of different severity levels in aggregate metrics
+
+**Example Scenarios:**
+- **Enterprise security audit**: Set `min_cvss_ingest: 6.0` and `confidence_floor: 0.6` for high-confidence critical/high vulnerabilities only
+- **Comprehensive assessment**: Set `min_cvss_ingest: 0.0` and `confidence_floor: 0.0` to see all potential issues
+- **M&A due diligence**: Set `min_cvss_context: 7.0` to focus executive summary on high-impact risks
 
 ## Example Workflow
 
@@ -80,13 +162,13 @@ open repo_audit/client-name/forgetrace_report/report.html
 
 ## ML-Based IP Classification
 
-ForgeTrace now supports **machine learning classification** for intelligent code origin detection.
+ForgeTrace now supports **machine learning classification** for intelligent code origin detection using a Random Forest classifier with 53 feature dimensions.
 
 ### Quick Start
 
 1. **Install ML dependencies:**
    ```bash
-   pip install scikit-learn numpy
+   pip install scikit-learn numpy matplotlib seaborn
    ```
 
 2. **Enable in config.yaml:**
@@ -96,37 +178,158 @@ ForgeTrace now supports **machine learning classification** for intelligent code
      confidence_threshold: 0.7
    ```
 
-3. **Bootstrap training data:**
+3. **Use pre-trained model (recommended):**
    ```bash
-   # Run audits on 5-10 repositories with known IP status
-   forgetrace audit /path/to/repo1 --output-dir output1
-   forgetrace audit /path/to/repo2 --output-dir output2
+   # Model already trained on 131,906 examples from 54 repositories
+   forgetrace audit /path/to/repo --out repo_audit/example/forgetrace_report
+   # Automatically uses models/ip_classifier_rf.pkl
+   ```
+
+4. **Or train custom model:**
+   ```bash
+   # Generate training data from curated repositories
+   python scripts/run_training_pipeline.py --output training_output/
    
-   # Export training examples
-   python -c "from forgetrace.classifiers import MLIPClassifier; ..."
+   # Train Random Forest classifier
+   python scripts/train_random_forest.py --data training_output/dataset/training_dataset.jsonl
    ```
 
-4. **Train model:**
-   ```bash
-   python -m forgetrace.classifiers.train_model training_data.jsonl
-   ```
+### Feature Schema (53 Features)
 
-5. **Run with ML:**
-   ```bash
-   forgetrace audit /path/to/repo --output-dir output
-   # Automatically uses trained model
-   ```
+The ML classifier analyzes code files across multiple dimensions:
+
+**Structural Features (5)**
+- `lines_of_code`, `file_size_bytes`, `path_depth`, `avg_line_length`, `nesting_depth`
+
+**Code Complexity (4)**
+- `comment_ratio`, `code_to_text_ratio`, `sample_entropy`, `language_entropy`
+
+**Import/Dependency Analysis (4)**
+- `import_count`, `external_import_ratio`, `stdlib_import_ratio`, `module_depth_score`
+
+**Path & Naming Indicators (7)**
+- `template_indicator`, `config_indicator`, `sbom_indicator`, `manifest_indicator`
+- `vendor_path_indicator`, `is_test_path`, `is_docs_path`
+
+**License & Legal (4)**
+- `spdx_header_present`, `has_spdx_header`, `license_keyword_hits`, `permissive_license_indicator`
+
+**Security Features (7)**
+- `secret_risk_score`, `credential_keyword_density`, `secret_pattern_hits`
+- `sensitive_assignment_hits`, `high_entropy_literal_ratio`, `private_key_indicator`, `crypto_import_indicator`
+
+**Domain-Specific Indicators (5)**
+- `data_access_indicator`, `api_endpoint_count`, `async_processing_indicator`
+- `orchestration_signal`, `plugin_registration_hits`
+
+**Research/Academic (8)**
+- `citation_count`, `paper_reference_hits`, `figure_mentions`, `dataset_mentions`
+- `experiment_path_indicator`, `experiment_config_indicator`, `methodology_indicator`, `abstract_indicator`
+
+**Business Context (5)**
+- `framework_keyword_hits`, `framework_mentions`, `business_context_density`
+- `metric_mentions`, `dashboard_indicator`
+
+**Repository-Level Vulnerability Metrics (4)** *(currently non-functional)*
+- `repo_vulnerability_count`, `repo_vuln_density`, `repo_vuln_weighted_score`, `repo_osv_noise_ratio`
+
+**Top 10 Most Important Features:**
+1. `template_indicator` (16.43%)
+2. `language_entropy` (13.92%)
+3. `external_import_ratio` (11.02%)
+4. `import_count` (10.24%)
+5. `nesting_depth` (8.82%)
+6. `sample_entropy` (5.45%)
+7. `citation_count` (4.74%)
+8. `module_depth_score` (4.52%)
+9. `code_to_text_ratio` (3.46%)
+10. `comment_ratio` (2.84%)
+
+### Production Deployment
+
+#### 1. Model Versioning
+
+Add metadata to models for audit trails:
+
+```bash
+python scripts/model_versioning.py \
+  --model models/ip_classifier_rf.pkl \
+  --output models/ip_classifier_v2025.11.08.pkl \
+  --version 2025.11.08.1 \
+  --notes "Initial production release with 131K training examples"
+
+# Inspect versioned model
+python scripts/model_versioning.py --inspect models/ip_classifier_v2025.11.08.pkl
+```
+
+**Metadata Included:**
+- Training dataset hash (reproducibility)
+- Feature schema version
+- Hyperparameters
+- Performance metrics (99.9% test accuracy)
+- Label distribution (89% third_party, 9.3% foreground, 1.7% background)
+
+#### 2. Production Monitoring
+
+Track model performance and data drift:
+
+```bash
+# Run audit and save predictions
+forgetrace audit /path/to/repo --out output/ --save-predictions predictions.jsonl
+
+# Monitor confidence, class distribution, feature drift
+python scripts/production_monitor.py \
+  --predictions predictions.jsonl \
+  --output metrics/ \
+  --confidence-threshold 0.70
+
+# Export low-confidence predictions for human review
+python scripts/production_monitor.py \
+  --predictions predictions.jsonl \
+  --export-retraining retraining_candidates.jsonl
+```
+
+**Monitoring Outputs:**
+- `metrics/monitoring_results.json` - Full analysis results
+- `metrics/confidence_distribution.png` - Confidence score histogram
+- `metrics/class_distribution.png` - Training vs production class ratios
+- `metrics/feature_drift.png` - Top 10 drifted features
+- `retraining_candidates.jsonl` - Low-confidence cases for retraining
+
+#### 3. Feedback Loop for Continuous Improvement
+
+```bash
+# 1. Export uncertain predictions
+python scripts/production_monitor.py \
+  --predictions predictions.jsonl \
+  --export-retraining review_queue.jsonl \
+  --confidence-threshold 0.70
+
+# 2. Human reviewers label exported cases
+# Edit review_queue.jsonl: Set "human_label": "foreground|third_party|background"
+
+# 3. Append corrected examples to training dataset
+cat review_queue.jsonl >> training_output/dataset/training_dataset.jsonl
+
+# 4. Retrain when >1,000 new examples accumulated
+python scripts/train_random_forest.py \
+  --data training_output/dataset/training_dataset.jsonl \
+  --output models/ip_classifier_v2025.12.01.pkl
+```
 
 ### See Full Documentation
 
 **Comprehensive ML classifier guide**: [docs/ML_CLASSIFIER.md](docs/ML_CLASSIFIER.md)
 
+**Model card with full specifications**: [docs/MODEL_CARD.md](docs/MODEL_CARD.md)
+
 Covers:
-- Feature engineering details (23 features)
-- Training workflow and best practices
+- Feature engineering details (53 features with importance rankings)
+- Training workflow and dataset composition (54 repos, 5 phases)
 - Confidence scoring and thresholds
-- Performance tuning and troubleshooting
-- Advanced topics (cross-project generalization, model versioning)
+- Performance metrics (99.9% accuracy, per-class precision/recall)
+- Production deployment best practices
+- Known limitations and ethical considerations
 
 ## Interpreting Results
 

@@ -29,9 +29,7 @@ class Phase(Enum):
             Phase.SECURITY: (
                 "Deepen license, SBOM, and security provenance understanding"
             ),
-            Phase.ENTERPRISE: (
-                "Model complex multi-author enterprise codebases"
-            ),
+            Phase.ENTERPRISE: ("Model complex multi-author enterprise codebases"),
             Phase.RESEARCH: (
                 "Expose classifier to niche, research-grade, and anomalous code"
             ),
@@ -89,7 +87,9 @@ class TrainingDataGenerator:
         self.configs = configs
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-    def run_phase(self, phase: Phase, repos: Iterable[RepoSpec]) -> List[TrainingExample]:
+    def run_phase(
+        self, phase: Phase, repos: Iterable[RepoSpec]
+    ) -> List[TrainingExample]:
         """Run a single phase extractor and return validated examples."""
 
         config = self.configs[phase]
@@ -131,7 +131,9 @@ class TrainingDataGenerator:
 
         return DatasetValidator()
 
-    def _persist_phase_data(self, phase: Phase, examples: Sequence[TrainingExample]) -> None:
+    def _persist_phase_data(
+        self, phase: Phase, examples: Sequence[TrainingExample]
+    ) -> None:
         phase_dir = self.output_dir / phase.name.lower()
         phase_dir.mkdir(parents=True, exist_ok=True)
         output_file = phase_dir / "examples.jsonl"
@@ -149,8 +151,13 @@ class TrainingDataGenerator:
                 fh.write(json.dumps(line, ensure_ascii=False) + "\n")
 
     def _persist_full_dataset(self, examples: Sequence[TrainingExample]) -> None:
-        dataset_file = self.output_dir / "training_dataset.jsonl"
-        with dataset_file.open("w", encoding="utf-8") as fh:
+        dataset_paths = [
+            self.output_dir / "training_dataset.jsonl",
+            self.output_dir / "complete_training_dataset.jsonl",
+        ]
+
+        handles = [path.open("w", encoding="utf-8") for path in dataset_paths]
+        try:
             for example in examples:
                 line: Dict[str, Any] = {
                     "repo": example.repo.name,
@@ -160,4 +167,9 @@ class TrainingDataGenerator:
                     "features": example.features,
                     "metadata": example.metadata,
                 }
-                fh.write(json.dumps(line, ensure_ascii=False) + "\n")
+                json_line = json.dumps(line, ensure_ascii=False) + "\n"
+                for handle in handles:
+                    handle.write(json_line)
+        finally:
+            for handle in handles:
+                handle.close()

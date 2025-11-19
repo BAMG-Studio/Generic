@@ -1,4 +1,5 @@
 """Tests for License Scanner functionality."""
+
 from pathlib import Path
 from typing import Any, Callable, Type, cast
 
@@ -10,14 +11,18 @@ ScannerFactory = Callable[[Type[Any], Path | str], Any]
 class TestLicenseScanner:
     """Test suite for LicenseScanner."""
 
-    def test_scanner_initialization(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scanner_initialization(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that scanner initializes correctly."""
 
         scanner: Any = scanner_factory(LicenseScanner, temp_dir)
         assert scanner is not None
         assert hasattr(scanner, "scan")
 
-    def test_scan_mit_license(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_mit_license(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting MIT license."""
 
         scanner: Any = scanner_factory(LicenseScanner, sample_repo)
@@ -29,7 +34,9 @@ class TestLicenseScanner:
         license_ids = [finding.get("license", "").upper() for finding in findings]
         assert any("MIT" in lid for lid in license_ids)
 
-    def test_scan_license_metadata(self, sample_repo: Path, scanner_factory: ScannerFactory) -> None:
+    def test_scan_license_metadata(
+        self, sample_repo: Path, scanner_factory: ScannerFactory
+    ) -> None:
         """Test that license metadata is captured."""
 
         scanner: Any = scanner_factory(LicenseScanner, sample_repo)
@@ -39,7 +46,9 @@ class TestLicenseScanner:
         for finding in findings:
             assert "file" in finding
 
-    def test_scan_no_license(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_no_license(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test scanning a repo without license files."""
 
         from git import Repo
@@ -63,7 +72,9 @@ class TestLicenseScanner:
         findings = cast(list[dict[str, Any]], results.get("findings", []))
         assert isinstance(findings, list)
 
-    def test_scan_multiple_licenses(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_multiple_licenses(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting multiple licenses."""
 
         from git import Repo
@@ -112,7 +123,9 @@ you may not use this file except in compliance with the License.
         findings = cast(list[dict[str, Any]], results.get("findings", []))
         assert len(findings) >= 1
 
-    def test_scan_license_in_code(self, temp_dir: str, scanner_factory: ScannerFactory) -> None:
+    def test_scan_license_in_code(
+        self, temp_dir: str, scanner_factory: ScannerFactory
+    ) -> None:
         """Test detecting license headers in source code."""
 
         from git import Repo
