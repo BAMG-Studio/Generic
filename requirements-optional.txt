@@ -1,7 +1,7 @@
 # Optional dependencies for enhanced features
 
 # Fuzzy hashing for similarity detection
-tlsh>=4.0.0
+py-tlsh>=4.7.2
 ppdeep>=20200505
 
 # Code complexity analysis (for future rewriteability scoring)
