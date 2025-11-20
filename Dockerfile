@@ -9,6 +9,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     git \
     curl \
+    build-essential \
+    g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first (for caching)
