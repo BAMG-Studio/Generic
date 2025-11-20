@@ -49,7 +49,7 @@ tools:
   trufflehog: ""
   gitleaks: ""
   jscpd: ""
-  owasp_dependency_check: ""  # Optional: path to dependency-check.sh
+  owasp_dependency_check: "/opt/dependency-check/bin/dependency-check.sh"  # Optional: path to dependency-check.sh
 
 # Vulnerability Scanning
 vulnerability_scanning:
