@@ -13,6 +13,11 @@ setup(
         "jinja2>=3.1.0",
         "gitpython>=3.1.0",
         "joblib>=1.3.0",
+        # ML stack for classifiers and MLflow-driven workflows
+        "numpy>=1.24.0",
+        "scikit-learn>=1.3.0",
+        "mlflow==2.17.2",
+        "matplotlib>=3.7.0",
     ],
     extras_require={
         "full": [

@@ -6,13 +6,15 @@ gitpython>=3.1.0
 # Development dependencies
 pytest>=7.4.0
 pytest-cov>=4.1.0
+bandit>=1.9.1
 
 # ML dependencies for intelligent IP classification
 # Install with: pip install -r requirements.txt
 scikit-learn>=1.3.0  # Random Forest classifier, cross-validation
 numpy>=1.24.0  # Numerical array operations
 joblib>=1.3.0  # Safe model serialization compatible with sklearn
-mlflow==3.6.0  # Tracking/training orchestration (pinned pending CVE fixes)
+mlflow==2.17.2  # Tracking/training orchestration (patched for recent CVEs)
+matplotlib>=3.7.0  # Visualizations used in ML tests
 
 # Optional: Install with pip install -e ".[full]"
 # py-tlsh>=4.7.2
