@@ -18,6 +18,7 @@ setup(
         "scikit-learn>=1.3.0",
         "mlflow==2.17.2",
         "matplotlib>=3.7.0",
+        "seaborn>=0.13.0",
     ],
     extras_require={
         "full": [
