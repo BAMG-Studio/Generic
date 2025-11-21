@@ -1,7 +1,7 @@
 # Optional dependencies for enhanced features
 
-# Fuzzy hashing for similarity detection
-py-tlsh>=4.7.2
+# Fuzzy hashing for similarity detection (py-tlsh provides the `tlsh` module)
+py-tlsh==4.7.2
 ppdeep>=20200505
 
 # Code complexity analysis (for future rewriteability scoring)
