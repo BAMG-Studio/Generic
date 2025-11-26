@@ -21,7 +21,7 @@ This file is used to test the complete CI/CD pipeline for ForgeTrace production 
 - **IAM User:** forgetrace-ci
 - **CloudTrail:** forgetrace-audit-production
 - **CloudWatch:** /forgetrace/production
-- **MLflow:** http://localhost:5000 (PostgreSQL backend)
+- **MLflow:** http://localhost:5050 (PostgreSQL backend)
 
 ## Expected Results
 

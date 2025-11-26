@@ -111,6 +111,20 @@ jobs:
       
       - name: Set MLflow tracking URI
         run: echo "MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}" >> $GITHUB_ENV
+
+      - name: Verify MLflow connectivity (optional)
+        if: ${{ secrets.MLFLOW_TRACKING_URI != '' }}
+        env:
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_USERNAME: ${{ secrets.MLFLOW_USERNAME }}
+          MLFLOW_PASSWORD: ${{ secrets.MLFLOW_PASSWORD }}
+        run: |
+          echo "Checking MLflow at ${MLFLOW_TRACKING_URI}"
+          AUTH_FLAGS=()
+          if [ -n "${MLFLOW_USERNAME}" ] && [ -n "${MLFLOW_PASSWORD}" ]; then
+            AUTH_FLAGS=(--user "${MLFLOW_USERNAME}:${MLFLOW_PASSWORD}")
+          fi
+          curl -sSf "${AUTH_FLAGS[@]}" "${MLFLOW_TRACKING_URI}/api/2.0/mlflow/experiments/list" >/dev/null
       
       - name: Run training pipeline
         env:

@@ -50,7 +50,7 @@ This log captures notable debugging sessions so future responders can apply prov
 
   ```bash
   safety check --full-report
-  docker-compose up -d mlflow && curl -sf http://localhost:5000/health
+  docker-compose up -d mlflow && curl -sf http://localhost:5050/health
   ```
 
 ## 5. PDF Report Rendering Failures (Historical)

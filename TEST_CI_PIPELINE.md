@@ -15,7 +15,7 @@ This PR tests the complete CI/CD pipeline with production infrastructure.
 - S3 bucket: forgetrace-models-production-dbjohpzx
 - CloudTrail: forgetrace-audit-production
 - CloudWatch: /forgetrace/production
-- MLflow: http://localhost:5000 (PostgreSQL + S3)
+- MLflow: http://localhost:5050 (PostgreSQL + S3)
 
 ## Expected CI/CD Results
 - ✅ Linting (black, flake8, mypy)

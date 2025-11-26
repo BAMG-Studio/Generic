@@ -12,7 +12,7 @@
 | DVC remote | ✅ `production` → `s3://forgetrace-models-production-dbjohpzx/dvc-storage (default)` | Matches PR3 scope. |
 | AWS access | ✅ `aws s3 ls s3://forgetrace-models-production-dbjohpzx/` | Returned `audit-reports/`, `benchmarks/`, `mlflow/`, `models/`, `training-data/`. |
 | Disk space | ✅ 861 GB free (`df -h .`) | Plenty for 4-hour run. |
-| MLflow health | ✅ `curl http://localhost:5000/health` → `OK` | Ready for experiment logging. |
+| MLflow health | ✅ `curl http://localhost:5050/health` → `OK` | Ready for experiment logging. |
 | Tooling gaps | ❗ Catalog helper scripts missing | To be built in Phase 2. |
 | Risks | ⚠️ Branch divergence, S3 creds rely on current shell | Re-validate after shell restart. |
 
@@ -32,7 +32,7 @@ aws s3 ls s3://forgetrace-models-production-dbjohpzx/
 df -h .
 
 # MLflow health check
-curl -sf http://localhost:5000/health
+curl -sf http://localhost:5050/health
 ```
 
 ### Findings & Next Actions

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: forgetrace-frontend
+  labels:
+    app: forgetrace
+    component: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: forgetrace
+      component: frontend
+  template:
+    metadata:
+      labels:
+        app: forgetrace
+        component: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ${REGISTRY}/forgetrace-frontend:${VERSION}
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgetrace-frontend
+  labels:
+    app: forgetrace
+    component: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: forgetrace
+    component: frontend

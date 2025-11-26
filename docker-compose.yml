@@ -33,7 +33,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "5000:5000"
+      - "5050:5050"
     environment:
       MLFLOW_BACKEND_STORE_URI: postgresql://mlflow:${MLFLOW_DB_PASSWORD:-change_this_password_123}@postgres:5432/mlflow
       MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL:-https://s3.amazonaws.com}
@@ -45,11 +45,11 @@ services:
       --backend-store-uri postgresql://mlflow:${MLFLOW_DB_PASSWORD:-change_this_password_123}@postgres:5432/mlflow
       --default-artifact-root s3://${DVC_REMOTE_BUCKET:-forgetrace-models}/mlflow/
       --host 0.0.0.0
-      --port 5000
+      --port 5050
     networks:
       - forgetrace-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5050/health"]
       interval: 30s
       timeout: 10s
       retries: 3

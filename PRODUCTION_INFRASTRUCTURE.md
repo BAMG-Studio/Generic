@@ -117,7 +117,7 @@ These resources need to be created following the deployment guide:
   - PostgreSQL database (Docker)
   - MLflow server (Docker)
   - Nginx proxy (optional, for auth)
-- Access: http://localhost:5000
+- Access: http://localhost:5050
 
 **Option B: AWS SageMaker (Managed)**
 - Cost: ~$50-100/month
@@ -268,7 +268,7 @@ ForgeTrace/
 ### 3. MLflow Deployment (10 min)
 - Create `.env` file
 - Run `docker-compose up -d`
-- Verify UI at http://localhost:5000
+- Verify UI at http://localhost:5050
 
 ### 4. Configure GitHub Secrets (5 min)
 - Add 8 secrets to repository
@@ -309,7 +309,7 @@ You will need to obtain and securely store these credentials:
 After deployment, verify:
 
 - [ ] AWS S3 accessible: `aws s3 ls s3://forgetrace-models-<suffix>/`
-- [ ] MLflow UI accessible: http://localhost:5000
+- [ ] MLflow UI accessible: http://localhost:5050
 - [ ] GitHub Actions enabled and running
 - [ ] Branch protection blocking direct pushes to main
 - [ ] Test secrets workflow passing

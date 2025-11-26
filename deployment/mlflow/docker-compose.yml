@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  mlflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: forgetrace-mlflow
+    command: >
+      server
+      --host 0.0.0.0
+      --port 5050
+      --backend-store-uri ${MLFLOW_BACKEND_STORE_URI}
+      --default-artifact-root ${MLFLOW_ARTIFACT_ROOT}
+      --allowed-hosts ${MLFLOW_ALLOWED_HOSTS-*,127.0.0.1,localhost}
+      --cors-allowed-origins ${MLFLOW_CORS_ORIGINS-*,http://localhost:3000,http://localhost:8001}
+    ports:
+      - "5050:5050"
+    environment:
+      - MLFLOW_BACKEND_STORE_URI=postgresql://mlflow:mlflow_password@mlflow-db:5432/mlflow
+      - MLFLOW_ARTIFACT_ROOT=s3://forgetrace-models/mlflow-artifacts
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+    depends_on:
+      - mlflow-db
+    restart: unless-stopped
+    networks:
+      - mlflow-network
+
+  mlflow-db:
+    image: postgres:15-alpine
+    container_name: forgetrace-mlflow-db
+    environment:
+      - POSTGRES_DB=mlflow
+      - POSTGRES_USER=mlflow
+      - POSTGRES_PASSWORD=mlflow_password
+    volumes:
+      - mlflow-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - mlflow-network
+
+volumes:
+  mlflow-db-data:
+
+networks:
+  mlflow-network:
+    driver: bridge
