@@ -24,7 +24,7 @@
 | Service | Container | Port | Status |
 |---------|-----------|------|--------|
 | **PostgreSQL** | forgetrace-postgres | 5432 | ✅ Running |
-| **MLflow** | forgetrace-mlflow | 5000 | ✅ Running |
+| **MLflow** | forgetrace-mlflow | 5050 | ✅ Running |
 | **Nginx** | forgetrace-nginx | 80/443 | ⏸️ Optional |
 
 ### GitHub Configuration
@@ -118,10 +118,10 @@
 **1. Monitor MLflow**
 ```bash
 # Access MLflow UI
-http://localhost:5000
+http://localhost:5050
 
 # Check experiments via API
-curl http://localhost:5000/api/2.0/mlflow/experiments/search?max_results=10
+curl http://localhost:5050/api/2.0/mlflow/experiments/search?max_results=10
 ```
 
 **2. Check Container Health**
@@ -294,7 +294,7 @@ docker-compose logs --tail 100
 
 ```bash
 # MLflow health
-curl http://localhost:5000/health
+curl http://localhost:5050/health
 # Expected: OK
 
 # PostgreSQL health
@@ -361,7 +361,7 @@ aws s3 ls s3://forgetrace-models-production-dbjohpzx/
 ## 🔗 Quick Links
 
 ### Production URLs
-- **MLflow UI:** http://localhost:5000
+- **MLflow UI:** http://localhost:5050
 - **GitHub Repository:** https://github.com/BAMG-Studio/Generic
 - **GitHub Actions:** https://github.com/BAMG-Studio/Generic/actions
 - **AWS Console:** https://console.aws.amazon.com/

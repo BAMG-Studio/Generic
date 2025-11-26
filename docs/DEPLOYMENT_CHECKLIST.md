@@ -44,14 +44,14 @@ Use this checklist to track your production deployment progress.
 - [ ] `.env` file created with AWS credentials
 - [ ] MLflow database password set
 - [ ] Docker Compose services started (`docker-compose up -d`)
-- [ ] MLflow UI accessible at http://localhost:5000
+- [ ] MLflow UI accessible at http://localhost:5050
 - [ ] PostgreSQL database healthy
 - [ ] MLflow can write to S3 (test experiment created)
 - [ ] (Optional) Nginx authentication configured
 - [ ] (Optional) SSL/TLS certificates configured
 
 **MLflow Configuration**:
-- MLFLOW_TRACKING_URI: `http://____________:5000`
+- MLFLOW_TRACKING_URI: `http://____________:5050`
 - MLFLOW_DB_PASSWORD: `____________________`
 - MLFLOW_USERNAME: `____________` (if using auth)
 - MLFLOW_PASSWORD: `____________` (if using auth)

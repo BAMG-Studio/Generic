@@ -64,8 +64,8 @@ pip install -r requirements-optional.txt  # optional scanners
 3. Smoke-test endpoints:
 
    ```bash
-   curl -sf http://localhost:5000/health
-   curl -sf http://localhost:5000/api/2.0/mlflow/experiments/list | python -m json.tool
+   curl -sf http://localhost:5050/health
+   curl -sf http://localhost:5050/api/2.0/mlflow/experiments/list | python -m json.tool
    ```
 
 ## 5. Production Deployment Snapshot

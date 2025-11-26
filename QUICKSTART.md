@@ -72,7 +72,7 @@ docker-compose up -d
 
 # 3. Verify
 docker-compose ps
-open http://localhost:5000  # MLflow UI should load
+open http://localhost:5050  # MLflow UI should load
 ```
 
 ---
@@ -90,7 +90,7 @@ Add these secrets:
 | `AWS_DEFAULT_REGION` | `us-east-1` |
 | `DVC_REMOTE_BUCKET` | `forgetrace-models-<suffix>` |
 | `GITHUB_TOKEN` | From Step 2 |
-| `MLFLOW_TRACKING_URI` | `http://your-server:5000` |
+| `MLFLOW_TRACKING_URI` | `http://your-server:5050` |
 
 ---
 

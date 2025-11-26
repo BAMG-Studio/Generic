@@ -11,7 +11,7 @@ Use this checklist when populating repository secrets after Terraform/Terragrunt
 | `AWS_DEFAULT_REGION` | `us-east-1` | `var.aws_region` / Terragrunt input | Matches the region used for infra. |
 | `DVC_REMOTE_BUCKET` | `forgetrace-models-prod-abc12345` | `terraform output -raw s3_bucket_name` | Used by CI pipelines and DVC remote. |
 | `GITHUB_TOKEN` | `ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` | Personal access token (repo + workflow scopes) | Prefer fine-grained PAT tied to deployment bot account. |
-| `MLFLOW_TRACKING_URI` | `http://mlflow.internal:5000` | DNS/IP of MLflow deployment | Required for pipelines that log experiments. |
+| `MLFLOW_TRACKING_URI` | `http://mlflow.internal:5050` | DNS/IP of MLflow deployment | Required for pipelines that log experiments. |
 | `MLFLOW_USERNAME` | `mlflow_admin` | Nginx/basic auth credential | Optional if MLflow is private network only. |
 | `MLFLOW_PASSWORD` | `***************` | Password created during nginx setup | Rotate every 180 days (see `SECURITY.md`). |
 

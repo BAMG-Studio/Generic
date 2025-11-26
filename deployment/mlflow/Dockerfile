@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir \
     boto3==1.34.0
 
 # Expose MLflow port
-EXPOSE 5000
+EXPOSE 5050
 
 # Run MLflow server (command will be provided by docker-compose)
 ENTRYPOINT ["mlflow"]

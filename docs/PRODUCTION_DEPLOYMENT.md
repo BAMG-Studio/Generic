@@ -254,7 +254,7 @@ docker-compose ps
 docker-compose logs -f mlflow
 
 # Access UI
-open http://localhost:5000
+open http://localhost:5050
 ```
 
 #### Step 3: (Optional) Enable Authentication
@@ -323,7 +323,7 @@ curl -u mlflow_admin:your_password http://localhost/api/2.0/mlflow/experiments/l
 | `AWS_DEFAULT_REGION` | `us-east-1` | Your AWS region |
 | `DVC_REMOTE_BUCKET` | `forgetrace-models-pk-8472` | Your S3 bucket name |
 | `GITHUB_TOKEN` | `ghp_...` | Personal access token |
-| `MLFLOW_TRACKING_URI` | `http://your-server:5000` | Self-hosted or SageMaker ARN |
+| `MLFLOW_TRACKING_URI` | `http://your-server:5050` | Self-hosted or SageMaker ARN |
 | `MLFLOW_USERNAME` | `mlflow_admin` | Optional, if using auth |
 | `MLFLOW_PASSWORD` | `your_password` | Optional, if using auth |
 
@@ -442,7 +442,7 @@ aws s3 ls s3://forgetrace-models-pk-8472/
 aws cloudtrail describe-trails  # (if enabled)
 
 # ✅ MLflow
-curl http://localhost:5000/health
+curl http://localhost:5050/health
 # OR
 curl $MLFLOW_TRACKING_URI/health
 
@@ -483,7 +483,7 @@ git push origin test-branch
 # Security tab → Dependabot alerts
 
 # Review MLflow experiments
-open http://localhost:5000  # or your MLflow URI
+open http://localhost:5050  # or your MLflow URI
 ```
 
 ### Weekly Tasks
@@ -585,11 +585,11 @@ docker-compose ps
 docker-compose logs mlflow
 
 # Solution 2: Verify port is accessible
-curl http://localhost:5000/health
+curl http://localhost:5050/health
 
 # Solution 3: Check firewall rules
 sudo ufw status  # Linux
-# Ensure port 5000 is open
+# Ensure port 5050 is open
 ```
 
 **Problem**: MLflow cannot write to S3

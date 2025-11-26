@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: forgetrace-production
+
+resources:
+  - frontend-deployment.yaml
+  - backend-deployment.yaml
+  - ingress.yaml
+  - hpa.yaml
+
+# Default image registry and tags (override with environment variables)
+images:
+  - name: ${REGISTRY}/forgetrace-frontend
+    newName: forgetrace-frontend
+    newTag: latest
+  - name: ${REGISTRY}/forgetrace-backend
+    newName: forgetrace-backend
+    newTag: latest
+
+# Common labels for all resources
+commonLabels:
+  app.kubernetes.io/name: forgetrace
+  app.kubernetes.io/managed-by: kustomize
+  environment: production

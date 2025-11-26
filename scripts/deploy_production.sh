@@ -70,7 +70,7 @@ docker-compose up -d
 
 if [ $? -eq 0 ]; then
     echo "✅ MLflow deployed!"
-    echo "  → Access: http://localhost:5000"
+    echo "  → Access: http://localhost:5050"
 else
     echo "⚠️  MLflow deployment failed (Docker not running?)"
 fi
@@ -82,7 +82,7 @@ echo "╚═══════════════════════�
 echo ""
 echo "✅ AWS Infrastructure: Deployed"
 echo "✅ Credentials: Saved to ~/.forgetrace/aws-outputs.json"
-echo "✅ MLflow: Running at http://localhost:5000"
+echo "✅ MLflow: Running at http://localhost:5050"
 echo ""
 echo "Next Steps:"
 echo "  1. Run test audit: forgetrace audit test_output/ml_demo_repo/"

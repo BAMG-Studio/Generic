@@ -76,7 +76,7 @@ AWS_SECRET_ACCESS_KEY: (from output)
 AWS_DEFAULT_REGION: us-east-1
 DVC_REMOTE_BUCKET: (from output)
 GITHUB_TOKEN: ghp_...
-MLFLOW_TRACKING_URI: http://localhost:5000
+MLFLOW_TRACKING_URI: http://localhost:5050
 MLFLOW_USERNAME: admin (optional)
 MLFLOW_PASSWORD: (set your password)
 ```
@@ -100,7 +100,7 @@ EOF
 docker-compose up -d
 
 # Verify
-curl http://localhost:5000/api/2.0/mlflow/experiments/list
+curl http://localhost:5050/api/2.0/mlflow/experiments/list
 ```
 
 ---
@@ -129,7 +129,7 @@ curl http://localhost:5000/api/2.0/mlflow/experiments/list
 ### MLflow Deployment (Semi-Automated)
 - [ ] Create .env file with AWS credentials
 - [ ] Run `docker-compose up -d`
-- [ ] Access MLflow UI: http://localhost:5000
+- [ ] Access MLflow UI: http://localhost:5050
 - [ ] Test artifact upload to S3
 
 ### Validation

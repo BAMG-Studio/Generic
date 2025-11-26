@@ -54,7 +54,7 @@ After bumping, complete the verification checklist captured inside `config/mlflo
 | Fast unit tests | `pytest tests/mlflow/test_mlflow_quick.py -q` | Pass, ensures fixture works with new client. |
 | End-to-end MLflow suite | `pytest tests/mlflow -m "not slow"` | All green, metrics logged locally. |
 | Regression safety scan | `safety check --full-report` | No MLflow CVEs. |
-| Container smoke test | `docker-compose up -d mlflow && curl -sf http://localhost:5000/health` | HTTP 200. |
+| Container smoke test | `docker-compose up -d mlflow && curl -sf http://localhost:5050/health` | HTTP 200. |
 | Artifact push | `python scripts/run_sample_audit.py --log-mlflow` | Completes with run recorded in staging bucket. |
 
 ## 5. Deployment Rollout

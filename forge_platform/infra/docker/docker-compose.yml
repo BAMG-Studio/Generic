@@ -1,0 +1,87 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: forgetrace-platform-db
+    environment:
+      POSTGRES_DB: forgetrace_platform
+      POSTGRES_USER: forgetrace
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-forgetrace_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # External:Internal - Using 5433 to avoid conflict with system PostgreSQL
+    networks:
+      - forgetrace-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U forgetrace"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: forgetrace-platform-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - forgetrace-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../infra/docker/Dockerfile.backend
+    container_name: forgetrace-platform-backend
+    environment:
+      ENV: ${ENV:-development}
+      DATABASE_URL: postgresql+asyncpg://forgetrace:${DB_PASSWORD:-forgetrace_dev_password}@postgres:5432/forgetrace_platform
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
+      JWT_SECRET: ${JWT_SECRET:-dev-jwt-secret-change-in-production}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - forgetrace-network
+    volumes:
+      - ../backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Frontend
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../infra/docker/Dockerfile.frontend
+    container_name: forgetrace-platform-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - forgetrace-network
+    environment:
+      VITE_API_URL: http://localhost:8000/api/v1
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  forgetrace-network:
+    driver: bridge

@@ -42,17 +42,26 @@ EXPECTED OUTCOME:
 
 import argparse
 import json
+import os
 import pickle
 import sys
-from pathlib import Path
-from typing import List, Dict, Any, Tuple, Sequence, Optional, Set
-from collections import Counter
 import time
+from collections import Counter
+from contextlib import contextmanager
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+
+try:  # MLflow is optional when running outside CI
+    import mlflow
+    import mlflow.sklearn
+except Exception:  # pragma: no cover - optional dependency guard
+    mlflow = None
 
 
 def _parse_cli_args() -> argparse.Namespace:
@@ -104,6 +113,98 @@ LOG_TRANSFORM_FEATURES: Sequence[str] = (
     "lines_of_code",
     "file_size_bytes",
 )
+
+MODEL_CONFIG: Dict[str, Any] = {
+    "n_estimators": 100,
+    "max_depth": 15,
+    "min_samples_split": 10,
+    "class_weight": "balanced",
+    "random_state": 42,
+    "n_jobs": -1,
+}
+
+
+def _mlflow_configured() -> bool:
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+    return bool(tracking_uri) and mlflow is not None
+
+
+@contextmanager
+def _mlflow_run(run_name: str, phase_context: str):
+    if not _mlflow_configured():
+        yield None
+        return
+
+    tracking_uri = os.environ["MLFLOW_TRACKING_URI"]
+    mlflow.set_tracking_uri(tracking_uri)
+
+    # Basic auth variables expected by MLflow's HTTP client
+    username = os.getenv("MLFLOW_USERNAME")
+    password = os.getenv("MLFLOW_PASSWORD")
+    if username and password:
+        os.environ["MLFLOW_TRACKING_USERNAME"] = username
+        os.environ["MLFLOW_TRACKING_PASSWORD"] = password
+
+    experiment_name = os.getenv("MLFLOW_EXPERIMENT_NAME", "forgetrace-training")
+    mlflow.set_experiment(experiment_name)
+
+    default_run_name = run_name or f"rf-{phase_context.lower()}-{datetime.utcnow().isoformat()}"
+    with mlflow.start_run(run_name=default_run_name) as active_run:
+        mlflow.set_tags({
+            "phase": phase_context,
+            "training_script": "train_random_forest.py",
+            "ci_pipeline": os.getenv("GITHUB_WORKFLOW", "local"),
+        })
+        yield active_run
+
+
+def _log_results_to_mlflow(
+    model: RandomForestClassifier,
+    metrics: Dict[str, float],
+    artifacts: List[Path],
+    feature_names: Sequence[str],
+    metadata: Dict[str, Any],
+    phase_context: str,
+    dataset_path: str,
+    output_path: str,
+):
+    if not _mlflow_configured():
+        return
+
+    with _mlflow_run(run_name=f"RF-{phase_context}", phase_context=phase_context):
+        mlflow.log_params({
+            "dataset_path": dataset_path,
+            "model_output": output_path,
+            "feature_count": len(feature_names),
+            "phase": phase_context,
+            **MODEL_CONFIG,
+        })
+
+        mlflow.log_metrics(metrics)
+        mlflow.log_dict(
+            {
+                "feature_names": list(feature_names),
+                "metadata": metadata,
+                "artifact_paths": [str(path) for path in artifacts],
+            },
+            artifact_file="training_metadata.json",
+        )
+
+        for artifact in artifacts:
+            if artifact.exists():
+                mlflow.log_artifact(str(artifact))
+
+        # Persist model using MLflow's sklearn utilities for easier serving
+        try:
+            mlflow.sklearn.log_model(
+                sk_model=model,
+                artifact_path="model",
+                registered_model_name=os.getenv(
+                    "MLFLOW_REGISTERED_MODEL_NAME", "forgetrace-ip-classifier"
+                ),
+            )
+        except Exception as exc:  # pragma: no cover - network/registry issues
+            print(f"⚠️  Failed to register model with MLflow registry: {exc}")
 
 
 def apply_log_transforms(
@@ -436,13 +537,8 @@ def train_model(X_train: np.ndarray, y_train: np.ndarray) -> RandomForestClassif
     start_time = time.time()
     
     model = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=15,
-        min_samples_split=10,
-        class_weight='balanced',
-        random_state=42,
-        n_jobs=-1,
-        verbose=0
+        **MODEL_CONFIG,
+        verbose=0,
     )
     
     # This is where the magic happens!
@@ -458,8 +554,13 @@ def train_model(X_train: np.ndarray, y_train: np.ndarray) -> RandomForestClassif
     return model
 
 
-def evaluate_model(model: RandomForestClassifier, X_train: np.ndarray, y_train: np.ndarray, 
-                   X_test: np.ndarray, y_test: np.ndarray) -> None:
+def evaluate_model(
+    model: RandomForestClassifier,
+    X_train: np.ndarray,
+    y_train: np.ndarray,
+    X_test: np.ndarray,
+    y_test: np.ndarray,
+) -> Tuple[Dict[str, float], Dict[str, Any]]:
     """
     STEP 4: Evaluating Model Performance
     ====================================
@@ -530,7 +631,8 @@ def evaluate_model(model: RandomForestClassifier, X_train: np.ndarray, y_train: 
     # Detailed metrics on test set
     print("\n📊 Detailed Classification Report (Test Set):")
     print("   Shows precision, recall, and F1 for each class\n")
-    print(classification_report(y_test, y_test_pred, digits=3))
+    report = classification_report(y_test, y_test_pred, digits=3)
+    print(report)
     
     # Confusion matrix
     print("\n🔢 Confusion Matrix (Test Set):")
@@ -560,6 +662,23 @@ def evaluate_model(model: RandomForestClassifier, X_train: np.ndarray, y_train: 
     print(f"\n   Fold accuracies: {[f'{s:.3f}' for s in cv_scores]}")
     print(f"   Average: {cv_scores.mean():.3f} (±{cv_scores.std():.3f})")
     print(f"\n   Interpretation: Model is {'stable' if cv_scores.std() < 0.02 else 'somewhat variable'} across different data subsets")
+
+    metrics = {
+        "train_accuracy": float(train_accuracy),
+        "test_accuracy": float(test_accuracy),
+        "train_test_gap": float(train_accuracy - test_accuracy),
+        "cv_mean_accuracy": float(cv_scores.mean()),
+        "cv_std_accuracy": float(cv_scores.std()),
+    }
+
+    evaluation = {
+        "classification_report": report,
+        "confusion_matrix": cm.tolist(),
+        "labels": labels,
+        "cv_scores": [float(score) for score in cv_scores],
+    }
+
+    return metrics, evaluation
 
 
 def analyze_feature_importance(model: RandomForestClassifier, feature_names: List[str]) -> None:
@@ -609,6 +728,28 @@ def analyze_feature_importance(model: RandomForestClassifier, feature_names: Lis
     if low_features:
         print(f"\n   ⚠️  Low-importance features: {', '.join(low_features)}")
         print("   → Could be removed to simplify model (tradeoff: slightly lower accuracy)")
+
+
+def persist_evaluation_artifacts(
+    evaluation: Dict[str, Any],
+    metrics_dir: Path,
+) -> List[Path]:
+    """Write evaluation artifacts to disk for MLflow/artifact uploads."""
+
+    metrics_dir.mkdir(parents=True, exist_ok=True)
+
+    report_path = metrics_dir / "classification_report.txt"
+    report_path.write_text(evaluation["classification_report"] + "\n", encoding="utf-8")
+
+    cm_payload = {
+        "labels": evaluation["labels"],
+        "matrix": evaluation["confusion_matrix"],
+        "cv_scores": evaluation["cv_scores"],
+    }
+    cm_path = metrics_dir / "confusion_matrix.json"
+    cm_path.write_text(json.dumps(cm_payload, indent=2), encoding="utf-8")
+
+    return [report_path, cm_path]
 
 
 def save_model(
@@ -764,7 +905,7 @@ def main():
                 print(f"   • {name:35s} {importance:.6f}")
 
     # Step 5: Evaluate final model
-    evaluate_model(model, x_train, y_train, x_test, y_test)
+    metrics, evaluation = evaluate_model(model, x_train, y_train, x_test, y_test)
 
     # Step 6: Feature importance summary
     analyze_feature_importance(model, feature_names)
@@ -776,6 +917,21 @@ def main():
         model_metadata["auto_prune_threshold"] = AUTO_PRUNE_THRESHOLD
 
     save_model(model, feature_names, output_path, metadata=model_metadata)
+
+    metrics_dir = Path("training_output/metrics")
+    artifact_paths = persist_evaluation_artifacts(evaluation, metrics_dir)
+    artifact_paths.append(Path(output_path))
+
+    _log_results_to_mlflow(
+        model=model,
+        metrics=metrics,
+        artifacts=artifact_paths,
+        feature_names=feature_names,
+        metadata=model_metadata,
+        phase_context=phase_context,
+        dataset_path=training_file,
+        output_path=output_path,
+    )
     
     print("\n" + "█"*70)
     print("█" + " "*68 + "█")

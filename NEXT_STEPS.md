@@ -120,7 +120,7 @@ Before starting deployment, collect these values:
 - [ ] GITHUB_TOKEN: `ghp____________________________________`
 
 #### MLflow (10 minutes to set up)
-- [ ] MLFLOW_TRACKING_URI: `http://____________:5000`
+- [ ] MLFLOW_TRACKING_URI: `http://____________:5050`
 - [ ] MLFLOW_DB_PASSWORD: `____________________`
 
 **See `QUICKSTART.md` for step-by-step instructions on obtaining these.**
@@ -270,7 +270,7 @@ detect-secrets scan --all-files
 ### Tip 4: Bookmark These URLs
 - AWS Console: https://console.aws.amazon.com
 - GitHub Repo Settings: https://github.com/papaert-cloud/peter-security-CI-CDpipelines/settings
-- MLflow UI: http://localhost:5000 (after deployment)
+- MLflow UI: http://localhost:5050 (after deployment)
 
 ---
 
