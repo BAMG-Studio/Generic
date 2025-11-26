@@ -28,7 +28,7 @@
 
 ### MLflow Tracking Server
 
-- **URL:** http://localhost:5000
+- **URL:** http://localhost:5050
 
 - **Backend:** PostgreSQL (persistent)
 
@@ -116,13 +116,13 @@ DVC_REMOTE_BUCKET=forgetrace-models-production-dbjohpzx
 
 ```bash
 # Check health
-curl http://localhost:5000/health
+curl http://localhost:5050/health
 
 # List experiments
-curl "http://localhost:5000/api/2.0/mlflow/experiments/search?max_results=10" | python3 -m json.tool
+curl "http://localhost:5050/api/2.0/mlflow/experiments/search?max_results=10" | python3 -m json.tool
 
 # Access UI
-xdg-open http://localhost:5000
+xdg-open http://localhost:5050
 ```
 
 
@@ -203,7 +203,7 @@ python -m forgetrace preview validation/
 | FOUNDATIONAL | 40 GB             | Python frameworks                    |
 | SECURITY     | 40 GB             | Tools like Trivy, Syft               |
 | ENTERPRISE   | 40 GB             | GitLab, Metabase, Grafana            |
-| RESEARCH     | 40 GB             | ML/AI runtimes                       |
+| RESEARCH     | 40 GB             | ML/ForgeTrace runtimes               |
 
 - Run `scripts/preflight_check.sh --phase <PHASE>` before invoking the workflow to validate disk, DVC remote, and arguments.
 - Trigger GitHub Actions with explicit phase input (defaults to `ALL`):
@@ -262,7 +262,7 @@ docker-compose logs postgres --tail 100
 
 ```bash
 # All systems check
-echo "MLflow:" && curl -s http://localhost:5000/health && \
+echo "MLflow:" && curl -s http://localhost:5050/health && \
 echo "\nDocker:" && docker-compose ps | grep healthy && \
 echo "\nS3:" && aws s3 ls s3://forgetrace-models-production-dbjohpzx/ | head -1 && \
 echo "\nTerraform:" && cd terraform && terraform state list | wc -l && echo "resources deployed"
