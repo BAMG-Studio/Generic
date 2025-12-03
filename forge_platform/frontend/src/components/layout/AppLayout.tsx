@@ -7,7 +7,8 @@ import {
   Settings, 
   Menu, 
   X,
-  ShieldAlert
+  ShieldAlert,
+  Code2
 } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -23,6 +24,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     { name: 'Mission Control', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Code DNA', path: '/explorer', icon: FileCode },
     { name: 'Review Queue', path: '/review', icon: CheckSquare },
+    { name: 'Developer', path: '/developer', icon: Code2 },
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 

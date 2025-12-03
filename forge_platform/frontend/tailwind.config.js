@@ -7,12 +7,18 @@ export default {
   darkMode: 'class', // We default to dark, but this allows toggling
   theme: {
     extend: {
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
       colors: {
         // The "Void" Backgrounds - Deep, rich darks (not just black)
         canvas: {
           DEFAULT: '#0F172A', // Slate-900 (Main BG)
           panel: '#1E293B',   // Slate-800 (Widget BG)
           border: '#334155',  // Slate-700 (Borders)
+          hover: '#2D3748',   // Slate-750 (Hover states)
         },
         
         // The "Intelligence" Accent - Primary Brand Color
@@ -47,8 +53,15 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'], // Crucial for the code viewer
       },
+      fontSize: {
+        'xxs': '0.625rem',
+      },
       boxShadow: {
         'neon': '0 0 10px theme("colors.brand.glow")',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.3)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },

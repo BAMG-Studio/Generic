@@ -20,6 +20,8 @@ pip install -e .
 
 ## Basic Usage
 
+### CLI Audits
+
 ```bash
 # Run audit on a repository
 forgetrace audit /path/to/target-repo --out repo_audit/example/forgetrace_report
@@ -43,6 +45,149 @@ forgetrace audit /path/to/repo --exec-mode board
 
 # Preview on custom port
 forgetrace preview repo_audit/acme/forgetrace_report --port 9000 --browser
+```
+
+### API Access
+
+ForgeTrace provides a RESTful API for programmatic access. First, create an API token at `https://www.forgetrace.pro/app/developer`.
+
+#### Submit an Audit
+
+```bash
+curl -X POST https://api.forgetrace.pro/v1/audits \
+  -H "Authorization: Bearer ftk_your_token_here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repository": "https://github.com/org/repo",
+    "branch": "main",
+    "config": {
+      "confidence_threshold": 0.75,
+      "include_sbom": true,
+      "include_vulnerabilities": true
+    }
+  }'
+```
+
+Response:
+
+```json
+{
+  "id": "aud_abc123xyz",
+  "status": "queued",
+  "created_at": "2025-11-26T18:00:00Z",
+  "estimated_completion": "2025-11-26T18:05:00Z"
+}
+```
+
+#### Check Audit Status
+
+```bash
+curl https://api.forgetrace.pro/v1/audits/aud_abc123xyz \
+  -H "Authorization: Bearer ftk_your_token_here"
+```
+
+Response:
+
+```json
+{
+  "id": "aud_abc123xyz",
+  "status": "completed",
+  "progress": 100,
+  "created_at": "2025-11-26T18:00:00Z",
+  "completed_at": "2025-11-26T18:03:47Z",
+  "summary": {
+    "total_files": 1247,
+    "foreground_ip": 892,
+    "third_party_ip": 338,
+    "background_ip": 17,
+    "critical_vulnerabilities": 3,
+    "high_risk_licenses": 5
+  },
+  "reports": {
+    "html": "https://api.forgetrace.pro/v1/reports/rep_xyz789/html",
+    "json": "https://api.forgetrace.pro/v1/reports/rep_xyz789/json",
+    "pdf": "https://api.forgetrace.pro/v1/reports/rep_xyz789/pdf"
+  }
+}
+```
+
+#### Download Report
+
+```bash
+# JSON report
+curl https://api.forgetrace.pro/v1/reports/rep_xyz789/json \
+  -H "Authorization: Bearer ftk_your_token_here" \
+  -o audit_report.json
+
+# PDF report
+curl https://api.forgetrace.pro/v1/reports/rep_xyz789/pdf \
+  -H "Authorization: Bearer ftk_your_token_here" \
+  -o audit_report.pdf
+```
+
+#### Rate Limits
+
+API responses include rate limit headers:
+
+```text
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 45
+X-RateLimit-Reset: 1732645200
+```
+
+If you exceed limits, you'll receive a `429 Too Many Requests` response:
+
+```json
+{
+  "error": "rate_limit_exceeded",
+  "message": "Too many requests. Please slow down.",
+  "retry_after": 42
+}
+```
+
+#### CI/CD Integration
+
+Add to your GitHub Actions workflow:
+
+```yaml
+name: ForgeTrace Audit
+on: [pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run ForgeTrace Audit
+        run: |
+          AUDIT_ID=$(curl -X POST https://api.forgetrace.pro/v1/audits \
+            -H "Authorization: Bearer ${{ secrets.FORGETRACE_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"repository": "'"$GITHUB_REPOSITORY"'", "branch": "'"$GITHUB_REF"'"}' \
+            | jq -r '.id')
+          
+          # Poll for completion
+          while true; do
+            STATUS=$(curl https://api.forgetrace.pro/v1/audits/$AUDIT_ID \
+              -H "Authorization: Bearer ${{ secrets.FORGETRACE_TOKEN }}" \
+              | jq -r '.status')
+            
+            if [ "$STATUS" = "completed" ]; then
+              break
+            fi
+            sleep 10
+          done
+          
+          # Check for critical issues
+          CRITICAL=$(curl https://api.forgetrace.pro/v1/audits/$AUDIT_ID \
+            -H "Authorization: Bearer ${{ secrets.FORGETRACE_TOKEN }}" \
+            | jq -r '.summary.critical_vulnerabilities')
+          
+          if [ "$CRITICAL" -gt 0 ]; then
+            echo "::error::Found $CRITICAL critical vulnerabilities"
+            exit 1
+          fi
 ```
 
 ## Output Files

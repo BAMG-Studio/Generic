@@ -1,241 +1,155 @@
-# ForgeTrace Platform
+# ForgeTrace Control Center
 
-Multi-tenant SaaS platform for IP audit and provenance analysis.
+**Production-ready multi-domain platform for IP audit services**
 
-## Architecture
+## 🚀 Quick Start
+
+```bash
+# Deploy locally
+./deploy.sh development
+
+# Access at:
+# - Frontend: http://localhost:5173
+# - Backend: http://localhost:8000
+# - API Docs: http://localhost:8000/api/docs
+
+# Default admin:
+# Email: admin@forgetrace.pro
+# Password: admin123
+```
+
+## 📚 Documentation
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get running in 5 minutes
+- **[Production Deployment](PRODUCTION_DEPLOY.md)** - Deploy to forgetrace.pro
+- **[Implementation Complete](IMPLEMENTATION_COMPLETE.md)** - What's been built
+- **[Architecture](../docs/CONTROL_CENTER_ARCHITECTURE.md)** - System design
+- **[Control Center README](CONTROL_CENTER_README.md)** - Full platform docs
+
+## ✨ Features
+
+- ✅ **Dual Authentication** - Token-based for clients, credentials for management
+- ✅ **OAuth Integration** - GitHub and Google sign-in
+- ✅ **Role-Based Access** - Super Admin, Tenant Admin, User, Viewer
+- ✅ **API Tokens** - Secure ftk_ prefixed tokens with scoping
+- ✅ **Subscription Tiers** - Free, Professional, Enterprise
+- ✅ **Docker Deployment** - One-command setup
+- ✅ **CLI Tools** - User and token management
+- ✅ **Production Ready** - SSL, monitoring, backups
+
+## 🏗️ Architecture
+
+```
+www.forgetrace.pro    → Public marketing site
+app.forgetrace.pro    → Control center dashboard
+api.forgetrace.pro    → Backend API
+```
+
+## 🛠️ Tech Stack
+
+**Backend:**
+- FastAPI (Python)
+- PostgreSQL
+- Redis
+- JWT + OAuth
+
+**Frontend:**
+- React + TypeScript
+- Vite
+- Tailwind CSS
+
+**DevOps:**
+- Docker + Docker Compose
+- Nginx
+- Let's Encrypt SSL
+
+## 📋 Requirements
+
+- Docker & Docker Compose
+- 8GB RAM minimum
+- 50GB storage
+
+## 🔧 CLI Commands
+
+```bash
+# Create user
+docker-compose exec backend python cli.py create-user
+
+# Create API token
+docker-compose exec backend python cli.py create-token --email user@example.com
+
+# List users
+docker-compose exec backend python cli.py list-users
+
+# List tokens
+docker-compose exec backend python cli.py list-tokens --email user@example.com
+
+# Revoke token
+docker-compose exec backend python cli.py revoke-token --prefix ftk_xxxxxxxx
+```
+
+## 🔐 OAuth Configuration
+
+### GitHub OAuth
+- Client ID: `0v231iVg8ui90ZAI4Km8`
+- Callback: `https://api.forgetrace.pro/api/v1/auth/callback/github`
+
+### Google OAuth
+- Client ID: `163606189898-uts4nnb1u38b13785n7gmgq0j20m79ed.apps.googleusercontent.com`
+- Callback: `https://api.forgetrace.pro/api/v1/auth/callback/google`
+
+## 📊 Project Structure
 
 ```
 forge_platform/
-├── backend/          # FastAPI backend with async SQLAlchemy
-├── frontend/         # React + TypeScript + Tailwind CSS
-└── infra/           
-    ├── docker/       # Docker Compose for local development
-    └── k8s/          # Kubernetes manifests for production
+├── backend/              # FastAPI application
+│   ├── app/
+│   │   ├── api/         # API routes
+│   │   ├── models/      # Database models
+│   │   ├── middleware/  # Auth & RBAC
+│   │   └── core/        # Configuration
+│   ├── cli.py           # Management CLI
+│   └── requirements.txt
+├── frontend/            # React application
+│   ├── src/
+│   │   ├── pages/       # Login, portals
+│   │   ├── components/  # UI components
+│   │   └── store/       # State management
+│   └── package.json
+├── infra/               # Infrastructure
+│   ├── docker/          # Dockerfiles
+│   └── k8s/             # Kubernetes configs
+├── deploy.sh            # Deployment script
+└── docker-compose.yml   # Docker orchestration
 ```
 
-## Quick Start (Local Development)
+## 🚀 Deployment
 
-### Prerequisites
-- Docker & Docker Compose
-- Node.js 20+ (for frontend development)
-- Python 3.12+ (for backend development)
-
-### 1. Start Services
-
+### Local Development
 ```bash
-cd forge_platform/infra/docker
-cp .env.example .env
-# Edit .env with your configuration
-docker-compose up -d
+./deploy.sh development
 ```
 
-This starts:
-- PostgreSQL (port 5432)
-- Redis (port 6379)
-- Backend API (port 8000)
-- Frontend (port 3000)
-
-### 2. Initialize Database
-
+### Production
 ```bash
-cd forge_platform/backend
-pip install -r requirements.txt
-alembic upgrade head
+# See PRODUCTION_DEPLOY.md for full guide
+./deploy.sh production
 ```
 
-### 3. Access Application
+## 📞 Support
 
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/api/docs
+- **Email**: hello@bamgstudio.com
+- **Website**: https://bamgstudio.com
+- **Documentation**: See docs/ folder
 
-## Development
-
-### Backend Development
-
-```bash
-cd forge_platform/backend
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Copy environment file
-cp .env.example .env
-
-# Run migrations
-alembic upgrade head
-
-# Start dev server with hot reload
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### Frontend Development
-
-```bash
-cd forge_platform/frontend
-
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev
-```
-
-### Database Migrations
-
-```bash
-cd forge_platform/backend
-
-# Create new migration
-alembic revision --autogenerate -m "Description"
-
-# Apply migrations
-alembic upgrade head
-
-# Rollback
-alembic downgrade -1
-```
-
-## Production Deployment
-
-### Kubernetes Deployment
-
-1. **Build and push images:**
-
-```bash
-# Backend
-docker build -t ghcr.io/your-org/forgetrace-backend:latest \
-  -f forge_platform/infra/docker/Dockerfile.backend \
-  forge_platform/backend
-
-docker push ghcr.io/your-org/forgetrace-backend:latest
-
-# Frontend
-docker build -t ghcr.io/your-org/forgetrace-frontend:latest \
-  -f forge_platform/infra/docker/Dockerfile.frontend \
-  forge_platform/frontend
-
-docker push ghcr.io/your-org/forgetrace-frontend:latest
-```
-
-2. **Create secrets:**
-
-```bash
-kubectl create secret generic forgetrace-secrets \
-  --from-literal=database-url='postgresql+asyncpg://...' \
-  --from-literal=redis-url='redis://...' \
-  --from-literal=secret-key='your-secret-key' \
-  --from-literal=jwt-secret='your-jwt-secret'
-
-kubectl create secret generic aws-credentials \
-  --from-literal=access-key-id='YOUR_KEY' \
-  --from-literal=secret-access-key='YOUR_SECRET'
-```
-
-3. **Deploy:**
-
-```bash
-cd forge_platform/infra/k8s
-
-# Set environment variables
-export REGISTRY=ghcr.io/your-org
-export VERSION=latest
-
-# Apply manifests
-envsubst < backend-deployment.yaml | kubectl apply -f -
-envsubst < frontend-deployment.yaml | kubectl apply -f -
-kubectl apply -f ingress.yaml
-kubectl apply -f hpa.yaml
-```
-
-## API Documentation
-
-Once running, visit:
-- Development: http://localhost:8000/api/docs
-- Production: https://api.forgetrace.com/docs
-
-## Key Features
-
-### Backend
-- ✅ Multi-tenant architecture with row-level security
-- ✅ JWT authentication with refresh tokens
-- ✅ OAuth integration (GitHub, Google)
-- ✅ Async SQLAlchemy with PostgreSQL
-- ✅ Redis caching
-- ✅ Consent management system (GDPR/CCPA compliant)
-- ✅ Audit logging
-- ✅ S3 integration for scan artifacts
-- ✅ MLflow integration for model tracking
-
-### Frontend
-- ✅ React 18 with TypeScript
-- ✅ Tailwind CSS for styling
-- ✅ React Router for navigation
-- ✅ Zustand for state management
-- ✅ React Query for API calls
-- ✅ Responsive design
-
-## Configuration
-
-### Environment Variables
-
-See `.env.example` files in backend and frontend directories.
-
-Key variables:
-- `DATABASE_URL`: PostgreSQL connection string
-- `REDIS_URL`: Redis connection string
-- `SECRET_KEY`: Application secret key
-- `JWT_SECRET`: JWT signing secret
-- `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`: AWS credentials
-- `MLFLOW_TRACKING_URI`: MLflow server URL
-
-## Testing
-
-### Backend Tests
-```bash
-cd forge_platform/backend
-pytest tests/ -v
-```
-
-### Frontend Tests
-```bash
-cd forge_platform/frontend
-npm test
-```
-
-## CI/CD
-
-GitHub Actions workflow (`.github/workflows/platform-ci.yml`) handles:
-- Running tests
-- Building Docker images
-- Pushing to GitHub Container Registry
-- Deploying to staging/production Kubernetes clusters
-
-## Monitoring
-
-- Health check: `/health`
-- Metrics: Prometheus metrics exposed on `/metrics` (add middleware)
-- Logs: Structured JSON logging to stdout
-
-## Security
-
-- HTTPS enforced in production
-- CORS configured
-- Rate limiting
-- SQL injection protection (SQLAlchemy)
-- XSS protection
-- CSRF protection
-- Secure password hashing (bcrypt)
-- JWT token expiration
-- Multi-tenancy isolation
-
-## Support
-
-- Documentation: `/docs`
-- Issues: GitHub Issues
-- Email: support@forgetrace.com
-
-## License
+## 📄 License
 
 Proprietary - All Rights Reserved
-© 2025 BAMG Studio LLC
+
+Built by Peter Kolawole, BAMG Studio LLC
+
+---
+
+**ForgeTrace Control Center v1.0.0**
+
+🎉 **Ready for production deployment!**

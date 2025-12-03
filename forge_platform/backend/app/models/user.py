@@ -63,6 +63,7 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     is_verified = Column(Boolean, default=False)
     role = Column(SQLEnum(UserRole), default=UserRole.USER, nullable=False)
+    subscription_tier = Column(String, default="free")
     
     # OAuth
     oauth_provider = Column(String, nullable=True)  # github, google, etc

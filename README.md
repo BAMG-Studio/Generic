@@ -10,11 +10,12 @@ ForgeTrace blends static analysis, Git forensics, and ML-powered IP classificati
 
 1. [What ForgeTrace Does](#what-forgetrace-does)
 2. [Quick Start (5 Minutes)](#quick-start-5-minutes)
-3. [Scenarios & Workflows](#scenarios--workflows)
-4. [Outputs & Reports](#outputs--reports)
-5. [Platform Capabilities](#platform-capabilities)
-6. [Advanced Configuration](#advanced-configuration)
-7. [Learning Resources & Support](#learning-resources--support)
+3. [ForgeTrace App & Developer Portal](#forgetrace-app--developer-portal)
+4. [Scenarios & Workflows](#scenarios--workflows)
+5. [Outputs & Reports](#outputs--reports)
+6. [Platform Capabilities](#platform-capabilities)
+7. [Advanced Configuration](#advanced-configuration)
+8. [Learning Resources & Support](#learning-resources--support)
 
 ---
 
@@ -98,6 +99,62 @@ What you get:
 - File explorer with per-file rationale
 - Interactive charts (licenses, vulnerabilities, contributor heatmaps)
 - Export options for JSON, CSV, PDF, and slide decks
+
+---
+
+## ForgeTrace App & Developer Portal
+
+### Web Application
+
+Access the ForgeTrace platform at `https://www.forgetrace.pro/app` for:
+
+- **Mission Control** – Real-time dashboard with audit summaries and risk metrics
+- **Code DNA** – Interactive file explorer with per-file IP classification
+- **Review Queue** – Human-in-the-loop verification for low-confidence predictions
+- **Developer Portal** – Manage API tokens, view usage, and integrate with your CI/CD
+- **Settings** – Configure analysis thresholds, policies, and integrations
+
+### API Access & Tokens
+
+ForgeTrace provides a RESTful API for programmatic access and automation.
+
+#### Creating an API Token
+
+1. Log in to `https://www.forgetrace.pro/app`
+2. Navigate to **Developer** → **API Tokens**
+3. Click **Create Token**
+4. Assign a name and select scopes (`read:reports`, `write:audits`, etc.)
+5. Copy the token immediately (it won't be shown again)
+
+#### Using the API
+
+```bash
+# Submit an audit
+curl -X POST https://api.forgetrace.pro/v1/audits \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repository": "https://github.com/org/repo",
+    "branch": "main"
+  }'
+
+# Get audit status
+curl https://api.forgetrace.pro/v1/audits/{audit_id} \
+  -H "Authorization: Bearer YOUR_TOKEN"
+
+# Download report
+curl https://api.forgetrace.pro/v1/reports/{report_id} \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -o report.json
+```
+
+#### Rate Limits
+
+- **Free Tier**: 1,000 files/month, 60 requests/minute
+- **Pro Tier**: 50,000 files/month, priority queue
+- **Enterprise**: Custom quotas, SLA, and dedicated support
+
+See the [Developer Portal](https://www.forgetrace.pro/app/developer) for current usage and limits.
 
 ---
 

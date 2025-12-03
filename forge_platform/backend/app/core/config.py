@@ -38,9 +38,10 @@ class Settings(BaseSettings):
     # OAuth Providers
     GITHUB_CLIENT_ID: Optional[str] = None
     GITHUB_CLIENT_SECRET: Optional[str] = None
+    GITHUB_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/callback/github"
     GOOGLE_CLIENT_ID: Optional[str] = None
     GOOGLE_CLIENT_SECRET: Optional[str] = None
-    OAUTH_CALLBACK_URL: str = "http://localhost:8000/api/v1/auth/callback"
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/callback/google"
     
     # AWS/S3 for artifact storage
     AWS_ACCESS_KEY_ID: Optional[str] = None
@@ -73,6 +74,22 @@ class Settings(BaseSettings):
     SMTP_USER: Optional[str] = None
     SMTP_PASSWORD: Optional[str] = None
     SMTP_FROM_EMAIL: str = "noreply@forgetrace.com"
+    
+    # AWS SES
+    SES_REGION: str = "us-east-1"
+    SES_FROM_EMAIL: str = "noreply@forgetrace.pro"
+    SES_REPLY_TO_EMAIL: str = "hello@bamgstudio.com"
+    
+    # Stripe
+    STRIPE_SECRET_KEY: Optional[str] = None
+    STRIPE_PUBLISHABLE_KEY: Optional[str] = None
+    STRIPE_WEBHOOK_SECRET: Optional[str] = None
+    STRIPE_ACCOUNT_ID: Optional[str] = None
+    
+    # Domain URLs
+    FRONTEND_URL: str = "http://localhost:5173"
+    API_URL: str = "http://localhost:8000"
+    PUBLIC_URL: str = "http://localhost:3000"
     
     # Feature Flags
     ENABLE_SIGNUP: bool = True

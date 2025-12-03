@@ -3,49 +3,28 @@ kind: Ingress
 metadata:
   name: forgetrace-ingress
   annotations:
+    kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://app.forgetrace.pro,https://www.forgetrace.pro"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
 spec:
-  ingressClassName: nginx
   tls:
   - hosts:
-    - app.forgetrace.com
-    - api.forgetrace.com
-    - www.forgetrace.pro
     - api.forgetrace.pro
-    secretName: forgetrace-tls
+    secretName: forgetrace-api-tls
+  - hosts:
+    - app.forgetrace.pro
+    secretName: forgetrace-app-tls
+  - hosts:
+    - www.forgetrace.pro
+    secretName: forgetrace-www-tls
   rules:
-  - host: app.forgetrace.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: forgetrace-frontend
-            port:
-              number: 80
-  - host: api.forgetrace.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: forgetrace-backend
-            port:
-              number: 8000
-  - host: www.forgetrace.pro
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: forgetrace-frontend
-            port:
-              number: 80
+  # API Backend
   - host: api.forgetrace.pro
     http:
       paths:
@@ -56,3 +35,63 @@ spec:
             name: forgetrace-backend
             port:
               number: 8000
+  
+  # App Frontend
+  - host: app.forgetrace.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: forgetrace-frontend
+            port:
+              number: 80
+  
+  # Public Website
+  - host: www.forgetrace.pro
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: forgetrace-public
+            port:
+              number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgetrace-backend
+spec:
+  selector:
+    app: forgetrace-backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgetrace-frontend
+spec:
+  selector:
+    app: forgetrace-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgetrace-public
+spec:
+  selector:
+    app: forgetrace-public
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP

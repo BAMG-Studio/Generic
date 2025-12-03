@@ -7,7 +7,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from .core.config import settings
-from .api import auth, scans, repositories, consent, oauth
+from .api import auth, scans, repositories, consent, tokens, oauth_routes
+from .api import audits, usage
+from .middleware.rate_limit import RateLimitMiddleware, RateLimitConfig
 
 
 @asynccontextmanager
@@ -43,6 +45,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Rate limiting middleware
+app.add_middleware(
+    RateLimitMiddleware,
+    config=RateLimitConfig(
+        requests_per_minute=60,
+        requests_per_hour=1000,
+        requests_per_day=10000
+    )
+)
+
 # Security middleware
 if settings.ENV == "production":
     app.add_middleware(
@@ -52,10 +64,13 @@ if settings.ENV == "production":
 
 # Include routers
 app.include_router(auth.router, prefix=settings.API_PREFIX)
-app.include_router(oauth.router, prefix=f"{settings.API_PREFIX}/auth", tags=["oauth"])
+app.include_router(oauth_routes.router, prefix=settings.API_PREFIX)
 app.include_router(scans.router, prefix=settings.API_PREFIX)
 app.include_router(repositories.router, prefix=settings.API_PREFIX)
 app.include_router(consent.router, prefix=settings.API_PREFIX)
+app.include_router(tokens.router, prefix=settings.API_PREFIX)
+app.include_router(audits.router, prefix=settings.API_PREFIX, tags=["audits"])
+app.include_router(usage.router, prefix=settings.API_PREFIX, tags=["usage"])
 
 
 @app.get("/health")

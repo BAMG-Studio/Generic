@@ -1,0 +1,14 @@
+{
+  "domain": "www.forgetrace.pro",
+  "records": [
+    {
+      "type": "TXT",
+      "name": "@",
+      "value": "openai-domain-verification=dy-kVsBNBkOEgCbGkKjya2an2I",
+      "ttl": 14400,
+      "purpose": "OpenAI domain verification",
+      "created": "2024",
+      "status": "active"
+    }
+  ]
+}

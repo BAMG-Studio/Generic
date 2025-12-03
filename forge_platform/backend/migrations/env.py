@@ -15,6 +15,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from app.db.base import Base
 from app.models.user import User, Tenant, OAuthToken
 from app.models.scan import Repository, Scan, ConsentRecord, AuditLog
+from app.models.token import APIToken, TokenUsageEvent, UsageAggregate
 from app.core.config import settings
 
 # this is the Alembic Config object

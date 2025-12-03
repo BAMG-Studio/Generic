@@ -205,7 +205,7 @@ class OAuthService:
             self.providers['github'] = GitHubOAuthProvider(
                 client_id=settings.GITHUB_CLIENT_ID,
                 client_secret=settings.GITHUB_CLIENT_SECRET,
-                redirect_uri=f"{settings.OAUTH_CALLBACK_URL}/github"
+                redirect_uri=settings.GITHUB_REDIRECT_URI
             )
             logger.info("GitHub OAuth provider initialized")
         
@@ -214,7 +214,7 @@ class OAuthService:
             self.providers['google'] = GoogleOAuthProvider(
                 client_id=settings.GOOGLE_CLIENT_ID,
                 client_secret=settings.GOOGLE_CLIENT_SECRET,
-                redirect_uri=f"{settings.OAUTH_CALLBACK_URL}/google"
+                redirect_uri=settings.GOOGLE_REDIRECT_URI
             )
             logger.info("Google OAuth provider initialized")
     
